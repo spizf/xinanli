@@ -1,0 +1,8 @@
+{
+	"name": "Experts",
+	"slug": "experts",
+	"namespace": "Experts",
+	"version": "1.0",
+	"description": "This is the description for the Experts module.",
+	"enabled": true
+}

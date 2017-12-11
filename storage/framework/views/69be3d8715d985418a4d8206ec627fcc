@@ -1,0 +1,235 @@
+
+<h3 class="header smaller lighter blue mg-top12 mg-bottom20">编辑仲裁专家服务履历</h3>
+
+
+<form class="form-horizontal clearfix registerform" role="form" enctype="multipart/form-data"  action="/manage/expertsWorkHandle" method="post">
+	<?php echo csrf_field(); ?>
+
+	<div class="g-backrealdetails clearfix bor-border">
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 专家姓名：</p>
+			<p class="col-sm-4">
+				<zz style="line-height: 34px;font-size: 20px"><?php echo $experts->name; ?></zz>
+				<?php /*<span class="help-inline col-xs-12 col-sm-7"><i class="light-red ace-icon fa fa-asterisk"></i></span>*/ ?>
+			</p>
+		</div>
+		<input type="hidden" name="eid" value="<?php echo $experts->id; ?>">
+		<?php if(isset($work)): ?>
+		<input type="hidden" name="id" value="<?php echo $work->id; ?>">
+		<?php endif; ?>
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 所在公司：</p>
+			<p class="col-sm-4">
+				<input <?php if(isset($work)): ?>value="<?php echo $work->company; ?>"<?php endif; ?> type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="company">
+			</p>
+		</div>
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 图片：</p>
+			<div class="col-sm-4">
+				<div class="memberdiv pull-left">
+					<div class="position-relative">
+						<input type="file" id="id-input-file-3" name="img" />
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php if(isset($work)): ?>
+			<style>
+				#head_pic{
+					width:20%;height:25%;
+				}
+			</style>
+			<div class="bankAuth-bottom clearfix col-xs-12">
+				<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 原头像：</p>
+				<p class="col-sm-4">
+					<img id="head_pic" src="<?php echo url($work->img); ?>" style="" onmouseleave="toSmall(this)" onmouseenter="toBig(this)" alt="原头像">
+				</p>
+			</div>
+			<script>
+                function toBig(obj){
+                    $(obj).css({'width':'40%','height':'50%'});
+                }
+                function toSmall(obj){
+                    $(obj).css({'width':'20%','height':'25%'});
+                }
+			</script>
+		<?php endif; ?>
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" > 职称：</p>
+			<p class="col-sm-4">
+				<select name="position">
+					<option value="0">请选择专家职称</option>
+					<?php foreach($position as $v): ?>
+						<option
+								<?php if(isset($work)&&$work->position==$v->id): ?> selected <?php endif; ?>
+								value="<?php echo $v->id; ?>"><?php echo $v->position; ?></option>
+					<?php endforeach; ?>
+				</select>
+			</p>
+		</div>
+		<?php /*<div class="bankAuth-bottom clearfix col-xs-12">*/ ?>
+			<?php /*<p class="col-sm-1 control-label no-padding-left" for="form-field-1" >擅长领域</p>*/ ?>
+			<?php /*<p class="col-sm-4" id="cate">*/ ?>
+				<?php /*<select name="cate[]"  id="select" onchange="changeAppendSelect(this)">*/ ?>
+					<?php /*<option value="0">请选择擅长的领域</option>*/ ?>
+					<?php /*<?php if(is_array($cate)): ?>*/ ?>
+						<?php /*<?php foreach($cate as $item): ?>*/ ?>
+							<?php /*<option value="<?php echo $item->id; ?>"><?php echo $item->name; ?></option>*/ ?>
+						<?php /*<?php endforeach; ?>*/ ?>
+					<?php /*<?php endif; ?>*/ ?>
+				<?php /*</select>*/ ?>
+			<?php /*</p>*/ ?>
+		<?php /*</div>*/ ?>
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 开始时间：</p>
+			<div class="col-sm-4">
+				<p class="input-group input-daterange input-group-sm col-xs-10 col-sm-5">
+					<input type="text" <?php if(isset($work)): ?>value="<?php echo $work->start_time; ?>"<?php endif; ?> class="input-sm form-control hasDatepicker" name="start_time">
+					<span class="input-group-addon">
+							<i class="ace-icon fa fa-calendar"></i>
+					</span>
+				</p>
+			</div>
+		</div>
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 结束时间：</p>
+			<div class="col-sm-4">
+				<p class="input-group input-daterange input-group-sm col-xs-10 col-sm-5">
+					<input type="text" <?php if(isset($work)): ?>value="<?php echo $work->end_time; ?>"<?php endif; ?> class="input-sm form-control hasDatepicker" name="end_time">
+					<span class="input-group-addon">
+						<i class="ace-icon fa fa-calendar"></i>
+					</span>
+				</p>
+				<span class="help-inline col-xs-12 col-sm-7"><i class="light-red ace-icon fa fa-asterisk"></i>（提示：如果结束时间至今，则填写“至今”）</span>
+			</div>
+		</div>
+		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 工作职责：</p>
+			<p class="col-sm-4">
+				<textarea type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="work"><?php if(isset($work)): ?><?php echo $work->work; ?><?php endif; ?></textarea>
+			</p>
+		</div>
+		<?php /*<div class="form-group text-center">
+				<label class="col-sm-1 control-label no-padding-left" for="form-field-1"></label>
+				<div class="col-sm-3 text-center">
+					<button class="btn btn-primary" type="submit">提交</button>
+				</div>
+		</div>*/ ?>
+		<div class="col-xs-12">
+			<div class="clearfix row bg-backf5 padding20 mg-margin12">
+				<div class="col-xs-12">
+					<div class="col-md-1 text-right"></div>
+					<div class="col-md-10">
+						<button class="btn btn-primary btn-sm" type="submit">提交</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="space col-xs-12"></div>
+		<?php /*<div class="col-xs-12">*/ ?>
+			<?php /*<div class="col-md-1 text-right"></div>*/ ?>
+			<?php /*<div class="col-md-10"><a href="">上一项</a>　　<a href="">下一项</a></div>*/ ?>
+		<?php /*</div>*/ ?>
+		<div class="col-xs-12 space">
+
+		</div>
+	</div>
+</form>
+<script>
+    <?php /*function changeAppendSelect(act){*/ ?>
+        <?php /*if($(act).val()!=='0'){*/ ?>
+            <?php /*if($(act).next('select').length==0) {*/ ?>
+                <?php /*var str = '<select name="cate[]" onchange="changeAppendSelect(this)"> <option value="0" class="valueChange">请选择</option><?php foreach($cate as $v): ?><option value="<?php echo e($v->id); ?>"><?php echo e($v->name); ?></option> <?php endforeach; ?></select>';*/ ?>
+                <?php /*$(act).children('option.valueChange').html('移除');*/ ?>
+                <?php /*$(act).after(str);*/ ?>
+            <?php /*}*/ ?>
+        <?php /*}else{*/ ?>
+            <?php /*$(act).remove();*/ ?>
+        <?php /*}*/ ?>
+        <?php /*unsetOtherAct(1);*/ ?>
+    <?php /*}*/ ?>
+    <?php /*//获取所有活动选项*/ ?>
+	<?php /*<?php if(is_array($act_json)): ?>*/ ?>
+    <?php /*var act=new Array();*/ ?>
+    <?php /*var actArr=new Array();*/ ?>
+	<?php /*<?php foreach($act_json as $k=>$v): ?>*/ ?>
+    <?php /*act.push('<?php echo e($k); ?>');*/ ?>
+    <?php /*actArr['<?php echo e($k); ?>']='<?php echo e($v); ?>';*/ ?>
+	<?php /*<?php endforeach; ?>*/ ?>
+    <?php /*//获取已经存在的活动选项*/ ?>
+    <?php /*function getAct(){*/ ?>
+        <?php /*var arr=new Array();*/ ?>
+        <?php /*$("#cate select").each(function(){*/ ?>
+            <?php /*if($(this).val()!=='0') {*/ ?>
+                <?php /*arr.push($(this).val());*/ ?>
+            <?php /*}*/ ?>
+        <?php /*});*/ ?>
+        <?php /*return arr;*/ ?>
+    <?php /*}*/ ?>
+    <?php /*//删除已经存在的活动选项*/ ?>
+    <?php /*function unsetOtherAct(status){*/ ?>
+        <?php /*$("#cate select").each(function(){*/ ?>
+            <?php /*var arr=getAct();*/ ?>
+            <?php /*if($(this).val()!=='0') {*/ ?>
+                <?php /*arr.splice($.inArray($(this).val(), arr), 1);*/ ?>
+            <?php /*}*/ ?>
+            <?php /*var selectAct=new Array();*/ ?>
+            <?php /*$(this).children().each(function (k, v) {*/ ?>
+                <?php /*if ($.inArray($(v).val(),arr)!==-1) {*/ ?>
+                    <?php /*$(v).remove();*/ ?>
+                <?php /*}else{*/ ?>
+                    <?php /*selectAct.push($(v).val());*/ ?>
+                <?php /*}*/ ?>
+            <?php /*});*/ ?>
+            <?php /*if(status==1) {*/ ?>
+                <?php /*for (var i = 0; i < act.length; i++) {*/ ?>
+                    <?php /*if ($.inArray(act[i], selectAct) == -1&&$.inArray(act[i], arr) == -1) {*/ ?>
+                        <?php /*var index = act[i];*/ ?>
+                        <?php /*var str = '<option value="' + act[i] + '" >' + actArr[index] + '</option>';*/ ?>
+                        <?php /*$(this).append(str);*/ ?>
+                    <?php /*}*/ ?>
+                <?php /*}*/ ?>
+            <?php /*}*/ ?>
+        <?php /*});*/ ?>
+    <?php /*}*/ ?>
+	<?php /*<?php endif; ?>*/ ?>
+//unsetOtherAct(0);
+</script>
+
+<?php echo Theme::widget('popup')->render(); ?>
+
+<?php /*<?php echo Theme::widget('editor')->render(); ?>*/ ?>
+<?php echo Theme::widget('ueditor')->render(); ?>
+
+<?php /*<?php echo Theme::asset()->container('custom-css')->usePath()->add('back-stage-css', 'css/backstage/backstage.css'); ?>*/ ?>
+<?php /*<?php echo Theme::asset()->container('specific-css')->usePath()->add('validform-css', 'plugins/jquery/validform/css/style.css'); ?>*/ ?>
+<?php /*<?php echo Theme::asset()->container('specific-js')->usePath()->add('validform-js', 'plugins/jquery/validform/js/Validform_v5.3.2_min.js'); ?>*/ ?>
+
+
+<?php echo Theme::asset()->container('custom-css')->usePath()->add('chosen', 'plugins/ace/css/chosen.css'); ?>
+
+<?php echo Theme::asset()->container('custom-css')->usepath()->add('style','css/blue/style.css'); ?>
+
+
+<?php echo Theme::asset()->container('custom-css')->usepath()->add('issuetask','css/taskbar/issuetask.css'); ?>
+
+<?php echo Theme::asset()->container('custom-css')->usePath()->add('backstage', 'css/backstage/backstage.css'); ?>
+
+<?php echo Theme::asset()->container('specific-js')->usepath()->add('chosen','plugins/ace/js/chosen.jquery.min.js'); ?>
+
+<?php echo Theme::asset()->container('custom-js')->usePath()->add('backstage', 'js/doc/successcase.js'); ?>
+
+<?php echo Theme::asset()->container('custom-css')->usepath()->add('backstage', 'css/backstage/backstage.css'); ?>
+
+
+
+<?php echo Theme::asset()->container('specific-css')->usepath()->add('validform-css','plugins/jquery/validform/css/style.css'); ?>
+
+<?php echo Theme::asset()->container('specific-js')->usepath()->add('validform-js','plugins/jquery/validform/js/Validform_v5.3.2_min.js'); ?>
+
+
+<?php echo Theme::asset()->container('specific-css')->usePath()->add('datepicker-css', 'plugins/ace/css/datepicker.css'); ?>
+
+<?php echo Theme::asset()->container('specific-js')->usePath()->add('datepicker-js', 'plugins/ace/js/date-time/bootstrap-datepicker.min.js'); ?>
+
+<?php echo Theme::asset()->container('custom-js')->usePath()->add('userManage-js', 'js/userManage.js'); ?>

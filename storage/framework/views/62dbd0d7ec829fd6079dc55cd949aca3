@@ -1,0 +1,131 @@
+
+<h3 class="header smaller lighter blue mg-top12 mg-bottom20">快速发布需求</h3>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="clearfix  well">
+            <div class="form-inline search-group">
+                <form  role="form" action="/manage/fastTask" method="get">
+                    <div class="form-group search-list">
+                        <label for="name">需求标题　</label>
+                        <input type="text" class="form-control" id="task_title" name="task_title" placeholder="请输入需求标题" <?php if(isset($merge['task_title'])): ?>value="<?php echo $merge['task_title']; ?>"<?php endif; ?>>
+                    </div>
+                    <div class="form-group search-list">
+                        <label for="namee">用户名　　</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="请输入用户名" <?php if(isset($merge['username'])): ?>value="<?php echo $merge['username']; ?>"<?php endif; ?>>
+                    </div>
+                    <div class="form-group">
+                    	<button type="submit" class="btn btn-primary btn-sm">搜索</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div>
+            <table id="sample-table" class="table table-striped table-bordered table-hover">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>用户名</th>
+                    <th>手机号</th>
+                    <th>需求标题</th>
+                    <th>生产产品</th>
+                    <th>
+                        年规模/产量
+                    </th>
+                    <th>
+                        需求类型
+                    </th>
+                    <th>
+                        行业
+                    </th>
+                    <th>
+                        地区
+                    </th>
+                    <th>
+                        发布时间
+                    </th>
+                    <th>
+                        状态
+                    </th>
+                    <th>
+                        操作
+                    </th>
+                </tr>
+                </thead>
+                    <tbody>
+                    <?php foreach($task as $item): ?>
+                        <tr>
+                            <td>
+                                <a href="#"><?php echo $item->id; ?></a>
+                            </td>
+                            <td><?php echo $item->user; ?></td>
+                            <td><?php echo $item->mobile; ?></td>
+                            <td><?php echo $item->taskName; ?></td>
+                            <td><?php echo $item->productName; ?></td>
+                            <td><?php echo $item->productNum; ?></td>
+                            <td><?php echo $item->cate; ?></td>
+                            <td><?php echo $item->industry; ?></td>
+                            <td><?php echo $item->addr; ?></td>
+                            <td><?php echo $item->create_time; ?></td>
+                            <td>
+                                <?php if($item->status==1): ?>
+                                    <span style="color:green">已处理</span>
+                                <?php elseif($item->status==2): ?>
+                                    <span style="color:red">已放弃</span>
+                                <?php else: ?>
+                                    <span style="color:orangered">未处理</span>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <?php if($item->status==0): ?>
+                                <div class="hidden-sm hidden-xs btn-group">
+                                        <a class="btn btn-xs btn-success" onclick="changeTaskStatus('<?php echo e($item->id); ?>',1)">
+                                            <i class="ace-icon fa fa-check bigger-120">已处理</i>
+                                        </a>
+                                        <a class="btn btn-xs btn-danger" onclick="changeTaskStatus('<?php echo e($item->id); ?>',2)">
+                                            <i class="ace-icon fa fa-minus-circle bigger-120"> 放弃</i>
+                                        </a>
+                                </div>
+                                <?php else: ?>
+                                    操作人：<?php echo e($item->realname); ?>
+
+                                <?php endif; ?>
+                            </td>
+                            <script>
+                                function changeTaskStatus(id,status){
+                                    $.ajax({
+                                        url:'/manage/changeTaskStatus/'+id+'/'+status,
+                                        type:'get',
+                                        success:function(){
+                                            location.reload();
+                                        }
+                                    });
+                                }
+                            </script>
+                        </tr>
+                    <?php endforeach; ?>
+                    </tbody>
+                </form>
+            </table>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="dataTables_paginate paging_simple_numbers row" id="dynamic-table_paginate">
+                    <?php echo $task->appends($merge)->render(); ?>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div><!-- /.row -->
+
+
+<?php echo Theme::asset()->container('custom-css')->usepath()->add('backstage', 'css/backstage/backstage.css'); ?>
+
+
+<?php /*时间插件*/ ?>
+<?php echo Theme::asset()->container('specific-css')->usePath()->add('datepicker-css', 'plugins/ace/css/datepicker.css'); ?>
+
+<?php echo Theme::asset()->container('specific-js')->usePath()->add('datepicker-js', 'plugins/ace/js/date-time/bootstrap-datepicker.min.js'); ?>
+
+<?php echo Theme::asset()->container('custom-js')->usePath()->add('userfinance-js', 'js/userfinance.js'); ?>
