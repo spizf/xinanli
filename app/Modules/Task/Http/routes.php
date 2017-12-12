@@ -102,7 +102,7 @@ Route::group(['prefix'=>'task'],function(){
 	
 	Route::get('/','IndexController@tasks')->name('taskList');
 	
-	Route::get('/{id}','DetailController@index')->name('taskDetailPage')->where('id', '[0-9]+');;
+	Route::get('/{id}','DetailController@index')->name('taskDetailPage')->where('id', '[0-9]+');
 
 	
 	Route::get('/successCase','SuccessCaseController@index')->name('successCaseList');
