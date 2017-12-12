@@ -11,6 +11,7 @@ use App\Modules\Task\Model\TaskAttachmentModel;
 use App\Modules\Task\Model\TaskModel;
 use App\Modules\Task\Model\TaskPaySectionModel;
 use App\Modules\Task\Model\TaskPayTypeModel;
+use App\Modules\Task\Model\TaskReason;
 use App\Modules\Task\Model\TaskReportModel;
 use App\Modules\Task\Model\TaskRightsModel;
 use App\Modules\Task\Model\TaskServiceModel;
@@ -1646,5 +1647,23 @@ class DetailController extends IndexController
             MessageReceiveModel::create($messages);
         }
         return redirect()->to('task/'.$data['task_id'])->with(['error'=>'维权成功！']);
+    }
+
+    /*申请仲裁原因提交*/
+    public function reasonTask(Request $request)
+    {
+        $reasons = $request->input('reasons');
+        TaskReason::where('user_id',$reasons[2]['value'])->delete();
+        $content = [
+            'user_id' => $reasons[2]['value'],
+            'task_id' => $reasons[1]['value'],
+            'reason'  => $reasons[0]['value']
+        ];
+        if (TaskReason::create($content)){
+            return json_encode(['status'=>1]);
+        }else{
+            return json_encode(['status'=>0]);
+        }
+
     }
 }

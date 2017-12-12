@@ -1,4 +1,7 @@
-
+<script>
+    /*ajax获取token*/
+    var token="{{csrf_field()}}";
+</script>
 <div class="g-taskposition col-xs-12 col-left">
         您的位置：首页 > 任务详情
 </div>
@@ -1367,16 +1370,16 @@
                 <h4 class="modal-title">请填写仲裁原因</h4>
             </div>
             <div class="modal-body">
-                <form action="" id="reason">
-                    {{ csrf_field() }}
-                    <textarea name="reason" id="" cols="90" rows="10"></textarea>
-                    <input type="hidden" name="" value="{{$detail['id']}}">
+                <form action="/task/reasonTask" method="post" id="reason">
+                    <textarea name="reason" id="res" cols="90" rows="10"></textarea>
+                    <input type="hidden" name="task_id" value="{{$detail['id']}}">
+                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交</button>
-                <button type="button" class="btn btn-primary">支付仲裁费</button>
+                <button type="button" class="btn btn-primary subm">提交</button>
+                <a href=""><button type="button" class="btn btn-primary">支付仲裁费</button></a>
             </div>
         </div>
     </div>
@@ -1409,4 +1412,5 @@
 {{--{!! Theme::asset()->container('custom-js')->usepath()->add('checkbox', 'js/doc/checkbox.js') !!}--}}
 {!! Theme::asset()->container('specific-css')->usepath()->add('validform-css','plugins/jquery/validform/css/style.css') !!}
 {!! Theme::asset()->container('specific-js')->usepath()->add('validform-js','plugins/jquery/validform/js/Validform_v5.3.2_min.js') !!}
+
 
