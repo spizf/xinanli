@@ -2,5 +2,6 @@
 Homestead.yaml
 Homestead.json
 /storage/framework/views/
+/storage/framework/cache/
 .env
 /.idea
