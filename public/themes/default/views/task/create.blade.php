@@ -162,7 +162,7 @@
                                     <div class="clearfix  Validform-wysiwyg-editor" >
                                         <label for="name" class="phone text-size14">联系人：</label>
                                         <input type="text" id="contacts"  name="contacts" value="{!! old('contacts') !!}"
-                                               placeholder="请输入联系人姓名" datatype="zh2-4"
+                                               placeholder="请输入联系人姓名" datatype="z2-4"
                                                nullmsg="请输入联系人姓名！" errormsg="请输入2-4位中文字符">
                                         <label class="Validform_checktip task-checkip task-checkip-wrong">
 
