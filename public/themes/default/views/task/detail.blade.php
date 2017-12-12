@@ -269,7 +269,7 @@
                                         去评价
                                     </a>
                                 @endif
-                                <a href="#" class="btn btn-primary bor-radius2">
+                                <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请专家仲裁
                                 </a>
                             @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
@@ -1358,6 +1358,29 @@
     </div>
 </div>
 </form>
+<!-- 申请仲裁弹出窗 -->
+<div class="modal" id="mymodal-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">请填写仲裁原因</h4>
+            </div>
+            <div class="modal-body">
+                <form action="" id="reason">
+                    {{ csrf_field() }}
+                    <textarea name="reason" id="" cols="90" rows="10"></textarea>
+                    <input type="hidden" name="" value="{{$detail['id']}}">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-primary">支付仲裁费</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 {!! Theme::widget('popup')->render() !!}
 {!! Theme::asset()->container('custom-css')->usepath()->add('issuetask','css/taskbar/issuetask.css') !!}
@@ -1378,6 +1401,9 @@
 {!! Theme::asset()->container('custom-js')->usepath()->add('ace','plugins/ace/js/ace.min.js') !!}
 
 {!! Theme::asset()->container('custom-js')->usepath()->add('taskdetail','js/doc/taskdetail.js') !!}
+
+{{--仲裁弹窗ajax-js--}}
+{!! Theme::asset()->container('custom-js')->usepath()->add('zc_alert','js/zc_alert.js') !!}
 
 
 {{--{!! Theme::asset()->container('custom-js')->usepath()->add('checkbox', 'js/doc/checkbox.js') !!}--}}
