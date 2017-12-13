@@ -1,8 +1,9 @@
 /node_modules
 Homestead.yaml
 Homestead.json
-/storage/framework/views/
-/public/attachment/
-/storage/framework/cache/
+storage/framework/views
+public/attachment
+storage/framework/cache
 .env
-.idea
+.idea/
+cache
