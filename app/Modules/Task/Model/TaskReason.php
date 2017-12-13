@@ -10,6 +10,6 @@ class TaskReason extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'user_id','task_id','reason','accessory','created_at','updated_at'
+        'user_id','employer_id','task_id','reason','accessory','created_at','updated_at'
     ];
 }

@@ -1374,6 +1374,7 @@
                     <textarea name="reason" id="res" cols="90" rows="10"></textarea>
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <input type="hidden" name="employer_id" value="{{$detail['uid']}}">
                 </form>
             </div>
             <div class="modal-footer">

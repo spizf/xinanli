@@ -1656,6 +1656,7 @@ class DetailController extends IndexController
         TaskReason::where('user_id',$reasons[2]['value'])->delete();
         $content = [
             'user_id' => $reasons[2]['value'],
+            'employer_id' => $reasons[3]['value'],
             'task_id' => $reasons[1]['value'],
             'reason'  => $reasons[0]['value']
         ];
