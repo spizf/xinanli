@@ -775,6 +775,98 @@ class TaskModel extends Model
         }
         return is_null($status) ? true : false;
     }
+    /*仲裁费支付之后处理*/
+    static function arbitrationBounty($money, $task_id, $uid, $code, $type = 1)
+    {
+        $status = DB::transaction(function () use ($money, $task_id, $uid, $code, $type) {
+
+            $query = DB::table('user_detail')->where('uid', '=', $uid);
+            $query->where(function ($query) {
+                $query->where('balance_status', '!=', 1);
+            })->decrement('balance', $money);
+            /*add by xl 将任务状态改为14=>作业实施中*/
+            //self::where('id', $task_id)->update(['bounty_status' => 1,'status' => 7,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
+            self::where('id', $task_id)->update(['bounty_status' => 1,'status' => 19,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
+            $financial = [
+                'action' => 1,
+                'pay_type' => $type,
+                'cash' => $money,
+                'uid' => $uid,
+                'created_at' => date('Y-m-d H:i:s', time())
+            ];
+            FinancialModel::create($financial);
+
+            OrderModel::where('code', $code)->update(['status' => 1]);
+
+
+            UserDetailModel::where('uid', $uid)->increment('publish_task_num', 1);
+        });
+
+        if (is_null($status)) {
+
+            $task_publish_success = MessageTemplateModel::where('code_name', 'task_publish_success')->where('is_open', 1)->where('is_on_site', 1)->first();
+            if ($task_publish_success) {
+                $task = self::where('id', $task_id)->first()->toArray();
+                $task_status = [
+                    'status' => [
+                        0 => '暂不发布',
+                        1 => '已经发布',
+                        2 => '赏金托管',
+                        3 => '审核通过',
+                        4 => '威客交稿',
+                        5 => '雇主选稿',
+                        6 => '任务公示',
+                        7 => '交付验收',
+                        8 => '双方互评',
+                        /*add by xl 增加状态值*/
+                        12=> '已接单',
+                        13=> '已签合同',
+                        14=> '作业实施中',
+                        19=> '仲裁中'
+                    ]
+                ];
+                $task = \CommonClass::intToString([$task], $task_status);
+                $task = $task[0];
+                $user = UserModel::where('id', $uid)->first();
+                $site_name = \CommonClass::getConfig('site_name');
+                $domain = \CommonClass::getDomain();
+
+                $messageVariableArr = [
+                    'username' => $user['name'],
+                    'task_number' => $task['id'],
+                    'task_title' => $task['title'],
+                    'task_status' => $task['status_text'],
+                    'website' => $site_name,
+                    'href' => $domain . '/task/' . $task['id'],
+                    'task_link' => $task['title'],
+                    'start_time' => $task['begin_at'],
+                    'manuscript_end_time' => $task['delivery_deadline'],
+                ];
+                $message = MessageTemplateModel::sendMessage('task_publish_success', $messageVariableArr);
+                $data = [
+                    'message_title' => $task_publish_success['name'],
+                    'code' => 'task_publish_success',
+                    'message_content' => $message,
+                    'js_id' => $user['id'],
+                    'message_type' => 2,
+                    'receive_time' => date('Y-m-d H:i:s', time()),
+                    'status' => 0,
+                ];
+                MessageReceiveModel::create($data);
+            }
+
+
+            $work = WorkModel::where('task_id',$task_id)->where('status',1)->first();
+            if(!empty($work)){
+                $arr = [
+                    'task_id' => $task_id,
+                    'work_id' => $work['id']
+                ];
+                WorkModel::sendTaskWidMessage($arr);
+            }
+        }
+        return is_null($status) ? true : false;
+    }
 
     static function offlinePay($money, $task_id, $uid, $code, $type = 5)
     {

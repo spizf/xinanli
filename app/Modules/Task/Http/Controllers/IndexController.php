@@ -1328,26 +1328,26 @@ class IndexController extends BasicIndexController
     public function bidBounty($id)
     {
         $this->theme->setTitle('赏金托管');
-        
+
         $task = TaskModel::find($id);
 
-        
+
         if ($task['uid'] != $this->user['id'] || $task['bounty_status'] != 0) {
             return redirect()->to('/task/'.$id)->with(['error' => '非法操作！']);
         }
-        
+
         $user_money = UserDetailModel::where(['uid' => $this->user['id']])->first();
         $user_money = $user_money['balance'];
 
-        
+
         $balance_pay = false;
         if ($user_money > $task['bounty']) {
             $balance_pay = true;
         }
 
-        
+
         $bank = BankAuthModel::where('uid', '=', $id)->where('status', '=', 4)->get();
-        
+
         $payConfig = ConfigModel::getConfigByType('thirdpay');
         $view = [
             'task' => $task,
@@ -1364,89 +1364,89 @@ class IndexController extends BasicIndexController
     {
         $data = $request->except('_token');
         $data['id'] = intval($data['id']);
-        
+
         $task = TaskModel::findById($data['id']);
 
-        
+
         if ($task['uid'] != $this->user['id'] || $task['bounty_status'] == 1) {
             return redirect()->to('/task/' . $task['id'])->with('error', '非法操作！');
         }
 
-        
+
         $balance = UserDetailModel::where(['uid' => $this->user['id']])->first();
         $balance = (float)$balance['balance'];
 
         $money = $task['bounty'];
-        
+
         $is_ordered = OrderModel::bountyOrderByTaskBid($this->user['id'], $money, $task['id']);
 
         if (!$is_ordered) return redirect()->back()->with(['error' => '任务托管失败']);
 
-        
+
         if ($balance >= $money && $data['pay_canel'] == 0)
         {
-            
+
             $password = UserModel::encryptPassword($data['password'], $this->user['salt']);
             if ($password != $this->user['alternate_password']) {
                 return redirect()->back()->with(['error' => '您的支付密码不正确']);
             }
-            
+
             $result = TaskModel::bidBounty($money, $data['id'], $this->user['id'], $is_ordered->code);
             if (!$result){
-                return redirect()->back()->with(['error' => '赏金托管失败！']);
-            }
-            $url = 'task/'.$data['id'];
-            return redirect()->to($url);
-        } else if (isset($data['pay_type']) && $data['pay_canel'] == 1) {
-            
-            if ($data['pay_type'] == 1) {
-                $config = ConfigModel::getPayConfig('alipay');
-                $objOminipay = Omnipay::gateway('alipay');
-                $objOminipay->setPartner($config['partner']);
-                $objOminipay->setKey($config['key']);
-                $objOminipay->setSellerEmail($config['sellerEmail']);
-                $siteUrl = \CommonClass::getConfig('site_url');
-                $objOminipay->setReturnUrl($siteUrl . '/order/pay/alipay/return');
-                $objOminipay->setNotifyUrl($siteUrl . '/order/pay/alipay/notify');
+        return redirect()->back()->with(['error' => '赏金托管失败！']);
+    }
+        $url = 'task/'.$data['id'];
+        return redirect()->to($url);
+    } else if (isset($data['pay_type']) && $data['pay_canel'] == 1) {
 
-                $response = Omnipay::purchase([
-                    'out_trade_no' => $is_ordered->code, 
-                    'subject' => \CommonClass::getConfig('site_name'), 
-                    'total_fee' => $money, 
-                ])->send();
-                $response->redirect();
-            } else if ($data['pay_type'] == 2) {
-                $config = ConfigModel::getPayConfig('wechatpay');
-                $wechat = Omnipay::gateway('wechat');
-                $wechat->setAppId($config['appId']);
-                $wechat->setMchId($config['mchId']);
-                $wechat->setAppKey($config['appKey']);
-                $out_trade_no = $is_ordered->code;
-                $params = array(
-                    'out_trade_no' => $is_ordered->code, 
-                    'notify_url' => \CommonClass::getDomain() . '/order/pay/wechat/notify?out_trade_no=' . $out_trade_no . '&task_id=' . $data['id'], 
-                    'body' => \CommonClass::getConfig('site_name') . '余额充值', 
-                    'total_fee' => $money, 
-                    'fee_type' => 'CNY', 
-                );
-                $response = $wechat->purchase($params)->send();
+if ($data['pay_type'] == 1) {
+$config = ConfigModel::getPayConfig('alipay');
+$objOminipay = Omnipay::gateway('alipay');
+$objOminipay->setPartner($config['partner']);
+$objOminipay->setKey($config['key']);
+$objOminipay->setSellerEmail($config['sellerEmail']);
+$siteUrl = \CommonClass::getConfig('site_url');
+$objOminipay->setReturnUrl($siteUrl . '/order/pay/alipay/return');
+$objOminipay->setNotifyUrl($siteUrl . '/order/pay/alipay/notify');
 
-                $img = QrCode::size('280')->generate($response->getRedirectUrl());
+$response = Omnipay::purchase([
+'out_trade_no' => $is_ordered->code,
+'subject' => \CommonClass::getConfig('site_name'),
+'total_fee' => $money,
+])->send();
+$response->redirect();
+} else if ($data['pay_type'] == 2) {
+    $config = ConfigModel::getPayConfig('wechatpay');
+    $wechat = Omnipay::gateway('wechat');
+    $wechat->setAppId($config['appId']);
+    $wechat->setMchId($config['mchId']);
+    $wechat->setAppKey($config['appKey']);
+    $out_trade_no = $is_ordered->code;
+    $params = array(
+        'out_trade_no' => $is_ordered->code,
+        'notify_url' => \CommonClass::getDomain() . '/order/pay/wechat/notify?out_trade_no=' . $out_trade_no . '&task_id=' . $data['id'],
+        'body' => \CommonClass::getConfig('site_name') . '余额充值',
+        'total_fee' => $money,
+        'fee_type' => 'CNY',
+    );
+    $response = $wechat->purchase($params)->send();
 
-                $view = array(
-                    'cash'=>$money,
-                    'img' => $img
-                );
-                return $this->theme->scope('task.wechatpay', $view)->render();
-            } else if ($data['pay_type'] == 3) {
-                dd('银联支付！');
-            }
-        } else if (isset($data['account']) && $data['pay_canel'] == 2) {
-            dd('银行卡支付！');
-        } else
-        {
-            return redirect()->back()->with(['error' => '请选择一种支付方式']);
-        }
+    $img = QrCode::size('280')->generate($response->getRedirectUrl());
+
+    $view = array(
+        'cash'=>$money,
+        'img' => $img
+    );
+    return $this->theme->scope('task.wechatpay', $view)->render();
+} else if ($data['pay_type'] == 3) {
+    dd('银联支付！');
+}
+} else if (isset($data['account']) && $data['pay_canel'] == 2) {
+    dd('银行卡支付！');
+} else
+{
+    return redirect()->back()->with(['error' => '请选择一种支付方式']);
+}
 
     }
     //add by xl 签订合同
@@ -1550,6 +1550,128 @@ class IndexController extends BasicIndexController
             return redirect()->to($url);
         }
 
+    }
+    /*
+     * 仲裁费*/
+    public function arbitrationBounty($id)
+    {
+        $this->theme->setTitle('支付仲裁费');
+
+        $task = TaskModel::find($id);
+
+//        if ($task['uid'] != $this->user['id'] || $task['bounty_status'] != 0) {
+//            return redirect()->to('/task/'.$id)->with(['error' => '非法操作！']);
+//        }
+
+        $user_money = UserDetailModel::where(['uid' => $this->user['id']])->first();
+        $user_money = $user_money['balance'];
+
+        $balance_pay = false;
+        if ($user_money > $task['bounty']) {
+            $balance_pay = true;
+        }
+
+        $bank = BankAuthModel::where('uid', '=', $id)->where('status', '=', 4)->get();
+
+        $payConfig = ConfigModel::getConfigByType('thirdpay');
+        $view = [
+            'task' => $task,
+            'bank' => $bank,
+            'id' => $id,
+            'user_money' => $user_money,
+            'balance_pay' => $balance_pay,
+            'payConfig' => $payConfig
+        ];
+        return $this->theme->scope('task.bid.arbitrationbounty', $view)->render();
+    }
+    /*支付仲裁费*/
+    public function arbitrationBountyUpdate(BountyRequest $request)
+    {
+        $data = $request->except('_token');
+        $data['id'] = intval($data['id']);
+
+        $task = TaskModel::findById($data['id']);
+
+
+//        if ($task['uid'] != $this->user['id'] || $task['bounty_status'] == 1) {
+//            return redirect()->to('/task/' . $task['id'])->with('error', '非法操作！');
+//        }
+
+
+        $balance = UserDetailModel::where(['uid' => $this->user['id']])->first();
+        $balance = (float)$balance['balance'];
+
+        $money = $task['bounty'];
+
+        $is_ordered = OrderModel::bountyOrderByTaskBid($this->user['id'], $money, $task['id']);
+
+        if (!$is_ordered) return redirect()->back()->with(['error' => '任务托管失败']);
+
+
+        if ($balance >= $money && $data['pay_canel'] == 0)
+        {
+
+            $password = UserModel::encryptPassword($data['password'], $this->user['salt']);
+            if ($password != $this->user['alternate_password']) {
+                return redirect()->back()->with(['error' => '您的支付密码不正确']);
+            }
+
+            $result = TaskModel::arbitrationBounty($money, $data['id'], $this->user['id'], $is_ordered->code);
+            if (!$result){
+                return redirect()->back()->with(['error' => '赏金托管失败！']);
+            }
+            $url = 'task/'.$data['id'];
+            return redirect()->to($url);
+        } else if (isset($data['pay_type']) && $data['pay_canel'] == 1) {
+
+            if ($data['pay_type'] == 1) {
+                $config = ConfigModel::getPayConfig('alipay');
+                $objOminipay = Omnipay::gateway('alipay');
+                $objOminipay->setPartner($config['partner']);
+                $objOminipay->setKey($config['key']);
+                $objOminipay->setSellerEmail($config['sellerEmail']);
+                $siteUrl = \CommonClass::getConfig('site_url');
+                $objOminipay->setReturnUrl($siteUrl . '/order/pay/alipay/return');
+                $objOminipay->setNotifyUrl($siteUrl . '/order/pay/alipay/notify');
+
+                $response = Omnipay::purchase([
+                    'out_trade_no' => $is_ordered->code,
+                    'subject' => \CommonClass::getConfig('site_name'),
+                    'total_fee' => $money,
+                ])->send();
+                $response->redirect();
+            } else if ($data['pay_type'] == 2) {
+                $config = ConfigModel::getPayConfig('wechatpay');
+                $wechat = Omnipay::gateway('wechat');
+                $wechat->setAppId($config['appId']);
+                $wechat->setMchId($config['mchId']);
+                $wechat->setAppKey($config['appKey']);
+                $out_trade_no = $is_ordered->code;
+                $params = array(
+                    'out_trade_no' => $is_ordered->code,
+                    'notify_url' => \CommonClass::getDomain() . '/order/pay/wechat/notify?out_trade_no=' . $out_trade_no . '&task_id=' . $data['id'],
+                    'body' => \CommonClass::getConfig('site_name') . '余额充值',
+                    'total_fee' => $money,
+                    'fee_type' => 'CNY',
+                );
+                $response = $wechat->purchase($params)->send();
+
+                $img = QrCode::size('280')->generate($response->getRedirectUrl());
+
+                $view = array(
+                    'cash'=>$money,
+                    'img' => $img
+                );
+                return $this->theme->scope('task.wechatpay', $view)->render();
+            } else if ($data['pay_type'] == 3) {
+                dd('银联支付！');
+            }
+        } else if (isset($data['account']) && $data['pay_canel'] == 2) {
+            dd('银行卡支付！');
+        } else
+        {
+            return redirect()->back()->with(['error' => '请选择一种支付方式']);
+        }
     }
 
 }

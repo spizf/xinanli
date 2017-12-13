@@ -1371,7 +1371,7 @@
             </div>
             <div class="modal-body">
                 <form action="/task/reasonTask" method="post" id="reason">
-                    <textarea name="reason" id="res" cols="90" rows="10"></textarea>
+                    <textarea name="reason" id="res" cols="76" rows="10"></textarea>
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
                     <input type="hidden" name="employer_id" value="{{$detail['uid']}}">
@@ -1380,7 +1380,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary subm">提交</button>
-                <a href=""><button type="button" class="btn btn-primary">支付仲裁费</button></a>
+                <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">支付仲裁费</button></a>
             </div>
         </div>
     </div>
