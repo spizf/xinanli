@@ -11,12 +11,12 @@ $(".subm").click(function () {
             if (data.status =='1') {
                 $('#res').val('');
                 $.gritter.add({
-                    text: '<div><span class="text-center"><h5>提交成功！</h5></span></div>',
+                    text: '<div><span class="text-center"><h5>提交成功!</h5></span></div>',
                     class_name: 'gritter-info gritter-center'
                 });
             }else{
                 $.gritter.add({
-                    text: '<div><span class="text-center"><h5>提交失败！</h5></span></div>',
+                    text: '<div><span class="text-center"><h5>提交失败!</h5></span></div>',
                     class_name: 'gritter-info gritter-center'
                 });
             }
