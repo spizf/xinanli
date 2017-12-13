@@ -144,6 +144,17 @@ body{
 .g-banner .carousel-fade .carousel-inner .prev.right {
     opacity: 1;
 }
+.ab-dark,.ab-light {
+    position:relative;
+    height:435px;
+}
+.ab-dark img,.ab-light img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    margin-left: -960px;
+}
+
 /*最新任务*/
 .m-task{
     /*padding:0 5px 0 0;*/
