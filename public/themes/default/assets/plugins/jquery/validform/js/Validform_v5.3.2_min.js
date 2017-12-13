@@ -91,11 +91,11 @@
             'positive': /^[1-9]\d*$/,
             "s6-18": /^[\u4E00-\u9FA5\uf900-\ufa2d\w\.\s]{6,18}$/,
             "p": /^[0-9]{6}$/,
-            "z2-4": /^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/,
+            "zh2-4": /^[\u4E00-\u9FA5\uf900-\ufa2d]{2,4}$/,
             "m": /^(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/,
             "e": /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/,
             "url": /^(\w+:\/\/)?\w+(\.\w+)+.*$/
-        }, "zh2-4": /^[\u4E00-\u9FA5]{2,4}$/, toString: Object.prototype.toString, isEmpty: function (k) {
+        },  toString: Object.prototype.toString, isEmpty: function (k) {
             return k === "" || k === d.trim(this.attr("tip"))
         }, getValue: function (m) {
             var l, k = this;
