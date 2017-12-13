@@ -268,7 +268,7 @@
             <div  class="item @if($key == 0)active @endif item-banner{!! $key+1 !!}" >
                 <a href="{!! $value['ad_url'] !!}" target="_blank">
                     <div>
-                        <img src="{!!  URL($value['ad_file'])  !!}" alt="..." class="img-responsive itm-banner" data-adaptive-background='{!! $key+1 !!}'>
+                        <img src="{!!  URL($value['ad_file'])  !!}" alt="..." class="" data-adaptive-background='{!! $key+1 !!}'>
                     </div>
                 </a>
             </div>
