@@ -1,4 +1,5 @@
 
+//提交仲裁原因
 $(".subm").click(function () {
     var reasons = $("#reason").serializeArray();
     var token=$('input[name="_token"]').val();
@@ -23,3 +24,4 @@ $(".subm").click(function () {
         }
     })
 });
+//补充仲裁附件

@@ -66,12 +66,14 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	Route::get('/bidWinBid/{work_id}/{task_id}','DetailController@bidWinBid')->name('bidWinBid');
 	
 	Route::get('/bidBounty/{id}','IndexController@bidBounty')->name('bidBounty');
-//	仲裁费
+    //仲裁费
 	Route::get('/arbitrationBounty/{id}','IndexController@arbitrationBounty')->name('arbitrationBounty');
 
 	Route::post('/bidBountyUpdate','IndexController@bidBountyUpdate')->name('bidBountyUpdate');
-//	支付仲裁费
+    //支付仲裁费
 	Route::post('/arbitrationBountyUpdate','IndexController@arbitrationBountyUpdate')->name('arbitrationBountyUpdate');
+	//提交仲裁附件
+	Route::post('/reasonAccessory','DetailController@reasonAccessory')->name('reasonAccessory');
 
 	Route::get('/payType/{id}','DetailController@payType')->name('payType');
 	

@@ -958,4 +958,27 @@ class TaskModel extends Model
         }
         return is_null($status) ? true : false;
     }
+    /*储存仲裁附件*/
+    public function accessoryCreate($data)
+    {
+        $status = DB::transaction(function() use($data){
+
+            if(isset($data['file_id'])){
+                $file_able_ids = AttachmentModel::select('attachment.id','attachment.type')->whereIn('id',$data['file_id'])->get()->toArray();
+
+                foreach($file_able_ids as $v){
+                    $attachments = [
+                        'task_id'=>$data['task_id'],
+                        'user_id'=>$data['user_id'],
+                        'attachment_id'=>$v['id'],
+                        'type'=>$v['type']
+                    ];
+                    TaskReasonattachmentModel::create($attachments);
+                }
+            }
+
+        });
+
+        return is_null($status)?true:false;
+    }
 }
