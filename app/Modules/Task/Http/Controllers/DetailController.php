@@ -239,6 +239,9 @@ class DetailController extends IndexController
         
         $agree = AgreementModel::where('code_name','task_delivery')->first();
 
+        //是否仲裁中
+        $is_arbitration = TaskReasonModel::where('employer_id',Auth::id())->orwhere('user_id',Auth::id())->first();
+
         $view = [
             'detail'=>$detail,
             'attatchment'=>$attatchment,
@@ -267,7 +270,7 @@ class DetailController extends IndexController
             'is_rights'=>$is_rights,
             'works_winbid_count'=>$works_winbid_count,
             'agree' => $agree,
-
+            'is_arbitration' => $is_arbitration,
             'task_type_alias' => $taskTypeAlias,
             'pay_case_status' => $payCaseStatus,
             'pay_section' => $paySectionStatus,

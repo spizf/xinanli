@@ -275,10 +275,12 @@
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请专家仲裁
                                 </a>
-                            @elseif($detail['status']==19 && $user_type == 1 && $task_type_alias == 'zhaobiao')
+                                @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
+                                @if($user_type==1)
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
                                     查询仲裁专家
                                 </a>
+                                @endif
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
@@ -1246,6 +1248,7 @@
                             {{ (strtotime($detail['updated_at'])>0)?date('Y.m.d',strtotime($detail['updated_at'])):'' }}
                         @endif
                     </li>
+                    @if($is_arbitration)
                     <li class="{{ ($detail['status']>=19 && strtotime($detail['publicity_at'])>0)?'active':'' }}" data-target="#step1">
                         <span></span>
                         仲裁中&nbsp;
@@ -1253,6 +1256,7 @@
                             {{ (strtotime($detail['updated_at'])>0)?date('Y.m.d',strtotime($detail['updated_at'])):'' }}
                         @endif
                     </li>
+                    @endif
                     <li class="{{ ($detail['status']==19 && strtotime($detail['end_at'])>0)?'active':'' }}" data-target="#step1">
                         <span></span>
                         任务已结束&nbsp;&nbsp;
