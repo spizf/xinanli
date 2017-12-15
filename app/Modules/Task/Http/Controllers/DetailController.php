@@ -11,7 +11,7 @@ use App\Modules\Task\Model\TaskAttachmentModel;
 use App\Modules\Task\Model\TaskModel;
 use App\Modules\Task\Model\TaskPaySectionModel;
 use App\Modules\Task\Model\TaskPayTypeModel;
-use App\Modules\Task\Model\TaskReason;
+use App\Modules\Task\Model\TaskReasonModel;
 use App\Modules\Task\Model\TaskReportModel;
 use App\Modules\Task\Model\TaskRightsModel;
 use App\Modules\Task\Model\TaskServiceModel;
@@ -239,6 +239,9 @@ class DetailController extends IndexController
         
         $agree = AgreementModel::where('code_name','task_delivery')->first();
 
+        //是否仲裁中
+        $is_arbitration = TaskReasonModel::where('employer_id',Auth::id())->orwhere('user_id',Auth::id())->first();
+
         $view = [
             'detail'=>$detail,
             'attatchment'=>$attatchment,
@@ -267,7 +270,7 @@ class DetailController extends IndexController
             'is_rights'=>$is_rights,
             'works_winbid_count'=>$works_winbid_count,
             'agree' => $agree,
-
+            'is_arbitration' => $is_arbitration,
             'task_type_alias' => $taskTypeAlias,
             'pay_case_status' => $payCaseStatus,
             'pay_section' => $paySectionStatus,
@@ -580,7 +583,7 @@ class DetailController extends IndexController
         return ['able'=>true];
     }
 
-    
+    /*第三方接任务、仲裁，附件上传*/
     public function ajaxWorkAttatchment(Request $request)
     {
         $file = $request->file('file');
@@ -616,7 +619,23 @@ class DetailController extends IndexController
         }
         return response()->json(['errCode'=>1,'errMsg'=>'删除成功！']);
     }
+    /*提交仲裁附件*/
+    public function reasonAccessory(Request $request)
+    {
+        $data = $request->except('_token');
 
+//        if()
+//        {
+//            return redirect()->back()->with('error','您已提交过附件！');
+//        }
+
+        $taskModel = new TaskModel();
+        $result = $taskModel->accessoryCreate($data);
+
+        if(!$result) return redirect()->back()->with('error','提交附件失败！');
+
+        return redirect()->to('task/'.$data['task_id'])->with('error','提交附件成功！');
+    }
     
     public function download($id)
     {
@@ -1653,14 +1672,14 @@ class DetailController extends IndexController
     public function reasonTask(Request $request)
     {
         $reasons = $request->input('reasons');
-        TaskReason::where('user_id',$reasons[2]['value'])->delete();
+        TaskReasonModel::where('user_id',$reasons[2]['value'])->delete();
         $content = [
             'user_id' => $reasons[2]['value'],
             'employer_id' => $reasons[3]['value'],
             'task_id' => $reasons[1]['value'],
             'reason'  => $reasons[0]['value']
         ];
-        if (TaskReason::create($content)){
+        if (TaskReasonModel::create($content)){
             return json_encode(['status'=>1]);
         }else{
             return json_encode(['status'=>0]);

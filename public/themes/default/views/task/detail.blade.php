@@ -126,7 +126,7 @@
                                 @elseif($detail['status']==18)
                                 此任务当前处于：<span class="text-primary">20天静默期</span>状态
                                 @elseif($detail['status']==19)
-                                此任务当前处于：<span class="text-primary">已结束</span>状态
+                                此任务当前处于：<span class="text-primary">仲裁中</span>状态
                                 @elseif($detail['status']==7)
                                 此任务当前处于：<span class="text-primary">验收</span>状态
                                 @elseif($detail['status']==8)
@@ -275,7 +275,16 @@
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请专家仲裁
                                 </a>
-                            @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
+                                @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
+                                @if($user_type==1)
+                                <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
+                                    查询仲裁专家
+                                </a>
+                                @endif
+                                <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
+                                    补充仲裁资料
+                                </a>
+                            @elseif($detail['status']==999 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 @if(CommonClass::evaluted($detail['id'],Auth::user()['id'])==0)
                                     <a target="_blank" href="{{ URL('/task/evaluate').'?'.http_build_query(['id'=>$detail['id'],'work_id'=>isset($delivery['data'][0]['id']) ? $delivery['data'][0]['id'] : 1]) }}" class="btn btn-primary bor-radius2">
                                         去评价
@@ -1239,6 +1248,15 @@
                             {{ (strtotime($detail['updated_at'])>0)?date('Y.m.d',strtotime($detail['updated_at'])):'' }}
                         @endif
                     </li>
+                    @if($is_arbitration)
+                    <li class="{{ ($detail['status']>=19 && strtotime($detail['publicity_at'])>0)?'active':'' }}" data-target="#step1">
+                        <span></span>
+                        仲裁中&nbsp;
+                        @if($detail['status']>=19 && !empty($detail['updated_at']))
+                            {{ (strtotime($detail['updated_at'])>0)?date('Y.m.d',strtotime($detail['updated_at'])):'' }}
+                        @endif
+                    </li>
+                    @endif
                     <li class="{{ ($detail['status']==19 && strtotime($detail['end_at'])>0)?'active':'' }}" data-target="#step1">
                         <span></span>
                         任务已结束&nbsp;&nbsp;
@@ -1380,13 +1398,47 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary subm">提交</button>
-                <a href=""><button type="button" class="btn btn-primary">支付仲裁费</button></a>
+                <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">支付仲裁费</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+{{--补充仲裁材料弹窗--}}
+<div class="modal" id="replenish-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">请补充仲裁资料</h4>
+            </div>
+            <div class="modal-body">
+                <form action="/task/reasonAccessory" method="post">
+                    {{csrf_field()}}
+                    <input type="hidden" name="task_id" value="{{$detail['id']}}">
+                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <!--文件上传-->
+                    <div action=" " class="dropzone clearfix" id="dropzone"
+                         url="/task/ajaxAttatchment" deleteurl="/task/delAttatchment">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple="" />
+                        </div>
+                    </div>
+                    <div style="display:none;" id="file_update"></div>
+                    <input type="submit" value="asd">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">提交</button>
             </div>
         </div>
     </div>
 </div>
 
 {!! Theme::widget('popup')->render() !!}
+{{--文件上传--}}
+{!! Theme::widget('fileUpload')->render() !!}
+
 {!! Theme::asset()->container('custom-css')->usepath()->add('issuetask','css/taskbar/issuetask.css') !!}
 {!! Theme::asset()->container('custom-css')->usepath()->add('taskcommon','css/taskbar/taskcommon.css') !!}
 

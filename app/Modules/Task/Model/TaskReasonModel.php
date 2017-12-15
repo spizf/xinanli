@@ -4,7 +4,7 @@ namespace App\Modules\Task\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TaskReason extends Model
+class TaskReasonModel extends Model
 {
     protected $table = "task_reason";
 
