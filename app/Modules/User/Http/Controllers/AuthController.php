@@ -364,7 +364,7 @@ class AuthController extends UserCenterController
     
     public function getRealnameAuth()
     {
-         $this->theme->setTitle('实名认证');
+         $this->theme->setTitle('企业实名认证');
 
         $user = Auth::User();
         $realnameInfo = RealnameAuthModel::where('uid', $user->id)->orderBy('created_at', 'desc')->first();

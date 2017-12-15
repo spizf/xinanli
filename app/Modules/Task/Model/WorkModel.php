@@ -383,7 +383,7 @@ class WorkModel extends Model
         return is_null($status)?true:false;
     }
 
-    
+    //验收付款
     static public function bidWorkCheck($data)
     {
         if($data['status'] == 1){

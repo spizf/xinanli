@@ -77,7 +77,7 @@ class Kernel extends ConsoleKernel
             ->everyMinute();
         $schedule->command('taskBidComment')
             ->everyMinute();
-        $schedule->command('taskBidDelivery')
+        $schedule->command('taskBidDelivery')//优化为20天静默期后自动验收付款
             ->everyMinute();
         $schedule->command('taskBidSelectWork')
             ->everyMinute();

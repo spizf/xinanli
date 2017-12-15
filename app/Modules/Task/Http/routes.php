@@ -89,9 +89,9 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
     Route::get('/changeStatus/{id}/{status}','DetailController@changeStatus')->name('changeStatus');
     Route::get('/changeWibBid/{id}/{status}','DetailController@changeWibBid')->name('changeWibBid');
     Route::get('/signContract/{id}/{status}','IndexController@signContract')->name('signContract');
-    Route::post('/signContractUpdate','IndexController@signContractUpdate')->name('signContractUpdate');
-    Route::get('/offlinePayment/{id}','IndexController@offlinePayment')->name('offlinePayment');
-    Route::get('/getField/','IndexController@getField')->name('getField');
+    Route::post('/signContractUpdate','IndexController@signContractUpdate')->name('signContractUpdate');//报告交付
+    Route::get('/offlinePayment/{id}','IndexController@offlinePayment')->name('offlinePayment');//线下支付
+    Route::get('/getField/','IndexController@getField')->name('getField');//获取行业列表
 
 
 
