@@ -240,7 +240,7 @@ class DetailController extends IndexController
         $agree = AgreementModel::where('code_name','task_delivery')->first();
 
         //是否仲裁中
-        $is_arbitration = TaskReasonModel::where('employer_id',Auth::id())->orwhere('user_id',Auth::id())->first();
+        $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
 
         $view = [
             'detail'=>$detail,
