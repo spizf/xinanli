@@ -1411,8 +1411,8 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">请补充仲裁资料</h4>
             </div>
+            <form action="/task/reasonAccessory" method="post">
             <div class="modal-body">
-                <form action="/task/reasonAccessory" method="post">
                     {{csrf_field()}}
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
@@ -1424,13 +1424,12 @@
                         </div>
                     </div>
                     <div style="display:none;" id="file_update"></div>
-                    <input type="submit" value="asd">
-                </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button type="button" class="btn btn-primary">提交</button>
+                <input type="submit" class="btn btn-primary" value="提交">
             </div>
+            </form>
         </div>
     </div>
 </div>
