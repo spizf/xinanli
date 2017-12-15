@@ -125,7 +125,7 @@
                                         <a href="{!! url('password/email') !!}" class="pull-right cor-blue text-under">忘记密码？</a>
                                     </div>
                                     <div class="space-6"></div>
-                                    <div class="text-center cor-gray97">
+                                   {{-- <div class="text-center cor-gray97">
                                         <span class="s-loginline"></span>&nbsp;&nbsp;&nbsp; 可使用以下账号直接登录 &nbsp;&nbsp;&nbsp;<span class="s-loginline"></span>
                                     </div>
                                     <div class="space-6"></div>
@@ -153,7 +153,7 @@
                                                 </li>
                                             @endif
                                         </ul>
-                                    </div>
+                                    </div>--}}
                                 </form>
                             </div><!-- /widget-main -->
                         </div><!-- /widget-body -->
