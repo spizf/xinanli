@@ -207,7 +207,7 @@
                                         {!!  $task_comment_time_limit = $task_comment_time_limit*24*3600 !!}
                                     </div>
                                     离20天静默期结束还剩：
-                                    <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['updated_at'])+20*24*3600) }}" class="cor-orange text-size22 timer-check"></b>
+                                    <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['checked_at'])+$task_check_time_limit)*24*3600) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==11)
                                     请等待后台的处理结果

@@ -31,7 +31,7 @@ class TaskBidDelivery extends Command
         
         $taskTypeId = TaskTypeModel::getTaskTypeIdByAlias('zhaobiao');
         
-        $task = TaskModel::where('type_id',$taskTypeId)->where('status',18)->get()->toArray();//报告交付状态任务列表
+        $task = TaskModel::where('type_id',$taskTypeId)->where('status',18)->get()->toArray();//报告已交付状态任务列表
         
         $filled_tasks = self::filledTasks($task);//超过最大交付时间的还没有交付的任务列表
         //任务交付超时处理
@@ -75,22 +75,20 @@ class TaskBidDelivery extends Command
         $successed_tasks = self::filledTasks($task,2);//已交付过的
         if(!empty($successed_tasks)){
             
-            
-            $woker_expired = self::expireTaskWorker($successed_tasks);//已交付的没有超过验收最大时间限制的最终工作者用户ID
+            //add by xl 不明白逻辑过程先隐掉
+            /*$woker_expired = self::expireTaskWorker($successed_tasks);//已交付的没有超过验收最大时间限制的最终工作者用户ID
 
             foreach($woker_expired as $k=>$v){
                 WorkModel::where('task_id',$k)->whereIn('uid',$v)->update(['status'=>5]);
-            }
+            }*/
 
-            
-            
             $onwer_expired = self::expireTaskOwner($successed_tasks);//超过验收最大时间限制的稿件ID，且稿件是已交付状态
             $onwer_expired = array_flatten($onwer_expired);//多维数组扁平化为一维
             foreach($onwer_expired as $v){
                 $work_data = WorkModel::where('id',$v)->first();
 
                 $data['task_id'] = $work_data['task_id'];
-                $data['uid'] = $work_data['uid'];
+                $data['uid'] = $work_data['uid'];//第三方评价机构用户ID
                 $data['work_id'] = $v;
                 $data['status'] = 1;
 
@@ -103,12 +101,12 @@ class TaskBidDelivery extends Command
     
     private function expireTaskWorker($data)
     {
-        $task_delivery_max_time = \CommonClass::getConfig('bid_delivery_max_time');//招标验收期最大时间限制
+        $task_delivery_max_time = \CommonClass::getConfig('bid_delivery_max_time');//招标交付最大时间限制
         $task_delivery_max_time = $task_delivery_max_time*24*3600;
         $expired_works = [];
         foreach($data as $v)
         {
-            if((strtotime($v['checked_at'])+$task_delivery_max_time)>=time())//没有超过验收期
+            if((strtotime($v['checked_at'])+$task_delivery_max_time)>=time())//没有超过交付期
             {
                 
                 $works = WorkModel::where('task_id',$v['id'])
@@ -134,24 +132,25 @@ class TaskBidDelivery extends Command
         $expired_works = [];
         foreach($data as $v)
         {
-            
+            //获取没有验收的已交付且过了验收期的所有稿件
             $works = WorkModel::where('task_id',$v['id'])->where('status',2)->get()->toArray();
             $works_expired = [];
             if(!empty($works)){
                 foreach($works as $v) {
-                    if((strtotime($v['created_at']) + $task_check_time_limit)<=time()){//超过验收期最大时间限制
+                    if((strtotime($v['created_at']) + $task_check_time_limit)<=time()){//超过验收期最大时间限制（即20天静默期时间）
                         $works_expired[] = $v['id'];
                     }
                 }
             }
 
-            
-            $works_delivery = WorkModel::where('task_id',$v['id'])->where('status','>',2)->lists('id')->toArray();
+            //获取已交付且验收过的（无论是成功或者失败的）因为我们暂时不存在手动验收不会出现验收失败或者成功的情况
+           /* $works_delivery = WorkModel::where('task_id',$v['id'])->where('status','>',2)->lists('id')->toArray();
             $works_diff = array_diff($works_expired,$works_delivery);
             if(count($works_diff)>0)
             {
                 $expired_works[] = $works_diff;
-            }
+            }*/
+            $expired_works[] = $works_expired;
         }
         return $expired_works;
     }
@@ -159,7 +158,7 @@ class TaskBidDelivery extends Command
     
     private function filledTasks($data,$type=1)
     {
-        $task_delivery_max_time = \CommonClass::getConfig('bid_delivery_max_time');
+        $task_delivery_max_time = \CommonClass::getConfig('bid_delivery_max_time');//交付最大时间限制
 
         
         $task_delivery_max_time = $task_delivery_max_time*24*3600;
