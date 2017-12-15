@@ -361,14 +361,33 @@ class AuthController extends UserCenterController
     }
 
 
-    
+    //add by xl 之前是个人实名认证现在改为企业认证
     public function getRealnameAuth()
     {
-         $this->theme->setTitle('企业实名认证');
+         $this->theme->setTitle('企业认证');
 
         $user = Auth::User();
         $realnameInfo = RealnameAuthModel::where('uid', $user->id)->orderBy('created_at', 'desc')->first();
+        //add by xl 暂时先定义，之后建表后台添加
+        $enterprise_nature = array(
+            '0'=>array('id'=>1,'name'=>'国企'),
+            '1'=>array('id'=>2,'name'=>'合资'),
+            '2'=>array('id'=>3,'name'=>'私营')
+        );
+        $province = DistrictModel::findTree(0);
+        if(!empty($province)){
 
+            $city = DistrictModel::findTree($province[0]['id']);
+            if(!empty($city)){
+
+                $area = DistrictModel::findTree($city[0]['id']);
+            }else{
+                $area = array();
+            }
+        }else{
+            $city = array();
+            $area = array();
+        }
         $data = array();
         if (isset($realnameInfo->status)) {
             $data = array(
@@ -387,6 +406,12 @@ class AuthController extends UserCenterController
                     break;
             }
         } else {
+            $data = array(
+                'enterprise_nature' =>$enterprise_nature,
+                'province'    => $province,
+                'city'        => $city,
+                'area'        => $area
+            );
             $view = 'user.realnameauth';
         }
 
@@ -397,30 +422,13 @@ class AuthController extends UserCenterController
     
     public function postRealnameAuth(RealnameAuthRequest $request)
     {
-        $card_front_side = $request->file('card_front_side');
-        $card_back_dside = $request->file('card_back_dside');
+
         $validation_img = $request->file('validation_img');
 
         $realnameInfo = array();
         $authRecordInfo = array();
         $error = array();
         $allowExtension = array('jpg', 'gif', 'jpeg', 'bmp', 'png');
-        if ($card_front_side) {
-            $uploadMsg = json_decode(\FileClass::uploadFile($card_front_side, 'user', $allowExtension));
-            if ($uploadMsg->code != 200) {
-                $error['card_front_side'] = $uploadMsg->message;
-            } else {
-                $realnameInfo['card_front_side'] = $uploadMsg->data->url;
-            }
-        }
-        if ($card_back_dside) {
-            $uploadMsg = json_decode(\FileClass::uploadFile($card_back_dside, 'user', $allowExtension));
-            if ($uploadMsg->code != 200) {
-                $error['card_back_dside'] = $uploadMsg->message;
-            } else {
-                $realnameInfo['card_back_dside'] = $uploadMsg->data->url;
-            }
-        }
         if ($validation_img) {
             $uploadMsg = json_decode(\FileClass::uploadFile($validation_img, 'user', $allowExtension));
             if ($uploadMsg->code != 200) {
@@ -437,6 +445,13 @@ class AuthController extends UserCenterController
         $user = Auth::User();
 
         $now = time();
+        //add by xl  注册地址
+        $data = array(
+            'province'         => $request->get('province') ? $request->get('province'): '',
+            'city'             => $request->get('city') ? $request->get('city') : '',
+            'area'             => $request->get('area') ? $request->get('area') : ''
+        );
+        $registaddr = implode('-',$data);
 
         $realnameInfo['uid'] = $user->id;
         $realnameInfo['username'] = $user->name;
@@ -444,6 +459,11 @@ class AuthController extends UserCenterController
         $realnameInfo['card_number'] = $request->get('card_number');
         $realnameInfo['created_at'] = date('Y-m-d H:i:s', $now);
         $realnameInfo['updated_at'] = date('Y-m-d H:i:s', $now);
+        $realnameInfo['regist_time'] = date('Y-m-d H:i:s',strtotime($request->get('regist_time')));//注册时间
+        $realnameInfo['enterprise_nature'] = $request->get('enterprise_nature');//企业性质
+        $realnameInfo['registaddr'] = $registaddr ;//注册地址
+        $realnameInfo['address'] = $request->get('address');//详细地址
+
 
         $authRecordInfo['uid'] = $user->id;
         $authRecordInfo['username'] = $user->name;

@@ -11,7 +11,8 @@ class RealnameAuthModel extends Model
     protected $table = 'realname_auth';
     
     protected $fillable = [
-        'uid', 'username', 'card_front_side', 'card_back_dside', 'validation_img', 'status', 'auth_time','card_type','type','realname','card_number'
+        'uid', 'username', 'card_front_side', 'card_back_dside', 'validation_img', 'status', 'auth_time','card_type',
+        'type','realname','card_number','enterprise_nature','registaddr','address'
     ];
 
     

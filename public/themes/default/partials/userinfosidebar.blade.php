@@ -59,7 +59,10 @@
 
         <div id="collapseThree" class="panel-collapse {{ ($_SERVER['REQUEST_URI']=='/user/realnameAuth' || $_SERVER['REQUEST_URI']=='/user/paylist' || $_SERVER['REQUEST_URI']=='/user/emailAuth')?'in':'collapse' }}">
             <div class="g-sidenav {{ ($_SERVER['REQUEST_URI']=='/user/realnameAuth')?'z-active':'' }}">
-                <a href="{!! url('user/realnameAuth') !!}" class="g-wrap2 {{ ($_SERVER['REQUEST_URI']=='/user/realnameAuth')?'active':'' }}">实名认证</a>
+                <a href="{!! url('user/realnameAuth') !!}" class="g-wrap2 {{ ($_SERVER['REQUEST_URI']=='/user/realnameAuth')?'active':'' }}">企业认证</a>
+            </div>
+            <div class="g-sidenav {{ ($_SERVER['REQUEST_URI']=='/user/enterpriseAuth')?'z-active':'' }}">
+                <a href="{!! url('user/enterpriseAuth') !!}" class="g-wrap2 {{ ($_SERVER['REQUEST_URI']=='/user/enterpriseAuth')?'active':'' }}">机构认证</a>
             </div>
             <div class="g-sidenav {{ ($_SERVER['REQUEST_URI']=='/user/paylist')?'z-active':'' }}">
                 <a href="{!! url('user/paylist') !!}" class="g-wrap2 {{ ($_SERVER['REQUEST_URI']=='/user/paylist')?'active':'' }}">支付绑定</a>
