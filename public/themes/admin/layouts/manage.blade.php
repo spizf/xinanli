@@ -111,6 +111,7 @@
                 try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
             </script>
             <ul class="breadcrumb">
+                @if(is_array(Theme::get('menu_data')))
                 @foreach(Theme::get('menu_data') as $v)
                     @if(!empty($v['_child']))
                         <li>
@@ -133,6 +134,7 @@
                         <li class="active">{{ $v['name'] }}</li>
                     @endif
                 @endforeach
+                @endif
             </ul>
             <!-- /.breadcrumb -->
             <!-- #section:basics/content.searchbox -->

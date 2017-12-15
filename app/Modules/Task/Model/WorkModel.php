@@ -405,25 +405,32 @@ class WorkModel extends Model
                 TaskPaySectionModel::where('task_id',$data['task_id'])
                     ->where('work_id',$data['work_id'])
                     ->update($paySectionInfo);
+                //add by xl  查找任务的付款方式
+                $task = TaskModel::where('id',$data['task_id'])->first();
+                if($task['bounty_status'] == 1){//资金托管
+                    UserDetailModel::where('uid', $data['uid'])->increment('balance', $task['bounty']);
+                    $pay_type = 1;//余额付款
+                }elseif($task['bounty_status'] == 2){//线下付款
+                    $pay_type = 5;//线下付款
+                }
 
-                
-                UserDetailModel::where('uid', $data['uid'])->increment('balance', $paySection['price']);
                 
                 $finance_data = [
                     'action' => 2,
-                    'pay_type' => 1,
-                    'cash' => $paySection['price'],
+                    'pay_type' => $pay_type,
+                    'cash' => $task['bounty'],
                     'uid' => $data['uid'],
                     'create_at' => date('Y-m-d H:i:s', time())
                 ];
                 FinancialModel::create($finance_data);
 
-                
-                $isFinish = TaskPaySectionModel::where('task_id',$data['task_id'])
+                // add by xl20天静默期验收成功任务状态改为999已完成
+                /*$isFinish = TaskPaySectionModel::where('task_id',$data['task_id'])
                     ->where('section_status','<',3)->first();
                 if(empty($isFinish)){
                     TaskModel::where('id',$data['task_id'])->update(['status'=>8,'comment_at'=>date('Y-m-d H:i:s',time())]);
-                }
+                }*/
+                TaskModel::where('id',$data['task_id'])->update(['status'=>999,'update_at'=>date('Y-m-d H:i:s',time())]);
 
             });
             
