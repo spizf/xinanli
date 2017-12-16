@@ -92,6 +92,8 @@ class ExpertsController extends ManageController
             }
         }
         $data['act_json']=$actArr;
+        $field = \DB::table('field')->where('pid',0)->get();
+        $data['field'] = $field;
         return $this->theme->scope('manage.expertsAdd',$data)->render();
     }
     public function ajaxGetAddr(Request $request)
@@ -103,6 +105,8 @@ class ExpertsController extends ManageController
 
     public function expertsAddHandle(Request $request){
         $cate=$request->get('cate');
+        $industry=$request->get('industry');
+        $son_industry=$request->get('son_industry');
         $addr=$request->get('addr');
         foreach($cate as $k=>$v){
             if($v=='0'){
@@ -116,7 +120,9 @@ class ExpertsController extends ManageController
             'addr' => implode('-',$request->get('addr')),
             'add_time' => date('Y-m-d H:i:s',time()),
             'year' => $request->get('year'),
-            'cate' => implode(',',$cate),
+            'cate' => implode('-',$cate),
+            'industry' => implode('-',$industry),
+            'son_industry' => implode('-',$son_industry),
             'level' => $request->get('level'),
             'recommend' => $request->get('recommend'),
             'satisfaction' => $request->get('satisfaction'),

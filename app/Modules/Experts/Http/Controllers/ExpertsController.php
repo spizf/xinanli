@@ -116,7 +116,7 @@ class ExpertsController extends BasicIndexController
                     }
                 }
                 if($kk=='cate') {
-                    $data['experts'][$k]->cate=explode(',',$vv);
+                    $data['experts'][$k]->cate=explode('-',$vv);
                     foreach($data['experts'][$k]->cate as $key=>$item){
                         if($item!==0) {
                             $distirct = DB::table('cate')->whereId($item)->first();
