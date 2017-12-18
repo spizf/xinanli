@@ -275,11 +275,9 @@
                                     申请专家仲裁
                                 </a>
                                 @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
-                                @if($user_type==1)
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
                                     查询仲裁专家
                                 </a>
-                                @endif
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
@@ -1387,8 +1385,8 @@
                 <h4 class="modal-title">请填写仲裁原因</h4>
             </div>
             <div class="modal-body">
-                <form action="/task/reasonTask" method="post" id="reason">
-                    <textarea name="reason" id="res" cols="90" rows="10"></textarea>
+                <form action="/task/reasonTask" method="post" id="reason" >
+                    <textarea name="reason" id="res" style="width: 100%;" rows="10"></textarea>
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
                     <input type="hidden" name="employer_id" value="{{$detail['uid']}}">

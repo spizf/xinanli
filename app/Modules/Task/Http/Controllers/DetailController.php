@@ -242,7 +242,7 @@ class DetailController extends IndexController
         //是否仲裁中
         $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
         //仲裁专家
-        $experts = DB::table('experts')->get();
+        $experts = $this->arbitrationExpert($id);
 
         $view = [
             'detail'=>$detail,
@@ -293,7 +293,20 @@ class DetailController extends IndexController
     /*推荐仲裁专家*/
     public function arbitrationExpert($id)
     {
-        
+        $evade_one = WorkModel::where('task_id',$id)->where('status','2')->first();
+        $evade_two = TaskModel::where('id',$id)->first();
+//        $evade_one['workexpert'];
+        $pid = DB::table('cate')->where('id',$evade_two['cate_id'])->value('pid');
+        if ($pid==167 || $pid==168){
+            if ($evade_two['zc_status']==1){
+                return "第一次仲裁";
+            }
+        }else{
+            $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];
+            return $chose;
+        }
+
+
     }
 
     
