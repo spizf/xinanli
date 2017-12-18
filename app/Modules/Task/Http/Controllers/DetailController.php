@@ -241,10 +241,12 @@ class DetailController extends IndexController
 
         //是否仲裁中
         $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
+        //仲裁专家
         $experts = DB::table('experts')->get();
+
         $view = [
             'detail'=>$detail,
-            'expertss'=>$experts,
+            'experts'=>$experts,
             'attatchment'=>$attatchment,
             'alike_task'=>$alike_task,
             'user_type'=>$user_type,
@@ -286,6 +288,12 @@ class DetailController extends IndexController
             $view['area'] = $province;
         }
         return $this->theme->scope('task.detail', $view)->render();
+    }
+    
+    /*推荐仲裁专家*/
+    public function arbitrationExpert($id)
+    {
+        
     }
 
     

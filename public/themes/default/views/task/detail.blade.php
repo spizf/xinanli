@@ -1443,8 +1443,8 @@
             </div>
                 <div class="modal-body">
                     <div class="zongjian">
-                        @foreach($expertss as $k=>$item)
-
+                        @foreach($experts as $k=>$item)
+                            {{$experts[$k]->name}}
                         @endforeach
                     </div>
                 </div>
