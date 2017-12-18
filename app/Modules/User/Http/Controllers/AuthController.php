@@ -14,6 +14,9 @@ use App\Modules\User\Http\Requests\RealnameAuthRequest;
 use App\Modules\User\Model\RealnameAuthModel;
 use App\Modules\User\Model\UserDetailModel;
 use App\Modules\User\Model\UserModel;
+//add by xl 增加企业认证model
+use App\Modules\User\Model\EnterpriseAuthModel;
+use App\Modules\Task\Model\TaskCateModel;
 use Illuminate\Http\Request;
 use Auth;
 use Crypt;
@@ -796,7 +799,142 @@ class AuthController extends UserCenterController
                 return redirect('/user/alipayAuthList');
         }
     }
+    // add by xl 机构认证
+    public function getEnterpriseAuth()
+    {
+        $this->theme->setTitle('机构认证');
+        $user = Auth::User();
+        $companyInfo = EnterpriseAuthModel::where('uid', $user->id)->orderBy('created_at', 'desc')->first();
 
 
+        $cateFirst = TaskCateModel::findByPid([0],['id','name']);
+        if(!empty($cateFirst)){
+
+            $cateSecond = TaskCateModel::findByPid([$cateFirst[0]['id']],['id','name']);
+        }else{
+            $cateSecond = array();
+        }
+        //add by xl 暂时先定义，之后建表后台添加
+        $enterprise_nature = array(
+            '0'=>array('id'=>1,'name'=>'国企'),
+            '1'=>array('id'=>2,'name'=>'合资'),
+            '2'=>array('id'=>3,'name'=>'私营')
+        );
+        $qualification_level= array(
+            '0'=>array('id'=>1,'name'=>'甲级'),
+            '1'=>array('id'=>2,'name'=>'乙级'),
+            '2'=>array('id'=>3,'name'=>'丙级')
+        );
+        $province = DistrictModel::findTree(0);
+        if(!empty($province)){
+
+            $city = DistrictModel::findTree($province[0]['id']);
+            if(!empty($city)){
+
+                $area = DistrictModel::findTree($city[0]['id']);
+            }else{
+                $area = array();
+            }
+        }else{
+            $city = array();
+            $area = array();
+        }
+        $view = '';
+        if (isset($companyInfo->status)) {
+            $cateInfo = TaskCateModel::findById($companyInfo->cate_id);
+            if($cateInfo){
+                $cateName = $cateInfo['name'];
+            }else{
+                $cateName = '';
+            }
+            $data = array(
+                'company_info' => $companyInfo,
+                'cate_name' => $cateName,
+            );
+            switch ($companyInfo->status) {
+                case 0:
+                    $view = 'user.waitusershopauth';
+                    break;
+                case 1:
+                    return redirect('/user/shop');
+                    break;
+                case 2:
+                    $view = 'user.usershopauthfail';
+                    break;
+            }
+        } else {
+            $data = array(
+                'cate_first'  => $cateFirst,
+                'cate_second' => $cateSecond,
+                'province'    => $province,
+                'city'        => $city,
+                'area'        => $area,
+                'enterprise_nature'=>$enterprise_nature,
+                'qualification_level'=>$qualification_level
+            );
+            $view = 'user.usershopqy';
+        }
+
+       // $this->theme->set('TYPE',3);
+        return $this->theme->scope($view, $data)->render();
+    }
+    //机构认证提交数据处理
+    public function postEnterpriseAuth(Request $request)
+    {
+        $data = $request->except('_token');
+        $uid = Auth::id();
+        $companyInfo = array(
+            'uid'              => $uid,
+            'company_name'     => $data['company_name'] ? $data['company_name'] : '',//公司名称
+            'enterprise_nature'     => $data['enterprise_nature'] ? $data['enterprise_nature'] : '',//企业类型
+            'begin_at'         => $data['regist_time'] ? date('Y-m-d H:i:s',strtotime($data['regist_time'])) : '',//注册时间
+            'business_license' => $data['business_license'] ? $data['business_license'] : '',//营业执照
+            'province'         => $data['province'] ? $data['province'] : '',//注册地址
+            'city'             => $data['city'] ? $data['city'] : '',
+            'area'             => $data['area'] ? $data['area'] : '',
+            'address'          => $data['address'] ? $data['address'] : '',//详细地址
+            'organ_name'          => $data['organ_name'] ? $data['organ_name'] : '',//机构名称
+            'cate_id'          => $data['cate_first'] ? $data['cate_first'] : '' ,//资质类型
+            'qualification_level'          => $data['qualification_level'] ? $data['qualification_level'] : '',//资质等级
+            'evaluation_area'     => $data['evaluation_area'] ? $data['evaluation_area'] : '',//评价区域
+
+            'end_at'         => $data['end'] ? date('Y-m-d H:i:s',strtotime($data['end'])) : '',//有效区
+            'card_number'          => $data['card_number'] ? $data['card_number'] : '',//证件编号
+            'website'          => $data['website'] ? $data['website'] : '',//业务范围
+
+            'status'           => 0,
+            'created_at'       => date('Y-m-d H:i:s'),
+            'updated_at'       => date('Y-m-d H:i:s'),
+        );
+        $authRecordInfo = array(
+            'uid'       => $uid,
+            'auth_code' => 'enterprise',
+            'status'    => 0
+        );
+        //处理上传的照片
+        $validation_img = $request->file('validation_img');//营业执照
+        $qualification_img = $request->file('qualification_img');//资质照片
+        $allowExtension = array('jpg', 'gif', 'jpeg', 'bmp', 'png');
+        if ($validation_img) {
+            $uploadMsg = json_decode(\FileClass::uploadFile($validation_img, 'user', $allowExtension));
+            if ($uploadMsg->code != 200) {
+                $error['validation_img'] = $uploadMsg->message;
+            } else {
+                $companyInfo['validation_img'] = $uploadMsg->data->url;
+            }
+        }
+        if ($qualification_img) {
+            $uploadMsg = json_decode(\FileClass::uploadFile($qualification_img, 'user', $allowExtension));
+            if ($uploadMsg->code != 200) {
+                $error['qualification_img'] = $uploadMsg->message;
+            } else {
+                $companyInfo['qualification_img'] = $uploadMsg->data->url;
+            }
+        }
+        //$fileId = !empty($data['file_id']) ? $data['file_id'] : '';
+         EnterpriseAuthModel::createEnterpriseAuth($companyInfo,$authRecordInfo,'');
+        //UserModel::where('id', $uid)->update(['user_type' => 2]);
+        return redirect('/user/enterpriseAuth');
+    }
 
 }

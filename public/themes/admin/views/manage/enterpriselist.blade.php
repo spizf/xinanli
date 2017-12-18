@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="clearfix table-responsive">
-            <h3 class="header smaller lighter blue mg-bottom20 mg-top12">企业认证</h3>
+            <h3 class="header smaller lighter blue mg-bottom20 mg-top12">机构认证</h3>
             <div class="form-inline clearfix well">
             <form  role="form" action="/manage/enterpriseAuthList" method="get">
         		<div class="form-group search-list width285">
@@ -59,7 +59,12 @@
                     <th>编号</th>
                     <th>认证用户</th>
                     <th>认证公司名称</th>
-                    <th >所属行业</th>
+                    <th >机构名称</th>
+                    <th >资质类型</th>
+                    <th >营业执照号</th>
+                    <th >营业执照</th>
+                    <th >证书编号</th>
+                    <th >资质照片</th>
 
                     <th>
                         <i class="ace-icon fa fa-clock-o bigger-110 hidden-480"></i>
@@ -89,7 +94,12 @@
                         </td>
                         <td>{!! $item->name !!}</td>
                         <td>{!! $item->company_name !!}</td>
+                        <td>{!! $item->organ_name !!}</td>
                         <td>{!! $item->cate_name !!}</td>
+                        <td>{!! $item->business_license !!}</td>
+                        <td>{!! $item->validation_img !!}</td>
+                        <td>{!! $item->card_number !!}</td>
+                        <td><img width="100" height="100" src="{!! URL($item->qualification_img) !!}" /> </td>
                         <td>{!! $item->created_at !!}</td>
                         <td>
                             @if($item->auth_time){!! $item->auth_time !!}@else N/A @endif

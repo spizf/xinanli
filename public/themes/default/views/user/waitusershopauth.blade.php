@@ -4,7 +4,7 @@
     <div class="text-center g-bankhint1 g-bankhint">
         <img src="{!! Theme::asset()->url('images/withdrawhint.png') !!}"><b>
             很高兴您的入驻，我们会尽快完成认证！</b>
-        <p class="text-size14">返回 <a class="text-under" href="/user/shop">店铺设置</a></p>
+        {{--<p class="text-size14">返回 <a class="text-under" href="/user/shop">店铺设置</a></p>--}}
     </div>
     <div class="space-20"></div>
     <div class="space-10"></div>

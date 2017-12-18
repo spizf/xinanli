@@ -452,7 +452,7 @@ class AuthController extends ManageController
 
         $this->breadcrumb->add(array(
             array(
-                'label' => '企业认证',
+                'label' => '机构认证',
                 'url' => '/manage/enterpriseAuthList'
             ),
             array(

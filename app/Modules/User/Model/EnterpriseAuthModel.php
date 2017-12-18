@@ -144,6 +144,10 @@ class EnterpriseAuthModel extends Model
             AuthRecordModel::where('auth_id', $id)
                 ->where('auth_code', 'enterprise')
                 ->update(array('status' => 1, 'auth_time' => date('Y-m-d H:i:s')));
+            //add by xl 机构认证通过更改用户类型user_type为2第三方评价机构
+            $u = EnterpriseAuthModel::select('uid')->where('id',$id)->get()->toArray();
+            UserModel::where('id', $u['0']['uid'])->update(['user_type' => 2]);
+
         });
 
         return is_null($status) ? true : $status;

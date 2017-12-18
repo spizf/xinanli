@@ -216,9 +216,9 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     
     Route::post('/ajaxGetSecondCate', 'ShopController@ajaxGetSecondCate')->name('ajaxGetSecondCate');
     
-    Route::get('/enterpriseAuth', 'ShopController@getEnterpriseAuth')->name('enterpriseAuth');
+    Route::get('/enterpriseAuth', 'AuthController@getEnterpriseAuth')->name('enterpriseAuth');//add by xl
     
-    Route::post('/enterpriseAuth', 'ShopController@postEnterpriseAuth')->name('postEnterpriseAuth');
+    Route::post('/enterpriseAuth', 'AuthController@postEnterpriseAuth')->name('postEnterpriseAuth');
     Route::post('/fileUpload','ShopController@fileUpload')->name('enterpriseAuthFileCreate');
     Route::get('/fileDelete','ShopController@fileDelete')->name('enterpriseAuthFileDelete');
     Route::get('/enterpriseAuthAgain', 'ShopController@enterpriseAuthAgain')->name('enterpriseAuthAgain');
