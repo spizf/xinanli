@@ -787,7 +787,7 @@ class TaskModel extends Model
             /*add by xl 将任务状态改为14=>作业实施中*/
             //self::where('id', $task_id)->update(['bounty_status' => 1,'status' => 7,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
             self::where('id', $task_id)->update(['bounty_status' => 1,'status' => 19,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
-            self::increment('zc_status');
+            self::where('id', $task_id)->increment('zc_status');
             $financial = [
                 'action' => 1,
                 'pay_type' => $type,

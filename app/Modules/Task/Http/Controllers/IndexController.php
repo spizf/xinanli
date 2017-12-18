@@ -1640,6 +1640,7 @@ class IndexController extends BasicIndexController
         $this->theme->setTitle('支付仲裁费');
 
         $task = TaskModel::find($id);
+        $task['bounty'] = 3000;
 
 //        if ($task['uid'] != $this->user['id'] || $task['bounty_status'] != 0) {
 //            return redirect()->to('/task/'.$id)->with(['error' => '非法操作！']);
@@ -1683,7 +1684,7 @@ class IndexController extends BasicIndexController
         $balance = UserDetailModel::where(['uid' => $this->user['id']])->first();
         $balance = (float)$balance['balance'];
 
-        $money = $task['bounty'];
+        $money = $task['bounty'] = 3000;
 
         $is_ordered = OrderModel::bountyOrderByTaskBid($this->user['id'], $money, $task['id']);
 

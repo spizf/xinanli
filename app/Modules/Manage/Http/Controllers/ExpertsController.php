@@ -108,9 +108,20 @@ class ExpertsController extends ManageController
         $industry=$request->get('industry');
         $son_industry=$request->get('son_industry');
         $addr=$request->get('addr');
-        foreach($cate as $k=>$v){
-            if($v=='0'){
+        $str='';
+        foreach ($cate as $k=>$v){
+            if ($v==0){
                 unset($cate[$k]);
+                unset($industry[$k]);
+                unset($son_industry[$k]);
+            }
+        }
+        //筛选仲裁专家用
+        foreach($cate as $k=>$v){
+            if($k){
+                $str.=','.$v.'-'.$industry[$k].'-'.$son_industry[$k];
+            }else{
+                $str.=$v.'-'.$industry[$k].'-'.$son_industry[$k];
             }
         }
         $data = [
@@ -120,6 +131,7 @@ class ExpertsController extends ManageController
             'addr' => implode('-',$request->get('addr')),
             'add_time' => date('Y-m-d H:i:s',time()),
             'year' => $request->get('year'),
+            'cates' => $str,
             'cate' => implode('-',$cate),
             'industry' => implode('-',$industry),
             'son_industry' => implode('-',$son_industry),

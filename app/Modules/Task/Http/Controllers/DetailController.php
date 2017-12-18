@@ -242,11 +242,11 @@ class DetailController extends IndexController
         //是否仲裁中
         $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
         //仲裁专家
-        $experts = $this->arbitrationExpert($id);
+        $expertss = $this->arbitrationExpert($id);
 
         $view = [
             'detail'=>$detail,
-            'experts'=>$experts,
+            'expertss'=>$expertss,
             'attatchment'=>$attatchment,
             'alike_task'=>$alike_task,
             'user_type'=>$user_type,
@@ -330,11 +330,19 @@ class DetailController extends IndexController
         $pid = DB::table('cate')->where('id',$evade_two['cate_id'])->value('pid');
         if ($pid==167 || $pid==168){
             if ($evade_two['zc_status']==1){
-                return "第一次仲裁";
+                return DB::table('experts')->select('id','name')->where('cate','like','%'.$evade_two['cate_id'].'%')->where('name','!=',$evade_one['workexpert'])->where('name','!=',$evade_one['reviewexpert'])->take(10)->get();
+            }elseif($evade_two['zc_status']==2){
+
             }
         }else{
             $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];
-            return $chose;
+            if ($evade_two['zc_status']==1){
+                return DB::table('experts')->select('id','name')->where('cates','like','%'.$chose.'%')->where('name','!=',$evade_one['workexpert'])->where('name','!=',$evade_one['reviewexpert'])->take(10)->get();
+            }elseif ($evade_two['zc_status']==2){
+
+            }
+
+
         }
 
 

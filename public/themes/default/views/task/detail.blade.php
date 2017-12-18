@@ -271,9 +271,15 @@
                                         去评价
                                     </a>
                                 @endif
+                                @if($detail['zc_status']==0)
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请专家仲裁
                                 </a>
+                                @elseif($detail['zc_status']==1)
+                                <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
+                                    申请二次仲裁
+                                </a>
+                                @endif
                                 @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
                                     查询仲裁专家
@@ -380,7 +386,7 @@
 
                                 <div class="space"></div>
                             </div>
-                            @if(($detail['status']==5||$detail['status']==6)&&$experts->is_user)
+                            @if(($detail['status']==5||$detail['status']==6)&&$experts['is_user'])
                                 <div class="shenqing"  style="margin-bottom: 10px">
                                     <a href="javascript:;">申请仲裁</a>
                                 </div>
@@ -1541,8 +1547,8 @@
             </div>
                 <div class="modal-body">
                     <div class="zongjian">
-                        @foreach($experts as $k=>$item)
-                            {{$experts[$k]->name}}
+                        @foreach($expertss as $k=>$item)
+                            {{$expertss[$k]->name}}
                         @endforeach
                     </div>
                 </div>
