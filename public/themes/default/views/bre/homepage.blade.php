@@ -330,17 +330,32 @@
                                 <dl>
                                     <dt><i>*</i>手机号</dt>
                                     <dd id="yan" style="position: relative;">
-                                        <input name="mobile" id="mobile"  style="width:315px;" type="text" placeholder="请输入手机号" />
-                                        <span class="Validform_checktip validform-login-form"></span>
+                                        <input  datatype="m" nullmsg="请输入手机号" errormsg="手机号格式错误！" name="mobile" id="mobile"  style="width:315px;" type="text" placeholder="请输入手机号" />
+                                        <span style="line-height: 30px;margin-left: 5px;color:red;font-size: 14px" class="Validform_checktip validform-login-form" id="mobileMsg"></span>
                                     </dd>
                                 </dl>
+                                <script>
+                                    $('#mobile').blur(function(){
+                                        var val=this.value;
+                                       if(val){
+                                           var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+                                           if(!myreg.test(val)) {
+                                               $('#mobileMsg').html($(this).attr('errormsg'));
+                                           }else{
+                                               $('#mobileMsg').html('');
+                                           }
+                                           }else{
+                                           $('#mobileMsg').html($(this).attr('nullmsg'));
+                                       }
+                                    });
+                                </script>
                                 <dl>
                                     <dt><i>*</i>输入验证码</dt>
                                     <dd id="yan" style="position: relative;">
                                         {{--<input id="phone" style="width:315px;" type="text" placeholder="请输入验证码" />--}}
                                         {{--<a class="yan" onclick="getqrcoder('phone','yan')">获取验证码</a>--}}
                                         <input id="code" name="code" type="text" placeholder="短信验证码" class="inputxt logininp150" nullmsg="请输入验证码" datatype="*" id="form-field-3" value=""/>&nbsp;
-                                        <input type="button" token="{{csrf_token()}}" onclick="sendRegisterCode()" class="btn btn-white btn-primary c-btntime" value="获取验证码" id="sendMobileCode">&nbsp;&nbsp;
+                                        <input type="button" token="{{csrf_token()}}" onclick="sendRegisterCode()" class="btn btn-white btn-primary c-btntime" style="line-height: 17px;padding:5px 8px 5px 0px" value="获取验证码" id="sendMobileCode">&nbsp;&nbsp;
                                         <span class="Validform_checktip block validform-login-form {{ ($errors->first('code'))?'Validform_wrong':'' }}" style="color:red">{!! $errors->first('code') !!}</span>
                                     </dd>
                                 </dl>

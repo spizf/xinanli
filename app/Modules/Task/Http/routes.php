@@ -67,13 +67,14 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	
 	Route::get('/bidBounty/{id}','IndexController@bidBounty')->name('bidBounty');
     //仲裁费
-	Route::get('/arbitrationBounty/{id}','IndexController@arbitrationBounty')->name('arbitrationBounty');
+    Route::get('/arbitrationBounty/{id}','IndexController@arbitrationBounty')->name('arbitrationBounty');
 
-	Route::post('/bidBountyUpdate','IndexController@bidBountyUpdate')->name('bidBountyUpdate');
+
+    Route::post('/bidBountyUpdate','IndexController@bidBountyUpdate')->name('bidBountyUpdate');
     //支付仲裁费
-	Route::post('/arbitrationBountyUpdate','IndexController@arbitrationBountyUpdate')->name('arbitrationBountyUpdate');
-	//提交仲裁附件
-	Route::post('/reasonAccessory','DetailController@reasonAccessory')->name('reasonAccessory');
+    Route::post('/arbitrationBountyUpdate','IndexController@arbitrationBountyUpdate')->name('arbitrationBountyUpdate');
+    //提交仲裁附件
+	Route::post('/bidBountyUpdate','IndexController@bidBountyUpdate')->name('bidBountyUpdate');
 
 	Route::get('/payType/{id}','DetailController@payType')->name('payType');
 	
@@ -91,26 +92,25 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	Route::get('/bidWorkCheck','DetailController@bidWorkCheck')->name('bidWorkCheck');
 	
 	Route::post('/ajaxBidRights','DetailController@ajaxBidRights')->name('ajaxBidRights');
-	//add by xl
+    //申请仲裁
+    Route::post('/submitExperts','IndexController@submitExperts')->name('submitExperts');
+    //add by xl
     Route::get('/changeStatus/{id}/{status}','DetailController@changeStatus')->name('changeStatus');
     Route::get('/changeWibBid/{id}/{status}','DetailController@changeWibBid')->name('changeWibBid');
     Route::get('/signContract/{id}/{status}','IndexController@signContract')->name('signContract');
     Route::post('/signContractUpdate','IndexController@signContractUpdate')->name('signContractUpdate');//报告交付
     Route::get('/offlinePayment/{id}','IndexController@offlinePayment')->name('offlinePayment');//线下支付
     Route::get('/getField/','IndexController@getField')->name('getField');//获取行业列表
-
-
-
 });
 
 
 Route::group(['prefix'=>'task'],function(){
 	
 	Route::get('/','IndexController@tasks')->name('taskList');
-	
-	Route::get('/{id}','DetailController@index')->name('taskDetailPage')->where('id', '[0-9]+');
+
+    Route::get('/{id}','DetailController@index')->name('taskDetailPage')->where('id', '[0-9]+');
     Route::post('/reasonTask','DetailController@reasonTask');
-	
+
 	Route::get('/successCase','SuccessCaseController@index')->name('successCaseList');
 	Route::get('/successDetail/{id}','SuccessCaseController@detail')->name('successDetail');
 	Route::get('/successJump/{id}','SuccessCaseController@jump')->name('successJump');

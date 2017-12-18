@@ -279,7 +279,7 @@ class IndexController extends BasicIndexController
             'phone'=>$phone,
             'qq'=>$qq,
             'agree' => $agree,
-            'ad' => $ad,
+            'ad' => $ad
         ];
         $view['field'] = $field;
         return $this->theme->scope('task.create', $view)->render();
@@ -381,6 +381,79 @@ class IndexController extends BasicIndexController
 
         if($data['slutype']==3){
             return redirect()->to('user/unreleasedTasks');
+        }
+        $addr=$data['province'].'-'.$data['city'];
+        $cate=$data['cate_id'];
+        $expert_1=DB::table('experts')
+            ->where('addr','like',$addr.'%')
+            ->where('cate','like',$cate.',%')
+            ->orWhere('cate','like','%,'.$cate)
+            ->orWhere('cate','=',$cate)
+            ->orderBy('recommend','desc')
+            ->first();
+        if($expert_1){
+            $expert_data=$expert_1;
+        }else{
+            $addr=$data['province'];
+            $expert_2=DB::table('experts')
+                ->where('addr','like',$addr.'%')
+                ->where('cate','like',$cate.',%')
+                ->orWhere('cate','like','%,'.$cate)
+                ->orWhere('cate','=',$cate)
+                ->orderBy('recommend','desc')
+                ->first();
+            if($expert_2){
+                $expert_data=$expert_2;
+            }else{
+                $addr=$data['province'].'-'.$data['city'];
+                $expert_3=DB::table('experts')
+                    ->where('addr','like',$addr.'%')
+                    ->orderBy('recommend','desc')
+                    ->first();
+                if($expert_3){
+                    $expert_data=$expert_3;
+                }else{
+                    $addr=$data['province'];
+                    $expert_4=DB::table('experts')
+                        ->where('addr','like',$addr.'%')
+                        ->orderBy('recommend','desc')
+                        ->first();
+                    if($expert_4){
+                        $expert_data=$expert_4;
+                    }else{
+                        $expert_5=DB::table('experts')
+                            ->where('cate','like',$cate.',%')
+                            ->orWhere('cate','like','%,'.$cate)
+                            ->orWhere('cate','=',$cate)
+                            ->orderBy('recommend','desc')
+                            ->first();
+                        if($expert_5) {
+                            $expert_data = $expert_5;
+                        }else{
+                            $expert_6=DB::table('experts')
+                                ->orderBy('recommend','desc')
+                                ->first();
+                            $expert_data = $expert_6;
+                        }
+                    }
+                }
+            }
+        }
+        if(isset($expert_data)&&!empty($expert_data)) {
+            $expert_task['experts_id'] = $expert_data->id;
+            $expert_task['task_id'] = $result['id'];
+            $expert_task['detail'] = '';
+            $expert_task['status'] = 0;
+            DB::table('experts_task')->insert($expert_task);
+            $expert_user=DB::table('users')->where('name',$expert_data->name)->first();
+            if($expert_user) {
+                //将该专家成为IM好友
+                $im[0]['uid'] = $this->user['id'];
+                $im[1]['uid'] = $expert_user->id;
+                $im[0]['friend_uid'] = $expert_user->id;
+                $im[1]['friend_uid'] = $this->user['id'];
+                DB::table('im_attention')->insert($im);
+            }
         }
         return redirect()->to('task/' . $controller . '/' . $result['id']);
     }
@@ -766,7 +839,6 @@ class IndexController extends BasicIndexController
             return response()->json(['errMsg' => '参数错误！']);
         }
         $area = DistrictModel::findTree($id);
-
         return response()->json($area);
     }
 
@@ -1393,61 +1465,71 @@ class IndexController extends BasicIndexController
 
             $result = TaskModel::bidBounty($money, $data['id'], $this->user['id'], $is_ordered->code);
             if (!$result){
-        return redirect()->back()->with(['error' => '赏金托管失败！']);
+                return redirect()->back()->with(['error' => '赏金托管失败！']);
+            }
+            $url = 'task/'.$data['id'];
+            return redirect()->to($url);
+        } else if (isset($data['pay_type']) && $data['pay_canel'] == 1) {
+
+            if ($data['pay_type'] == 1) {
+                $config = ConfigModel::getPayConfig('alipay');
+                $objOminipay = Omnipay::gateway('alipay');
+                $objOminipay->setPartner($config['partner']);
+                $objOminipay->setKey($config['key']);
+                $objOminipay->setSellerEmail($config['sellerEmail']);
+                $siteUrl = \CommonClass::getConfig('site_url');
+                $objOminipay->setReturnUrl($siteUrl . '/order/pay/alipay/return');
+                $objOminipay->setNotifyUrl($siteUrl . '/order/pay/alipay/notify');
+
+                $response = Omnipay::purchase([
+                    'out_trade_no' => $is_ordered->code,
+                    'subject' => \CommonClass::getConfig('site_name'),
+                    'total_fee' => $money,
+                ])->send();
+                $response->redirect();
+            } else if ($data['pay_type'] == 2) {
+                $config = ConfigModel::getPayConfig('wechatpay');
+                $wechat = Omnipay::gateway('wechat');
+                $wechat->setAppId($config['appId']);
+                $wechat->setMchId($config['mchId']);
+                $wechat->setAppKey($config['appKey']);
+                $out_trade_no = $is_ordered->code;
+                $params = array(
+                    'out_trade_no' => $is_ordered->code,
+                    'notify_url' => \CommonClass::getDomain() . '/order/pay/wechat/notify?out_trade_no=' . $out_trade_no . '&task_id=' . $data['id'],
+                    'body' => \CommonClass::getConfig('site_name') . '余额充值',
+                    'total_fee' => $money,
+                    'fee_type' => 'CNY',
+                );
+                $response = $wechat->purchase($params)->send();
+
+                $img = QrCode::size('280')->generate($response->getRedirectUrl());
+
+                $view = array(
+                    'cash'=>$money,
+                    'img' => $img
+                );
+                return $this->theme->scope('task.wechatpay', $view)->render();
+            } else if ($data['pay_type'] == 3) {
+                dd('银联支付！');
+            }
+        } else if (isset($data['account']) && $data['pay_canel'] == 2) {
+            dd('银行卡支付！');
+        } else
+        {
+            return redirect()->back()->with(['error' => '请选择一种支付方式']);
+        }
+
     }
-        $url = 'task/'.$data['id'];
-        return redirect()->to($url);
-    } else if (isset($data['pay_type']) && $data['pay_canel'] == 1) {
-
-if ($data['pay_type'] == 1) {
-$config = ConfigModel::getPayConfig('alipay');
-$objOminipay = Omnipay::gateway('alipay');
-$objOminipay->setPartner($config['partner']);
-$objOminipay->setKey($config['key']);
-$objOminipay->setSellerEmail($config['sellerEmail']);
-$siteUrl = \CommonClass::getConfig('site_url');
-$objOminipay->setReturnUrl($siteUrl . '/order/pay/alipay/return');
-$objOminipay->setNotifyUrl($siteUrl . '/order/pay/alipay/notify');
-
-$response = Omnipay::purchase([
-'out_trade_no' => $is_ordered->code,
-'subject' => \CommonClass::getConfig('site_name'),
-'total_fee' => $money,
-])->send();
-$response->redirect();
-} else if ($data['pay_type'] == 2) {
-    $config = ConfigModel::getPayConfig('wechatpay');
-    $wechat = Omnipay::gateway('wechat');
-    $wechat->setAppId($config['appId']);
-    $wechat->setMchId($config['mchId']);
-    $wechat->setAppKey($config['appKey']);
-    $out_trade_no = $is_ordered->code;
-    $params = array(
-        'out_trade_no' => $is_ordered->code,
-        'notify_url' => \CommonClass::getDomain() . '/order/pay/wechat/notify?out_trade_no=' . $out_trade_no . '&task_id=' . $data['id'],
-        'body' => \CommonClass::getConfig('site_name') . '余额充值',
-        'total_fee' => $money,
-        'fee_type' => 'CNY',
-    );
-    $response = $wechat->purchase($params)->send();
-
-    $img = QrCode::size('280')->generate($response->getRedirectUrl());
-
-    $view = array(
-        'cash'=>$money,
-        'img' => $img
-    );
-    return $this->theme->scope('task.wechatpay', $view)->render();
-} else if ($data['pay_type'] == 3) {
-    dd('银联支付！');
-}
-} else if (isset($data['account']) && $data['pay_canel'] == 2) {
-    dd('银行卡支付！');
-} else
-{
-    return redirect()->back()->with(['error' => '请选择一种支付方式']);
-}
-
+    public function submitExperts(Request $request)
+    {
+        $data['detail']=$request->detail;
+        $data['status']=1;
+        $data['time']=date('Y-m-d H:i:s',time());
+        $tid=$request->task_id;
+        DB::table('experts_task')->where('task_id',$tid)->update($data);
+        DB::table('task')->whereId($tid)->update(['status'=>11]);
+        header('Location:'.url('/task',$tid));
     }
     //add by xl 签订合同
     public function signContract($taskId,$status){
@@ -1673,5 +1755,6 @@ $response->redirect();
             return redirect()->back()->with(['error' => '请选择一种支付方式']);
         }
     }
+
 
 }

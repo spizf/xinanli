@@ -287,6 +287,37 @@ class DetailController extends IndexController
             $province = \CommonClass::keyBy($province,'id');
             $view['area'] = $province;
         }
+        $view['experts']=DB::table('experts_task')
+            ->select('experts.*','experts_task.id as etid','position.position')
+            ->leftJoin('experts','experts_task.experts_id','=','experts.id')
+            ->leftJoin('position','position.id','=','experts.position')
+            ->where('task_id',$detail->id)
+            ->first();
+        if($view['experts']){
+            $view['experts']->user=DB::table('users')->where('name',$view['experts']->name)->first();
+            $view['experts']->addr=explode('-',$view['experts']->addr);
+            foreach($view['experts']->addr as $key=>$item){
+                $distirct=DB::table('district')->whereId($item)->first();
+                if($distirct) {
+                    $view['experts']->addr[$key] = $distirct->name;
+                }
+            }
+            $view['experts']->cate=explode(',',$view['experts']->cate);
+            foreach($view['experts']->cate as $key=>$item){
+                $distirct=DB::table('cate')->whereId($item)->first();
+                if($distirct) {
+                    $view['experts']->cate[$key] = $distirct->name;
+                }
+            }
+            $uid=\Auth::id();
+            $work=DB::table('work')->where('task_id',$id)->first();
+            $wid=isset($work)?$work->uid:0;
+            if(isset($uid)&&($uid==$detail->uid||$uid==$wid)){
+                $view['experts']->is_user=1;
+            }else{
+                $view['experts']->is_user=0;
+            }
+        }
         return $this->theme->scope('task.detail', $view)->render();
     }
     

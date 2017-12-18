@@ -380,7 +380,53 @@
 
                                 <div class="space"></div>
                             </div>
+                            @if(($detail['status']==5||$detail['status']==6)&&$experts->is_user)
+                                <div class="shenqing"  style="margin-bottom: 10px">
+                                    <a href="javascript:;">申请仲裁</a>
+                                </div>
+                            @endif
                         </div>
+                        <div id="tanchuceng" style="display: none;">
+                            <div class="shenqingbox">
+                                <h3>申请仲裁</h3>
+                                <div class="shenqb">
+                                    <form action="/task/submitExperts" method="post">
+                                        <div class="shenbtop">
+                                            <dl>
+                                                <dt>问题描述：</dt>
+                                                <dd>
+                                                    {!! csrf_field() !!}
+                                                    <textarea id="miaoshu" name="detail"></textarea>
+                                                    <input type="hidden" name="task_id" value="{!! $detail->id !!}"/>
+                                                </dd>
+                                            </dl>
+                                        </div>
+                                        <div class="tijiaobtn">
+                                            <input type="submit" value="提交" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="tanbox"></div>
+                        </div>
+                        <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
+                        <script>
+                            $(function(){
+                                $(".shenqing").click(function(){
+                                    $("#tanchuceng").show();
+
+                                });
+                                $(".tanbox").click(function(){
+                                    $(this).parent("#tanchuceng").hide();
+                                })
+                                $(".tijiaobtn").click(function(){
+                                    var zhi = $("#miaoshu").val();
+                                    if(zhi == ''){
+                                        alert("请填写问题描述");
+                                    }
+                                });
+                            })
+                        </script>
                     </div>
 
 
@@ -1285,6 +1331,61 @@
                 </ul>
                 @endif
             </div>
+            @if($experts)
+                <div class="zongjianle" style="float: none; margin:0;width:auto;margin-top:20px;height:528px;"  data="{!! $experts->id !!}">
+                    <div class="fuwutop zongjianle2">
+                        <span style="margin-left: 20px;">服务仲裁专家</span>
+                    </div>
+                    <div class="touxiang zongjianle2">
+                        <img src="{!! url($experts->head_img) !!}">
+                    </div>
+                    <h3>{!! $experts->name !!}</h3>
+                    <h4>{!! $experts->position !!}</h4>
+                    <div class="xinxi zongjianle2">
+                        <dl>
+                            <dd>{!! $experts->year !!}年工作经验</dd>
+                            @if(isset($experts->addr[0]))
+                                <dd>{!! $experts->addr[0] !!}</dd>
+                            @endif
+                            @if(isset($experts->addr[1]))
+                                <dd>{!! $experts->addr[1] !!}</dd>
+                            @endif
+                        </dl>
+                    </div>
+                    <div class="shanchang zongjianle2">
+                        @foreach($experts->cate as $v)
+                            <a href="">{!! $v !!}</a>
+                        @endforeach
+                    </div>
+                    <div class="dubox zongjianle2">
+                        <dl>
+                            <dt>{!! $experts->recommend !!}</dt>
+                            <dd>推荐指数</dd>
+                        </dl>
+                        <span></span>
+                        <dl>
+                            <dt>{!! $experts->satisfaction !!}%</dt>
+                            <dd>满意度</dd>
+                        </dl>
+                        <span></span>
+                        <dl>
+                            <dt>{!! $experts->ask_num !!}</dt>
+                            <dd>咨询量</dd>
+                        </dl>
+                    </div>
+                    <div class="liji">
+                        @if($experts->user)
+                            <a href="javascript:;" title="联系TA"  class="taskmessico" data-toggle="modal" data-target="#myModalgz" data-values="{!! $experts->user->id !!}" data-id="{!! Theme::get('is_IM_open') !!}" >立即免费在线咨询</a>
+                        @endif
+                    </div>
+                    <script>
+                        $('.liji .taskmessico').removeAttr('onblur');
+                        $('.zongjianle2').click(function(){
+                            location.href="{!! url('experts/detail') !!}"+'/'+$(this).parent().attr('data');
+                        });
+                    </script>
+                </div>
+            @endif
             @if(count($hotList))
             <div class=" taskside1 taskside">
                 <h4 class="mg-margin text-size14 cor-gray51"><strong>{!! $targetName !!}</strong></h4>
@@ -1453,8 +1554,14 @@
 </div>
 
 {!! Theme::widget('popup')->render() !!}
-{{--文件上传--}}
-{!! Theme::widget('fileUpload')->render() !!}
+{!! Theme::asset()->container('custom-css')->usepath()->add('css','css/css.css')
+ !!}
+{!! Theme::asset()->container('custom-css')->usepath()->add('newcss','css/newcss.css')
+ !!}
+{!! Theme::asset()->container('custom-css')->usepath()->add('style','css/style.css')
+ !!}
+{!! Theme::asset()->container('custom-css')->usepath()->add('swiper.min','css/swiper.min.css')
+!!}
 
 {!! Theme::asset()->container('custom-css')->usepath()->add('issuetask','css/taskbar/issuetask.css') !!}
 {!! Theme::asset()->container('custom-css')->usepath()->add('taskcommon','css/taskbar/taskcommon.css') !!}
