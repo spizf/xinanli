@@ -414,7 +414,9 @@ class WorkModel extends Model
                     $pay_type = 5;//线下付款
                 }
 
-                
+
+                UserDetailModel::where('uid', $data['uid'])->increment('balance', $paySection['price']);
+
                 $finance_data = [
                     'action' => 2,
                     'pay_type' => $pay_type,

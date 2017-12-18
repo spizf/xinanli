@@ -2,6 +2,7 @@
 
 
 Route::post('loginApi', 'UserController@loginApi');
+Route::post('registerApi', 'UserController@registerApi');
 
 
 
@@ -54,7 +55,8 @@ Route::get('reSendActiveEmail/{email}', 'Auth\AuthController@reSendActiveEmail')
 
 Route::get('user/getZone', 'AuthController@getZone')->name('zoneDetail');
 
-Route::get('/user/promote/{param}', 'PromoteController@promote')->name('promote'); 
+Route::get('/user/promote/{param}', 'PromoteController@promote')->name('promote');
+Route::get('user/checkInterVal','UserCenterController@checkInterVal')->name('checkInterVal');
 
 Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('/index','UserCenterController@index')->name('indexPage');
@@ -135,7 +137,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::post('/passwordUpdate','UserCenterController@passwordUpdate')->name('passwordUpdate');
     
     Route::get('/payPassword','UserCenterController@payPassword')->name('payPasswordUpdatePage');
-    Route::get('/checkInterVal','UserCenterController@checkInterVal')->name('checkInterVal');
+//    Route::get('/checkInterVal','UserCenterController@checkInterVal')->name('checkInterVal');
     Route::post('/payPasswordUpdate','UserCenterController@payPasswordUpdate')->name('payPasswordUpdate');
     Route::post('/sendEmail','UserCenterController@sendEmail')->name('sendEmail');
     Route::post('/checkEmail','UserCenterController@checkEmail')->name('checkEmail');

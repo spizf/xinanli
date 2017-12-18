@@ -21,14 +21,6 @@
                     <input type="hidden" name="task_id" value="{{ $task['id'] }}" />
                 <div class="tab-content b-border0 pd-padding0">
                     <div id="home" class=" tab-pane fade in active pd-padding30  bg-white b-border">
-                       {{-- <div class="clearfix"> <label class="">请输入作业专家：</label>
-                            <input type="text" placeholder=""  name="workexpert"  class="inputxt"  >
-                        </div>
-                        <div class="space"></div>
-                        <div class="clearfix"><label class="">请输入评审专家：</label>
-                            <input type="text" placeholder=""  name="reviewexpert"  class="inputxt" >　
-                        </div>
-                        <div class="space"></div>--}}
                         <!--编辑器-->
                         <div class="clearfix">
                             <script id="editor" name="desc" type="text/plain" style="height:300px;"></script>
