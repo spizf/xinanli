@@ -331,14 +331,33 @@ class DetailController extends IndexController
         if ($pid==167 || $pid==168){
             //一次仲裁
             if ($evade_two['zc_status']==1){
-                return DB::table('experts')->select('id','name')->where('cate','like','%'.$evade_two['cate_id'].'%')->whereNotIn('name',array($evade_one['workexpert'],$evade_one['reviewexpert']))->take(10)->get();
+                //先取出两位组长
+                $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
+                $nums = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);
+                if ($nums == 2){
+
+                }
+                //取出组员
+                return $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,8,2);
             }elseif($evade_two['zc_status']==2){
 
             }
         }else{
             $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];
             if ($evade_two['zc_status']==1){
-                return DB::table('experts')->select('id','name')->where('cates','like','%'.$chose.'%')->whereNotIn('name',array($evade_one['workexpert'],$evade_one['reviewexpert']))->take(10)->get();
+                $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
+                $num = $this->expertGroup($chose,$evade_two['city'],1,$name,2,1);
+                if ($num == 2){
+                    $expert = $this->expertGroup($chose,$evade_two['city'],1,$name,2,2);
+                }elseif($num == 1){
+                    $one = $this->expertGroup($chose,$evade_two['province'],1,$name,1,1);
+                    if ($one == 1){
+                        $expert_one = $this->expertGroup($chose,$evade_two['province'],1,$name,1,2);
+                    }
+                }else{
+
+                }
+                return $this->expertGroup($chose,$evade_two['city'],2,$name,8,2);
             }elseif ($evade_two['zc_status']==2){
 
             }
@@ -346,6 +365,18 @@ class DetailController extends IndexController
 
         }
 
+
+    }
+    //查询专家组长
+    /*
+     * $cate:专家领域；$area:地域；$level:专家为组长或组员;$name:规避的字段;$take:取出条数;$type:查询方式*/
+    public function expertGroup($cate,$area,$level,$name,$take,$type)
+    {
+        if ($type==1){
+            return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->count();
+        }elseif ($type == 2){
+            return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->get();
+        }
 
     }
 
