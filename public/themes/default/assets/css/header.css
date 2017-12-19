@@ -596,7 +596,7 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
 }
 
 .navbar .z-navactive .topmessage {
-    margin-right: 40px;
+    margin-right: 20px;
     margin-top: 18px;
     position: relative;
     display: block;

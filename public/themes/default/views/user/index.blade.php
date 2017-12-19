@@ -21,9 +21,9 @@
                         @endif
 
                         @if($auth_user['realname'] == true)
-                            <a class="u-infoiconact" data-toggle="tooltip" data-placement="top" title="实名已认证" ></a>
+                            <a class="u-infoiconact" data-toggle="tooltip" data-placement="top" title="企业已认证" ></a>
                         @else
-                            <a class="u-infoicon" data-toggle="tooltip" data-placement="top" title="实名未认证" ></a>
+                            <a class="u-infoicon" data-toggle="tooltip" data-placement="top" title="企业未认证" ></a>
                         @endif
 
                         @if(Auth::User()->email_status != 2)
@@ -38,9 +38,9 @@
                             <a  class="u-aliicon" data-toggle="tooltip" data-placement="top" title="支付未认证"></a>
                         @endif
                         @if($auth_user['enterprise'] == true)
-                            <a  class="u-comicon" data-toggle="tooltip" data-placement="top" title="企业已认证"></a>
+                            <a  class="u-comicon" data-toggle="tooltip" data-placement="top" title="机构已认证"></a>
                         @else
-                            <a  class="u-comicon-no" data-toggle="tooltip" data-placement="top" title="企业未认证"></a>
+                            <a  class="u-comicon-no" data-toggle="tooltip" data-placement="top" title="机构未认证"></a>
                         @endif
 
                     </div>
@@ -133,7 +133,7 @@
                             <p class="cor-gray51 text-size14">这儿潜伏着哪些任务？</p>
                             <p class="cor-gray51 text-size14">他们都有哪些需求？</p>
                             <div class="space-10"></div>
-                            <div class="g-userhintbtn"><a href="/task">查看任务大厅</a></div>
+                            <div class="g-userhintbtn"><a href="/user/enterpriseAuth">认证成第三方评价机构</a></div>
                             <div class="space-20"></div>
                         </div>
                     </div>
