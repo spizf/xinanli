@@ -856,7 +856,8 @@ class AuthController extends UserCenterController
                     $view = 'user.waitusershopauth';
                     break;
                 case 1:
-                    return redirect('/user/shop');
+                    $view = 'user.usershopauthsuccess';
+                    //return redirect('/user/shop');
                     break;
                 case 2:
                     $view = 'user.usershopauthfail';

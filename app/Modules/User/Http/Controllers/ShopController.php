@@ -36,8 +36,9 @@ class ShopController extends UserCenterController
     public function getShop(Request $request)
     {
         $uid = Auth::User()->id;
-        
-        $realName = RealnameAuthModel::where('uid',$uid)->where('status',1)->first();
+        //add by xl 开启店铺前需要机构认证
+        //$realName = RealnameAuthModel::where('uid',$uid)->where('status',1)->first();
+        $realName = EnterpriseAuthModel::where('uid',$uid)->where('status',1)->first();
         if(empty($realName)){
             return $this->theme->scope('user.usershopbefore')->render();
         }
@@ -575,8 +576,9 @@ class ShopController extends UserCenterController
     {
         $uid = Auth::id();
         $this->theme->setUserId($uid);
-        
-        $realName = RealnameAuthModel::where('uid',$uid)->where('status',1)->first();
+        //add by xl开启店铺需要机构认证
+        //$realName = RealnameAuthModel::where('uid',$uid)->where('status',1)->first();
+        $realName = EnterpriseAuthModel::where('uid',$uid)->where('status',1)->first();
         if(empty($realName)){
             return $this->theme->scope('user.usershopbefore')->render();
         }else{

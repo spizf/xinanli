@@ -5,7 +5,7 @@
     <div class="space-32"></div><div class="space-32"></div><div class="space-22"></div>
     <div class="text-center g-bankhint1 g-bankhint">
         <img src="{!! Theme::asset()->url('images/withdrawhint.png') !!}"><span class="text-size24 shop-hinttxt">
-            &nbsp;&nbsp;&nbsp;开启店铺前，请进行<a href="/user/realnameAuth">实名认证</a>！</span>
+            &nbsp;&nbsp;&nbsp;开启店铺前，请进行<a href="/user/enterpriseAuth">机构认证</a>！</span>
     </div>
 </div>
 

@@ -1,6 +1,6 @@
 
 <div class="g-main">
-    <h4 class="text-size16 cor-blue u-title">企业认证</h4>
+    <h4 class="text-size16 cor-blue u-title">机构认证</h4>
     <div class="space-30"></div>
     <div class="text-center g-bankhint">
         <img src="{!! Theme::asset()->url('images/sign-icon3.png') !!}"><b class="inlineblock">很遗憾，认证失败！</b>
