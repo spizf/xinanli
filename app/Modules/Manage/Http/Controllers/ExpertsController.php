@@ -149,6 +149,29 @@ class ExpertsController extends ManageController
             'un_cer_time' => date('Y-m-d H:i:s',strtotime($request->get('un_cer_time'))),
             'detail' => $request->get('detail')
         ];
+        //注册专家用户
+        $salt = \CommonClass::random(4);
+        $validationCode = \CommonClass::random(6);
+        $date = date('Y-m-d H:i:s');
+        $now = time();
+        $userArr = array(
+            'name' => $request->get('name'),
+            'password' => UserModel::encryptPassword('123456', $salt),
+            'alternate_password' => UserModel::encryptPassword('123456', $salt),
+            'salt' => $salt,
+            'email_status' => 2,
+            'status' => 1,
+            'last_login_time' => $date,
+            'overdue_date' => date('Y-m-d H:i:s', $now + 60*60*3),
+            'validation_code' => $validationCode,
+            'created_at' => $date,
+            'updated_at' => $date,
+            'user_type' => 3
+        );
+        $res = DB::table('users')->insertGetId($userArr);
+        $detail = DB::table('user_detail')->insert(['uid'=>$res]);
+        //注册专家结束
+
         $file=$request->file('head_img');
         if(!empty($file))
         {
@@ -157,7 +180,7 @@ class ExpertsController extends ManageController
             $data = array_add($data,'head_img',$result['data']['url']);
         }
         $status=DB::table('experts')->insert($data);
-        if ($status) {
+        if ($status && $detail) {
             if($addr) {
                 DB::table('district')->whereId($addr[0])->increment('experts_num');
             }

@@ -326,18 +326,19 @@ class DetailController extends IndexController
     {
         $evade_one = WorkModel::where('task_id',$id)->where('status','2')->first();
         $evade_two = TaskModel::where('id',$id)->first();
-//        $evade_one['workexpert'];
         $pid = DB::table('cate')->where('id',$evade_two['cate_id'])->value('pid');
+        //是否为消防或职业病
         if ($pid==167 || $pid==168){
+            //一次仲裁
             if ($evade_two['zc_status']==1){
-                return DB::table('experts')->select('id','name')->where('cate','like','%'.$evade_two['cate_id'].'%')->where('name','!=',$evade_one['workexpert'])->where('name','!=',$evade_one['reviewexpert'])->take(10)->get();
+                return DB::table('experts')->select('id','name')->where('cate','like','%'.$evade_two['cate_id'].'%')->whereNotIn('name',array($evade_one['workexpert'],$evade_one['reviewexpert']))->take(10)->get();
             }elseif($evade_two['zc_status']==2){
 
             }
         }else{
             $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];
             if ($evade_two['zc_status']==1){
-                return DB::table('experts')->select('id','name')->where('cates','like','%'.$chose.'%')->where('name','!=',$evade_one['workexpert'])->where('name','!=',$evade_one['reviewexpert'])->take(10)->get();
+                return DB::table('experts')->select('id','name')->where('cates','like','%'.$chose.'%')->whereNotIn('name',array($evade_one['workexpert'],$evade_one['reviewexpert']))->take(10)->get();
             }elseif ($evade_two['zc_status']==2){
 
             }
