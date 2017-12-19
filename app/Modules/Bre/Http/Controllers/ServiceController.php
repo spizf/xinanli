@@ -31,10 +31,14 @@ class serviceController extends IndexController
     public function serviceCaseList($uid)
     {
         $this->theme->setTitle('服务商成功案例');
-        
+
         $isFocus = \CommonClass::isFocus($uid);
 
         $user = UserModel::where('id',$uid)->first();
+        //add by xl 如果用户不存在提示空间已关闭
+        if(empty($user)){
+            $shopclose = 1;
+        }
         $userInfo = UserDetailModel::where('uid', $uid)->first();
 
         
@@ -68,7 +72,8 @@ class serviceController extends IndexController
             'user' => $user,
             'is_focus' => $isFocus,
             'skill_tag' => $tag,
-            'listCount' => $listCount
+            'listCount' => $listCount,
+            'shopclose' =>$shopclose
         );
         return $this->theme->scope('bre.serviceCaseList', $data)->render();
 

@@ -1,4 +1,5 @@
 <section>
+@if(empty($shopclose))<!-- add by xl判断用户存在与否显示不同页面 -->
     <!--<div class="container">
         <div class="row">-->
         <div class="col-md-12 col-sm-12 col-xs-12 case-col-md-12 col-left">
@@ -83,63 +84,71 @@
                 </div>
             </div>
         </div>
-    @if($introduce['shop_status'] == 1)
-        <!-- 成功案例和评价详情 -->
-        <div class="row">
-            <div class="col-md-12 col-sm-12 col-xs-12 col-left">
-                <div class="personal-case-detail-list">
-                    <a href="{!! URL('bre/serviceCaseList/'.$uid) !!}" title="" class="personal-case-list personal-active">成功案例</a>
-                    <a href="{!! URL('bre/serviceEvaluateDetail/'.$uid) !!}" title="" class="personal-evaluate-detail">评价详情</a>
+        @if($introduce['shop_status'] == 1)
+            <!-- 成功案例和评价详情 -->
+            <div class="row">
+                <div class="col-md-12 col-sm-12 col-xs-12 col-left">
+                    <div class="personal-case-detail-list">
+                        <a href="{!! URL('bre/serviceCaseList/'.$uid) !!}" title="" class="personal-case-list personal-active">成功案例</a>
+                        <a href="{!! URL('bre/serviceEvaluateDetail/'.$uid) !!}" title="" class="personal-evaluate-detail">评价详情</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <!-- 服务商  成功案例-->
-        <div class="serivce-caseList">
-            @if($listCount > 0)
-                @foreach($list as $v)
-                    <div class="col-lg-3 col-md-4 col-xs-6 col-sm-4 case-list-item col-left">
+            <!-- 服务商  成功案例-->
+            <div class="serivce-caseList">
+                @if($listCount > 0)
+                    @foreach($list as $v)
+                        <div class="col-lg-3 col-md-4 col-xs-6 col-sm-4 case-list-item col-left">
 
-                            @if(!$v['pic'])
-                                <a href="{!! URL('bre/serviceCaseDetail/'.$v['id'].'/'.$uid) !!}" title="">
+                                @if(!$v['pic'])
+                                    <a href="{!! URL('bre/serviceCaseDetail/'.$v['id'].'/'.$uid) !!}" title="">
 
-                                    <img src="{!! Theme::asset()->url('images/case_back.png') !!}" class="img-responsive"/>
-                                </a>
-                            @else
-                                <a href="{!! URL('bre/serviceCaseDetail/'.$v['id'].'/'.$uid) !!}" title="">
-                                    <img src="{!!  $domain.'/'.$v['pic'] !!}" class="img-responsive">
-                                </a>
-                            @endif
-                        <div class="case-list-item-name">
-                            <a class="cor-gray51" href="{!! URL('bre/serviceCaseDetail/'.$v['id'].'/'.$uid) !!}" title="">
-                            <p>{{ $v['title'] }}</p>
-                                </a>
+                                        <img src="{!! Theme::asset()->url('images/case_back.png') !!}" class="img-responsive"/>
+                                    </a>
+                                @else
+                                    <a href="{!! URL('bre/serviceCaseDetail/'.$v['id'].'/'.$uid) !!}" title="">
+                                        <img src="{!!  $domain.'/'.$v['pic'] !!}" class="img-responsive">
+                                    </a>
+                                @endif
+                            <div class="case-list-item-name">
+                                <a class="cor-gray51" href="{!! URL('bre/serviceCaseDetail/'.$v['id'].'/'.$uid) !!}" title="">
+                                <p>{{ $v['title'] }}</p>
+                                    </a>
+                            </div>
+                            <div class="case-list-item-admin">
+                                <span class="pull-right"><i class="fa fa-eye"></i> {{ $v['view_count'] }}人浏览</span>
+                                <span class="case-tag pull-left"> <i class="fa fa-tag "></i> {{ $v['cate_name']}}</span>
+                            </div>
                         </div>
-                        <div class="case-list-item-admin">
-                            <span class="pull-right"><i class="fa fa-eye"></i> {{ $v['view_count'] }}人浏览</span>
-                            <span class="case-tag pull-left"> <i class="fa fa-tag "></i> {{ $v['cate_name']}}</span>
-                        </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
+                <div class="pull-right">
+                    {!! $list->render() !!}
+                </div>
+            @else
+            <div class="row">
+                <div class="col-md-12  close-space-tip center">
+                    <img src="{!! Theme::asset()->url('images/close_space_tips.png') !!}" >
+                    <p>暂无成功案例哦！</p>
+                </div>
             </div>
-            <div class="pull-right">
-                {!! $list->render() !!}
+            @endif
+        @else($introduce['shop_status] == 2)
+            <div class="col-md-12 center">
+                <img src="{!! Theme::asset()->url('images/close_space_tips.png') !!}">
+                <p>该空间已经关闭，请等候服务商开启 ！</p>
             </div>
-        @else
-        <div class="row">
-            <div class="col-md-12  close-space-tip center">
-                <img src="{!! Theme::asset()->url('images/close_space_tips.png') !!}" >
-                <p>暂无成功案例哦！</p>
-            </div>
-        </div>
-        @endif
-    @else($introduce['shop_status] == 2)
-        <div class="col-md-12 center">
-            <img src="{!! Theme::asset()->url('images/close_space_tips.png') !!}">
-            <p>该空间已经关闭，请等候服务商开启 ！</p>
-        </div>
 
         @endif
 
+@else
+<div class="col-md-12 center">
+    <div class="space-20"></div>
+    <img src="{!! Theme::asset()->url('images/close_space_tips.png') !!}">
+    <p>该空间已经关闭，请等候服务商开启 ！</p>
+    <div class="space-20"></div>
+</div>
+@endif
 <!--</div>
 </div>-->
 </section>

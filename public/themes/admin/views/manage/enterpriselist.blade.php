@@ -97,9 +97,9 @@
                         <td>{!! $item->organ_name !!}</td>
                         <td>{!! $item->cate_name !!}</td>
                         <td>{!! $item->business_license !!}</td>
-                        <td>{!! $item->validation_img !!}</td>
+                        <td><a target="_blank" href="{!! URL($item->validation_img) !!}" ><img width="100" height="100" src="{!! URL($item->validation_img) !!}" /></a></td>
                         <td>{!! $item->card_number !!}</td>
-                        <td><img width="100" height="100" src="{!! URL($item->qualification_img) !!}" /> </td>
+                        <td><a target="_blank" href="{!! URL($item->qualification_img) !!}" ><img width="100" height="100" src="{!! URL($item->qualification_img) !!}" /></a></td>
                         <td>{!! $item->created_at !!}</td>
                         <td>
                             @if($item->auth_time){!! $item->auth_time !!}@else N/A @endif
