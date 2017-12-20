@@ -327,44 +327,100 @@ class DetailController extends IndexController
         $evade_one = WorkModel::where('task_id',$id)->where('status','2')->first();
         $evade_two = TaskModel::where('id',$id)->first();
         $pid = DB::table('cate')->where('id',$evade_two['cate_id'])->value('pid');
+        $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
         //是否为消防或职业病
         if ($pid==167 || $pid==168){
-            //一次仲裁
             if ($evade_two['zc_status']==1){
+                //一次仲裁
                 //先取出两位组长
-                $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
-                $nums = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);
-                if ($nums == 2){
-
+                $num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);
+                if ($num == 2){
+                    //足两位
+                    $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,2);//组长
+                }else{
+                    //不足两位
+                    $not_enough = 2-$num;//不足的数目
+                    if ($not_enough==1){
+                        //缺少一位组长
+                        $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,3);//市里专家名称
+                        $guibi1 = $name;
+                        array_push($guibi1,$group);
+                        $groups = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,2);//市里组长
+                        $group_one = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$guibi1,1,2);//省里组长（规避市里）
+                        $group_result = array_merge($groups,$group_one);//组合组长
+                    }elseif ($not_enough==2){
+                        $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$name,2,2);//组长
+                    }
                 }
-                //取出组员
-                return $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,8,2);
+                //组员
+                $first_group_son_num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,1);//市里组员数目
+                if ($first_group_son_num==8){
+                    //组员足够8位
+                    $group_son_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }else{
+                    //组员不足8位
+                    $not_enough_eight = 8-$first_group_son_num;
+                    $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);//市里专家名称
+                    $guibi2 = $name;
+                    for ($i=0;$i<$first_group_son_num;$i++){
+                        array_push($guibi2,$group[$i]->name);
+                    }
+                    $group_son = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],2,$guibi2,$not_enough_eight,2);
+                    $group_son_result = array_merge($group,$group_son);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }
             }elseif($evade_two['zc_status']==2){
-
+                //二次仲裁
             }
         }else{
-            $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];
+            $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];//行业筛选（暂时不加，留存）
             if ($evade_two['zc_status']==1){
-                $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
-                $num = $this->expertGroup($chose,$evade_two['city'],1,$name,2,1);
+                //第一次仲裁
+                $num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);//查询市里专家组长数目
                 if ($num == 2){
-                    $expert = $this->expertGroup($chose,$evade_two['city'],1,$name,2,2);
-                }elseif($num == 1){
-                    $one = $this->expertGroup($chose,$evade_two['province'],1,$name,1,1);
-                    if ($one == 1){
-                        $expert_one = $this->expertGroup($chose,$evade_two['province'],1,$name,1,2);
-                    }
+                    //足两位
+                    $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,2);//组长
                 }else{
-
+                    //不足两位
+                    $not_enough = 2-$num;//不足的数目
+                    if ($not_enough==1){
+                        //缺少一位组长
+                        $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,3);//市里专家名称
+                        $guibi1 = $name;
+                        array_push($guibi1,$group);
+                        $groups = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,2);//市里组长
+                        $group_one = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$guibi1,1,2);//省里组长（规避市里）
+                        $group_result = array_merge($groups,$group_one);//组合组长
+                    }elseif ($not_enough==2){
+                        $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$name,2,2);//组长
+                    }
                 }
-                return $this->expertGroup($chose,$evade_two['city'],2,$name,8,2);
+                //组员
+                $first_group_son_num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,1);//市里组员数目
+                if ($first_group_son_num==8){
+                    //组员足够8位
+                    $group_son_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }else{
+                    //组员不足8位
+                    $not_enough_eight = 8-$first_group_son_num;
+                    $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);//市里专家名称
+                    $guibi2 = $name;
+                    for ($i=0;$i<$first_group_son_num;$i++){
+                        array_push($guibi2,$group[$i]->name);
+                    }
+                    $group_son = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],2,$guibi2,$not_enough_eight,2);
+                    $group_son_result = array_merge($group,$group_son);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }
             }elseif ($evade_two['zc_status']==2){
-
+                //二次仲裁
             }
 
 
         }
-
+        return $expert_result;
 
     }
     //查询专家组长
@@ -375,8 +431,16 @@ class DetailController extends IndexController
         if ($type==1){
             return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->count();
         }elseif ($type == 2){
-            return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->get();
+            return DB::table('experts')->select('id','name','position_level')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->get();
+        }elseif ($type == 3){
+            return DB::table('experts')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->value('name');
         }
+
+    }
+
+    /*组员不足8位时*/
+    public function notEnough()
+    {
 
     }
 
