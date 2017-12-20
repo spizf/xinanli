@@ -241,12 +241,10 @@ class DetailController extends IndexController
 
         //是否仲裁中
         $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
-        //仲裁专家
-        $expertss = $this->arbitrationExpert($id);
 
         $view = [
             'detail'=>$detail,
-            'expertss'=>$expertss,
+//            'expertss'=>$expertss,
             'attatchment'=>$attatchment,
             'alike_task'=>$alike_task,
             'user_type'=>$user_type,
@@ -280,7 +278,38 @@ class DetailController extends IndexController
             'has_bid' => $hasBid,
             'usertype' =>$this->user['user_type']
         ];
-        
+        //保存仲裁专家
+        if ($is_arbitration) {
+            if (!DB::table('arbitration_expert')->where('task_id', $id)->get()) {
+                $str = '';
+                //仲裁专家
+                $experts = $this->arbitrationExpert($id);
+                foreach ($experts as $k => $v) {
+                    if ($k) {
+                        $str .= '-' . $v->id;
+                    } else {
+                        $str .= $v->id;
+                    }
+                }
+                $arbitration_expert = [
+                    'task_id' => $id,
+                    'experts' => $str
+                ];
+                DB::table('arbitration_expert')->insert($arbitration_expert);
+            }
+            //获取仲裁专家
+            $experts_str = DB::table('arbitration_expert')->where('task_id',$id)->first();
+            $array_experts = explode('-',$experts_str->experts);
+            $expertss = $this->getExperts($array_experts);
+            //专家组长
+            $group_two = DB::table('experts')
+                ->whereIn('id',$array_experts)
+                ->where('position_level',1)
+                ->select('id','name')
+                ->get();
+            $view['expertss'] = $expertss;
+            $view['group_two'] =$group_two;
+        }
         if($detail['region_limit']==1 && $detail['province'] && $detail['city'] && $detail['area'])
         {
             $province = DistrictModel::whereIn('id',[$detail['province'],$detail['city'],$detail['area']])->get()->toArray();
@@ -319,6 +348,12 @@ class DetailController extends IndexController
             }
         }
         return $this->theme->scope('task.detail', $view)->render();
+    }
+
+    /*return array(expert)*/
+    public function getExperts($expert_arr)
+    {
+        return DB::table('experts')->whereIn('id',$expert_arr)->get();
     }
     
     /*推荐仲裁专家*/
@@ -429,21 +464,14 @@ class DetailController extends IndexController
     public function expertGroup($cate,$area,$level,$name,$take,$type)
     {
         if ($type==1){
-            return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->count();
+            return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->orderBy(DB::raw('RAND()'))->take($take)->count();
         }elseif ($type == 2){
-            return DB::table('experts')->select('id','name','position_level')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->get();
+            return DB::table('experts')->select('id','name')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->orderBy(DB::raw('RAND()'))->take($take)->get();
         }elseif ($type == 3){
             return DB::table('experts')->where('cates','like','%'.$cate.'%')->where('addr','like','%'.$area.'%')->where('position_level',$level)->whereNotIn('name',$name)->take($take)->value('name');
         }
 
     }
-
-    /*组员不足8位时*/
-    public function notEnough()
-    {
-
-    }
-
     
     public function work($id)
     {

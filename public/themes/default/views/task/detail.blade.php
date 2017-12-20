@@ -287,6 +287,13 @@
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
+                                @elseif($detail['status']==19 && $user_type == 3 && (Auth::user()['name']==$group_two[0]->name || Auth::user()['name']==$group_two[1]->name) && $task_type_alias == 'zhaobiao')
+                                    <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#message-data">
+                                        通知双方补充冲裁资料
+                                    </a>
+                                    <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#submit-data">
+                                        提交仲裁报告
+                                    </a>
                             @elseif($detail['status']==999 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 @if(CommonClass::evaluted($detail['id'],Auth::user()['id'])==0)
                                     <a target="_blank" href="{{ URL('/task/evaluate').'?'.http_build_query(['id'=>$detail['id'],'work_id'=>isset($delivery['data'][0]['id']) ? $delivery['data'][0]['id'] : 1]) }}" class="btn btn-primary bor-radius2">
@@ -1508,6 +1515,8 @@
     </div>
 </div>
 {{--补充仲裁材料弹窗--}}
+@if($user_type==3)
+@else
 <div class="modal" id="replenish-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -1537,6 +1546,7 @@
         </div>
     </div>
 </div>
+@endif
 {{--查看推荐仲裁专家--}}
 <div class="modal" id="find-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="width: 1200px;">
@@ -1547,9 +1557,13 @@
             </div>
                 <div class="modal-body">
                     <div class="zongjian">
+                        @if(!empty($expertss))
                         @foreach($expertss as $k=>$item)
                             {{$expertss[$k]->name}}
                         @endforeach
+                        @else
+                            暂无推荐专家！
+                        @endif
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -1558,8 +1572,65 @@
         </div>
     </div>
 </div>
+{{--通知双方补充仲裁资料--}}
+<form class="modal" id="message-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">通知双方补充仲裁资料</h4>
+            </div>
+            <form action="" method="post"  >
+            <div class="modal-body">
+                <div>
+                        <textarea name="reason" id="res" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
+                        <input type="hidden" name="task_id" value="{{$detail['id']}}">
+                        <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <input type="submit" class="btn btn-primary" value="提交">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+{{--提交仲裁报告--}}
+<div class="modal" id="submit-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">提交仲裁报告</h4>
+            </div>
+            <form action="/task/reasonAccessory" method="post">
+                <div class="modal-body">
+                    {{csrf_field()}}
+                    <input type="hidden" name="task_id" value="{{$detail['id']}}">
+                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <!--文件上传-->
+                    <div action=" " class="dropzone clearfix" id="dropzone"
+                         url="/task/ajaxAttatchment" deleteurl="/task/delAttatchment">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple="" />
+                        </div>
+                    </div>
+                    <div style="display:none;" id="file_update"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <input type="submit" class="btn btn-primary" value="提交">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 {!! Theme::widget('popup')->render() !!}
+{{--文件上传--}}
+{!! Theme::widget('fileUpload')->render() !!}
+
 {!! Theme::asset()->container('custom-css')->usepath()->add('css','css/css.css')
  !!}
 {!! Theme::asset()->container('custom-css')->usepath()->add('newcss','css/newcss.css')
