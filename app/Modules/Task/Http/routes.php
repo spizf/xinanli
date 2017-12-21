@@ -92,6 +92,8 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	Route::get('/bidWorkCheck','DetailController@bidWorkCheck')->name('bidWorkCheck');
 	
 	Route::post('/ajaxBidRights','DetailController@ajaxBidRights')->name('ajaxBidRights');
+	//专家提交仲裁报告
+	Route::post('/submitAccessory','DetailController@submitAccessory')->name('submitAccessory');
     //申请仲裁
     Route::post('/submitExperts','IndexController@submitExperts')->name('submitExperts');
     //add by xl

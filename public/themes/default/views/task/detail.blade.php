@@ -279,6 +279,9 @@
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请二次仲裁
                                 </a>
+                                <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="" >
+                                    查看仲裁结果
+                                </a>
                                 @endif
                                 @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
@@ -1581,6 +1584,7 @@
                 <h4 class="modal-title">通知双方补充仲裁资料</h4>
             </div>
             <form action="" method="post"  >
+                {{csrf_field()}}
             <div class="modal-body">
                 <div>
                         <textarea name="reason" id="res" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
@@ -1604,11 +1608,11 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">提交仲裁报告</h4>
             </div>
-            <form action="/task/reasonAccessory" method="post">
-                <div class="modal-body">
+            <form action="/task/submitAccessory" method="post">
+                <div class="modal-body expert_list">
                     {{csrf_field()}}
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
-                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <input type="hidden" name="expert_id" value="{{Auth::id()}}">
                     <!--文件上传-->
                     <div action=" " class="dropzone clearfix" id="dropzone"
                          url="/task/ajaxAttatchment" deleteurl="/task/delAttatchment">
@@ -1617,7 +1621,15 @@
                         </div>
                     </div>
                     <div style="display:none;" id="file_update"></div>
+                    <select name="expert_list[]">
+                        @if(!empty($expertss))
+                            @foreach($expertss as $k=>$item)
+                                <option value="{{$expertss[$k]->id}}">{{$expertss[$k]->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
+                <button type="button" class="btn btn-primary add_expert" >添加仲裁专家</button>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <input type="submit" class="btn btn-primary" value="提交">
@@ -1626,7 +1638,12 @@
         </div>
     </div>
 </div>
-
+    <script>
+        //添加总裁专家
+        $(".add_expert").click(function () {
+            $(".expert_list").append("<select name=\"expert_list[]\" class=\"expert_list\"> @if(!empty($expertss)) @foreach($expertss as $k=>$item) <option value={{$expertss[$k]->id}}>{{$expertss[$k]->name}}</option> @endforeach @endif </select> ");
+        });
+    </script>
 {!! Theme::widget('popup')->render() !!}
 {{--文件上传--}}
 {!! Theme::widget('fileUpload')->render() !!}

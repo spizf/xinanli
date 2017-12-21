@@ -473,6 +473,19 @@ class DetailController extends IndexController
 
     }
     
+    /*专家提交仲裁报告*/
+    public function submitAccessory(Request $request)
+    {
+        $data = $request->except('_token');
+
+        $taskModel = new TaskModel();
+        $result = $taskModel->reportCreate($data);
+
+        if(!$result) return redirect()->back()->with('error','提交失败！');
+
+        return redirect()->to('task/'.$data['task_id'])->with('error','提交成功！');
+    }
+    
     public function work($id)
     {
         $this->theme->setTitle('竞标投稿');
