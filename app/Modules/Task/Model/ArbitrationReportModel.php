@@ -9,6 +9,6 @@ class ArbitrationReportModel extends Model
 
     public $timestamps = true;
     protected $fillable = [
-        'expert_id','task_id','expert_array','attachment','created_at','updated_at'
+        'expert_id','task_id','expert_array','num','attachment','created_at','updated_at'
     ];
 }

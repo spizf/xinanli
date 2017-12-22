@@ -7,6 +7,7 @@ use App\Modules\Manage\Model\AgreementModel;
 use App\Modules\Manage\Model\MessageTemplateModel;
 use App\Modules\Task\Http\Requests\CommentRequest;
 use App\Modules\Task\Http\Requests\WorkRequest;
+use App\Modules\Task\Model\ArbitrationReportModel;
 use App\Modules\Task\Model\TaskAttachmentModel;
 use App\Modules\Task\Model\TaskModel;
 use App\Modules\Task\Model\TaskPaySectionModel;
@@ -279,37 +280,51 @@ class DetailController extends IndexController
             'usertype' =>$this->user['user_type']
         ];
         //保存仲裁专家
-        if ($is_arbitration) {
-            if (!DB::table('arbitration_expert')->where('task_id', $id)->get()) {
+        if ($detail['zc_status']==1 || $detail['zc_status']==2) {
+            if (!DB::table('arbitration_expert')->where('task_id', $id)->where('num',$detail['zc_status'])->get()) {
                 $str = '';
                 //仲裁专家
                 $experts = $this->arbitrationExpert($id);
-                foreach ($experts as $k => $v) {
-                    if ($k) {
-                        $str .= '-' . $v->id;
-                    } else {
-                        $str .= $v->id;
+                if ($experts){
+                    foreach ($experts as $k => $v) {
+                        if ($k) {
+                            $str .= '-' . $v->id;
+                        } else {
+                            $str .= $v->id;
+                        }
                     }
+                    $arbitration_expert = [
+                        'task_id' => $id,
+                        'experts' => $str,
+                        'num' => $detail['zc_status']
+                    ];
+                    DB::table('arbitration_expert')->insert($arbitration_expert);
                 }
-                $arbitration_expert = [
-                    'task_id' => $id,
-                    'experts' => $str
-                ];
-                DB::table('arbitration_expert')->insert($arbitration_expert);
             }
             //获取仲裁专家
-            $experts_str = DB::table('arbitration_expert')->where('task_id',$id)->first();
-            $array_experts = explode('-',$experts_str->experts);
-            $expertss = $this->getExperts($array_experts);
+            $experts_str = DB::table('arbitration_expert')->where('task_id',$id)->where('num',$detail['zc_status'])->first();
+            if ($experts_str){
+                $array_experts = explode('-',$experts_str->experts);
+                $expertss = $this->getExperts($array_experts);
+                $view['expertss'] = $expertss;
+            }
             //专家组长
-            $group_two = DB::table('experts')
-                ->whereIn('id',$array_experts)
-                ->where('position_level',1)
-                ->select('id','name')
-                ->get();
-            $view['expertss'] = $expertss;
-            $view['group_two'] =$group_two;
+            if (isset($array_experts)){
+                $group_two = DB::table('experts')
+                    ->whereIn('id',$array_experts)
+                    ->where('position_level',1)
+                    ->select('id','name')
+                    ->get();
+                $view['group_two'] =$group_two;
+            }
         }
+        //获取仲裁报告
+        if (ArbitrationReportModel::where('task_id',$id)->where('num',$detail['zc_status'])->first()){
+            $report = ArbitrationReportModel::where('task_id',$id)->where('num',$detail['zc_status'])->first();
+            $arrayExpert = explode("-",$report->attachment);
+            $view['zc_report'] = AttachmentModel::whereIn('id',$arrayExpert)->get();
+        }
+
         if($detail['region_limit']==1 && $detail['province'] && $detail['city'] && $detail['area'])
         {
             $province = DistrictModel::whereIn('id',[$detail['province'],$detail['city'],$detail['area']])->get()->toArray();
@@ -406,7 +421,51 @@ class DetailController extends IndexController
                     $expert_result = array_merge($group_result,$group_son_result);
                 }
             }elseif($evade_two['zc_status']==2){
+                //规避一次仲裁专家
+                $one = DB::table('arbitration_expert')->where('num',1)->where('task_id',$id)->first();
+                $list = explode('-',$one->experts);
+                $one_list = DB::table('experts')->whereIn('id',$list)->get();
+                foreach ($one_list as $k=>$v){
+                    array_push($name,$v->name);
+                }
                 //二次仲裁
+                $num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);//查询市里专家组长数目
+                if ($num == 2){
+                    //足两位
+                    $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,2);//组长
+                }else{
+                    //不足两位
+                    $not_enough = 2-$num;//不足的数目
+                    if ($not_enough==1){
+                        //缺少一位组长
+                        $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,3);//市里专家名称
+                        $guibi1 = $name;
+                        array_push($guibi1,$group);
+                        $groups = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,2);//市里组长
+                        $group_one = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$guibi1,1,2);//省里组长（规避市里）
+                        $group_result = array_merge($groups,$group_one);//组合组长
+                    }elseif ($not_enough==2){
+                        $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$name,2,2);//组长
+                    }
+                }
+                //组员
+                $first_group_son_num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,1);//市里组员数目
+                if ($first_group_son_num==8){
+                    //组员足够8位
+                    $group_son_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }else{
+                    //组员不足8位
+                    $not_enough_eight = 8-$first_group_son_num;
+                    $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);//市里专家名称
+                    $guibi2 = $name;
+                    for ($i=0;$i<$first_group_son_num;$i++){
+                        array_push($guibi2,$group[$i]->name);
+                    }
+                    $group_son = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],2,$guibi2,$not_enough_eight,2);
+                    $group_son_result = array_merge($group,$group_son);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }
             }
         }else{
             $chose = $evade_two['cate_id'].'-'.$evade_two['industry'];//行业筛选（暂时不加，留存）
@@ -450,7 +509,51 @@ class DetailController extends IndexController
                     $expert_result = array_merge($group_result,$group_son_result);
                 }
             }elseif ($evade_two['zc_status']==2){
+                //规避一次仲裁专家
+                $one = DB::table('arbitration_expert')->where('num',1)->where('task_id',$id)->first();
+                $list = explode('-',$one->experts);
+                $one_list = DB::table('experts')->whereIn('id',$list)->get();
+                foreach ($one_list as $k=>$v){
+                    array_push($name,$v->name);
+                }
                 //二次仲裁
+                $num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);//查询市里专家组长数目
+                if ($num == 2){
+                    //足两位
+                    $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,2);//组长
+                }else{
+                    //不足两位
+                    $not_enough = 2-$num;//不足的数目
+                    if ($not_enough==1){
+                        //缺少一位组长
+                        $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,3);//市里专家名称
+                        $guibi1 = $name;
+                        array_push($guibi1,$group);
+                        $groups = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,1,2);//市里组长
+                        $group_one = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$guibi1,1,2);//省里组长（规避市里）
+                        $group_result = array_merge($groups,$group_one);//组合组长
+                    }elseif ($not_enough==2){
+                        $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],1,$name,2,2);//组长
+                    }
+                }
+                //组员
+                $first_group_son_num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,1);//市里组员数目
+                if ($first_group_son_num==8){
+                    //组员足够8位
+                    $group_son_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }else{
+                    //组员不足8位
+                    $not_enough_eight = 8-$first_group_son_num;
+                    $group = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);//市里专家名称
+                    $guibi2 = $name;
+                    for ($i=0;$i<$first_group_son_num;$i++){
+                        array_push($guibi2,$group[$i]->name);
+                    }
+                    $group_son = $this->expertGroup($evade_two['cate_id'],$evade_two['province'],2,$guibi2,$not_enough_eight,2);
+                    $group_son_result = array_merge($group,$group_son);
+                    $expert_result = array_merge($group_result,$group_son_result);
+                }
             }
 
 

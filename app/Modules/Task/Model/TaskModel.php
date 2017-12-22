@@ -1009,6 +1009,7 @@ class TaskModel extends Model
                 $attachments = [
                     'task_id'=>$data['task_id'],
                     'expert_id'=>$data['expert_id'],
+                    'num' => $data['num'],
                     'attachment'=>$attachment,
                     'expert_array' => $expert_list,
                 ];
