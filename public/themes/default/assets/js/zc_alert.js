@@ -12,7 +12,7 @@ $(".subm").click(function () {
             if (data.status =='1') {
                 $('#res').val('');
                 $.gritter.add({
-                    text: '<div><span class="text-center"><h5>提交成功!</h5></span></div>',
+                    text: '<div><span class="text-center"><h5>提交成功,支付仲裁费后开启仲裁!</h5></span></div>',
                     class_name: 'gritter-info gritter-center'
                 });
             }else{
@@ -24,4 +24,4 @@ $(".subm").click(function () {
         }
     })
 });
-//补充仲裁附件
+

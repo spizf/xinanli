@@ -982,4 +982,43 @@ class TaskModel extends Model
 
         return is_null($status)?true:false;
     }
+    /*专家提交仲裁报告*/
+    public function reportCreate($data)
+    {
+        $status = DB::transaction(function() use($data){
+
+            if(isset($data['file_id'])){
+                $file_able_ids = AttachmentModel::select('attachment.id','attachment.type')->whereIn('id',$data['file_id'])->get()->toArray();
+                $attachment = '';
+                foreach($file_able_ids as $k=>$v){
+                    if ($k){
+                        $attachment .= '-'.$v['id'];
+                    }else{
+                        $attachment .= $v['id'];
+                    }
+                }
+                $expert_list = '';
+                $data['expert_list'] = array_unique($data['expert_list']);
+                foreach($data['expert_list'] as $ks=>$vs){
+                    if ($ks){
+                        $expert_list .= '-'.$vs;
+                    }else{
+                        $expert_list .= $vs;
+                    }
+                }
+                $attachments = [
+                    'task_id'=>$data['task_id'],
+                    'expert_id'=>$data['expert_id'],
+                    'num' => $data['num'],
+                    'attachment'=>$attachment,
+                    'expert_array' => $expert_list,
+                ];
+                ArbitrationReportModel::create($attachments);
+                TaskModel::where('id',$data['task_id'])->update(['status'=>18]);
+            }
+
+        });
+
+        return is_null($status)?true:false;
+    }
 }

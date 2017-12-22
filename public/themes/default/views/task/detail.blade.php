@@ -279,6 +279,13 @@
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请二次仲裁
                                 </a>
+                                <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
+                                    查看仲裁结果
+                                </a>
+                                @elseif($detail['zc_status']==2)
+                                <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
+                                    查看仲裁结果
+                                </a>
                                 @endif
                                 @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
@@ -393,35 +400,35 @@
 
                                 <div class="space"></div>
                             </div>
-                            @if(($detail['status']==5||$detail['status']==6)&&$experts['is_user'])
-                                <div class="shenqing"  style="margin-bottom: 10px">
-                                    <a href="javascript:;">申请仲裁</a>
-                                </div>
-                            @endif
+                            {{--@if(($detail['status']==5||$detail['status']==6)&&$experts->is_user)--}}
+                                {{--<div class="shenqing"  style="margin-bottom: 10px">--}}
+                                    {{--<a href="javascript:;">申请仲裁</a>--}}
+                                {{--</div>--}}
+                            {{--@endif--}}
                         </div>
-                        <div id="tanchuceng" style="display: none;">
-                            <div class="shenqingbox">
-                                <h3>申请仲裁</h3>
-                                <div class="shenqb">
-                                    <form action="/task/submitExperts" method="post">
-                                        <div class="shenbtop">
-                                            <dl>
-                                                <dt>问题描述：</dt>
-                                                <dd>
-                                                    {!! csrf_field() !!}
-                                                    <textarea id="miaoshu" name="detail"></textarea>
-                                                    <input type="hidden" name="task_id" value="{!! $detail->id !!}"/>
-                                                </dd>
-                                            </dl>
-                                        </div>
-                                        <div class="tijiaobtn">
-                                            <input type="submit" value="提交" />
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="tanbox"></div>
-                        </div>
+                        {{--<div id="tanchuceng" style="display: none;">--}}
+                            {{--<div class="shenqingbox">--}}
+                                {{--<h3>申请仲裁</h3>--}}
+                                {{--<div class="shenqb">--}}
+                                    {{--<form action="/task/submitExperts" method="post">--}}
+                                        {{--<div class="shenbtop">--}}
+                                            {{--<dl>--}}
+                                                {{--<dt>问题描述：</dt>--}}
+                                                {{--<dd>--}}
+                                                    {{--{!! csrf_field() !!}--}}
+                                                    {{--<textarea id="miaoshu" name="detail"></textarea>--}}
+                                                    {{--<input type="hidden" name="task_id" value="{!! $detail->id !!}"/>--}}
+                                                {{--</dd>--}}
+                                            {{--</dl>--}}
+                                        {{--</div>--}}
+                                        {{--<div class="tijiaobtn">--}}
+                                            {{--<input type="submit" value="提交" />--}}
+                                        {{--</div>--}}
+                                    {{--</form>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="tanbox"></div>--}}
+                        {{--</div>--}}
                         <script src="http://libs.baidu.com/jquery/1.9.1/jquery.min.js"></script>
                         <script>
                             $(function(){
@@ -1571,7 +1578,7 @@
     </div>
 </div>
 {{--通知双方补充仲裁资料--}}
-<form class="modal" id="message-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+<div class="modal" id="message-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog" >
         <div class="modal-content">
             <div class="modal-header">
@@ -1579,6 +1586,7 @@
                 <h4 class="modal-title">通知双方补充仲裁资料</h4>
             </div>
             <form action="" method="post"  >
+                {{csrf_field()}}
             <div class="modal-body">
                 <div>
                         <textarea name="reason" id="res" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
@@ -1602,11 +1610,12 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">提交仲裁报告</h4>
             </div>
-            <form action="/task/reasonAccessory" method="post">
-                <div class="modal-body">
+            <form action="/task/submitAccessory" method="post">
+                <div class="modal-body expert_list">
                     {{csrf_field()}}
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
-                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <input type="hidden" name="expert_id" value="{{Auth::id()}}">
+                    <input type="hidden" name="num" value="{{$detail['zc_status']}}">
                     <!--文件上传-->
                     <div action=" " class="dropzone clearfix" id="dropzone"
                          url="/task/ajaxAttatchment" deleteurl="/task/delAttatchment">
@@ -1615,7 +1624,15 @@
                         </div>
                     </div>
                     <div style="display:none;" id="file_update"></div>
+                    <select name="expert_list[]">
+                        @if(!empty($expertss))
+                            @foreach($expertss as $k=>$item)
+                                <option value="{{$expertss[$k]->id}}">{{$expertss[$k]->name}}</option>
+                            @endforeach
+                        @endif
+                    </select>
                 </div>
+                <button type="button" class="btn btn-primary add_expert" >添加仲裁专家</button>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     <input type="submit" class="btn btn-primary" value="提交">
@@ -1624,6 +1641,51 @@
         </div>
     </div>
 </div>
+    <script>
+        //添加总裁专家
+        $(".add_expert").click(function () {
+            $(".expert_list").append("<select name=\"expert_list[]\" class=\"expert_list\"> @if(!empty($expertss)) @foreach($expertss as $k=>$item) <option value={{$expertss[$k]->id}}>{{$expertss[$k]->name}}</option> @endforeach @endif </select> ");
+        });
+    </script>
+    {{--下载仲裁报告--}}
+@if($detail['zc_status']==1 || $detail['zc_status']==2)
+<div class="modal" id="download-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">下载仲裁报告</h4>
+            </div>
+            <div class="modal-body">
+                <div class="user-profile clearfix">
+                    <ul class="ace-thumbnails">
+                        @if(!empty($zc_report))
+                        @foreach($zc_report as $v)
+                            <li>
+                                <a href="#" >
+                                    <img alt="150x150" src="{!! Theme::asset()->url('images/task-xiazai/'.matchImg($v['type']).'.png') !!}">
+                                    <div class="text">
+                                        <div class="inner"></div>
+                                    </div>
+                                </a>
+                                <div class="tools tools-bottom">
+                                    <a href="{{ URL('task/download',['id'=>$v['id']]) }}" target="_blank">下载</a>
+                                </div>
+                            </li>
+                        @endforeach
+                            @else
+                            暂无报告
+                        @endif
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+@endif
 
 {!! Theme::widget('popup')->render() !!}
 {{--文件上传--}}
