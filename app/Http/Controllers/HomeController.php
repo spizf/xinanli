@@ -515,8 +515,8 @@ class HomeController extends IndexController
         $this->theme->set('now_menu','/');
 
         //获取任务分类信息
-        $data['cateFirst']=DB::table('cate')->where('pid',0)->orderBy('sort')->get();
-        $data['cateAll']=DB::table('cate')->where('pid','!=',0)->get();
+        $data['cateFirst']=DB::table('cate')->where('pid',0)->orderBy('sort','asc')->get();
+        $data['cateAll']=DB::table('cate')->where('pid','!=',0)->orderBy('sort','asc')->get();
         $where=[];
         foreach($data['cateAll'] as $k=>$v){
             foreach($data['cateFirst'] as $kk=>$vv){
@@ -569,7 +569,7 @@ class HomeController extends IndexController
             }
         }
         $data['district']=DB::table('district')->where('upid',0)->get();
-        $data['field']=DB::table('field')->where('pid',0)->get();
+        $data['field']=DB::table('field')->where('pid',0)->orderby('sort','asc')->get();
         return $this->theme->scope('bre.homepage',$data)->render();
     }
     public function getDistrict($id){

@@ -1420,8 +1420,6 @@
             <div class="taskside1" >
                 @if(count($ad))
                 <a href="{!! $ad[0]['ad_url'] !!}"><img src="{!! URL($ad[0]['ad_file']) !!}" alt="" class="img-responsive" width="100%"></a>
-                @else
-                <img src="{{ Theme::asset()->url('images/task-gg.png') }}" alt="" class="img-responsive" width="100%">
                 @endif
             </div>
             <div class="space"></div>

@@ -264,7 +264,7 @@ class IndexController extends BasicIndexController
         $qq = \CommonClass::getConfig('qq');
         
         $ad = AdTargetModel::getAdInfo('TASKINFO_RIGHT');
-        $field = \DB::table('field')->where('pid',0)->get();
+        $field = \DB::table('field')->where('pid',0)->orderby('sort','asc')->get();
 
         $view = [
             'hotcate' => $hotCate,
