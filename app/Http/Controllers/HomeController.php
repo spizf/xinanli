@@ -577,7 +577,7 @@ class HomeController extends IndexController
         return $district;
     }
     public function getField($id){
-        $data['field']=DB::table('field')->where('pid',$id)->get();
+        $data['field']=DB::table('field')->where('pid',$id)->orderby('sort','asc')->get();
         return $data['field'];
     }
     public function fastAddTask(Request $request){
