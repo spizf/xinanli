@@ -130,8 +130,6 @@ Route::group(['prefix'=>'task'],function(){
 	Route::post('/collectionTask','IndexController@postCollectionTask');
 	
 	Route::get('/rememberTable','DetailController@rememberTable');
-//测试
-    Route::get('/arbitrationExpert/{id}','DetailController@arbitrationExpert')->name('arbitrationExpert');
 
 
 });

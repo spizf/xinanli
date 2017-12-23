@@ -172,19 +172,21 @@
 		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 专家等级：</p>
 			<p class="col-sm-4">
-				<input type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="level">
+				<input type="text" value="5" id="form-field-1"  class="col-xs-10 col-sm-5" name="level">
 			</p>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 推荐指数：</p>
 			<p class="col-sm-4">
-				<input type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="recommend">
+				<input type="text" value="5.0" id="form-field-1"  class="col-xs-10 col-sm-5" name="recommend">
+				<span style="padding-left:5px;color:red;line-height: 34px"> 格式：如4.9</span>
 			</p>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 满意度：</p>
 			<p class="col-sm-4">
-				<input type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="satisfaction">
+				<input type="text" value="100" id="form-field-1"  class="col-xs-10 col-sm-5" name="satisfaction">
+				<span style="padding-left:5px;color:red;line-height: 34px"> 单位：%</span>
 			</p>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
@@ -203,6 +205,7 @@
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 平均响应时间：</p>
 			<p class="col-sm-4">
 				<input type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="do_time">
+				<span style="padding-left:5px;color:red;line-height: 34px"> 单位：分</span>
 			</p>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
