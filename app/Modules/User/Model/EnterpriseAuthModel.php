@@ -50,7 +50,7 @@ class EnterpriseAuthModel extends Model
         if($companyInfo->cate_id){
             $cateInfo = TaskCateModel::findById($companyInfo->cate_id);
             $companyInfo['cate_name'] = $cateInfo['name'];
-            
+            dd($cateInfo);
             $parentCate= TaskCateModel::findById($cateInfo['pid']);
             $companyInfo['cate_parent_name'] = $parentCate['name'];
         }else{

@@ -1076,6 +1076,7 @@ class IndexController extends BasicIndexController
         $delivery_deadline = strtotime($delivery_deadline);
         $begin_at = strtotime($begin_at);
         $max_limit_delivery = \CommonClass::getConfig('bid_delivery_max');
+        $test = $max_limit_delivery;
         $max_limit_delivery = $max_limit_delivery * 24 * 3600;
         $deadlineMax = $begin_at + $max_limit_delivery;
         
@@ -1085,7 +1086,7 @@ class IndexController extends BasicIndexController
         }
         if ($deadlineMax < $delivery_deadline) {
             $info = '当前截稿时间最晚可设置为' . date('Y-m-d', $deadlineMax);
-            return json_encode(['info' => $info, 'status' => 'n']);
+            return json_encode(['info' => $info, 'status' => 'n' ,'as'=>$test]);
         }
         $info = '当前截稿时间最晚可设置为' . date('Y-m-d', $deadlineMax);
         $status = 'y';

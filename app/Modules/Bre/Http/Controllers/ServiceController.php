@@ -36,6 +36,7 @@ class serviceController extends IndexController
 
         $user = UserModel::where('id',$uid)->first();
         //add by xl 如果用户不存在提示空间已关闭
+        $shopclose = '';
         if(empty($user)){
             $shopclose = 1;
         }

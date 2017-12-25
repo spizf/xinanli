@@ -388,10 +388,10 @@
                         </div>
                         <input type='hidden' name="slutype" value="1" id="slutype"/>
                         <button class="btn btn-primary btn-blue bor-radius2 btn-big3 preservation" onclick="sluSub(1)">
-                            保存
+                            提交
                         </button>
-                        <a href="javascript:sluSub(2);"  class="text-size14 text-under preview">预览任务</a>
-                        <a href="javascript:sluSub(3);" class="text-size14 text-under not_released">暂不发布</a>
+                        {{--<a href="javascript:sluSub(2);"  class="text-size14 text-under preview">预览任务</a>--}}
+                        {{--<a href="javascript:sluSub(3);" class="text-size14 text-under not_released">暂不发布</a>--}}
                     </div>
                 </form>
             </div>
