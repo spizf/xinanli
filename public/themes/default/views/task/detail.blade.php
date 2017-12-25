@@ -358,10 +358,18 @@
                             <!--任务描述-->
                             <div class="task-description cor-gray51">
                                 <div class="description-main">
-                                    <p class="h4 description-title">任务详情</p>
+                                    <p class="h4 description-title">生产产品</p>
                                     <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
                                         <div class="text">
                                             {!! $detail['desc'] !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="description-main">
+                                    <p class="h4 description-title">任务详情</p>
+                                    <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
+                                        <div class="text">
+                                            {!! $detail['task_detail'] !!}
                                         </div>
                                     </div>
                                     <p style="margin-left:20px;"><span class="js_more" style="cursor:pointer;color:#2f55a0"><span class="text">查看更多</span> <i class="fa fa-angle-double-down"></i></span></p>

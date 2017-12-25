@@ -147,6 +147,7 @@
                                         <span class="Validform_checktip">
                                         </span>
                                     </div>
+
                                     <div class="clearfix  Validform-wysiwyg-editor" >
                                         <label for="name" class="phone text-size14">年规模/产量：</label>
                                         <input type="text" name="productNum" id="form-input-readonly"
@@ -186,6 +187,19 @@
                                                     {!! $errors->first('phone') !!}
                                                 </span>
                                         @endif
+                                    </div>
+                                    <div class="clearfix  Validform-wysiwyg-editor" >
+                                        <label for="name" class="phone text-size14">任务详情：</label>
+
+                                        <textarea name="task_detail"  class="col-xs-12" placeholder="请输入您的项目任务详情"
+                                                  datatype="*" nullmsg="请填写任务详情！"  rows="5"></textarea>
+                                        @if($errors->first('task_detail'))
+                                            <p class="Validform_checktip Validform_wrong">
+                                                {!! $errors->first('task_detail') !!}
+                                            </p>
+                                        @endif
+                                        <span class="Validform_checktip">
+                                        </span>
                                     </div>
                                     <div class="annex">
                                         <!--文件上传-->
