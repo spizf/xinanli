@@ -250,15 +250,15 @@
                                 </a>
                             @elseif($detail['status']==14 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/15" class="btn btn-primary bor-radius2">
-                                    作业实施
+                                    作业实施完成
                                 </a>
                             @elseif($detail['status']==15 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/16" class="btn btn-primary bor-radius2">
-                                    报告编写
+                                    报告编写完成
                                 </a>
                             @elseif($detail['status']==16 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/17" class="btn btn-primary bor-radius2">
-                                    作业评审
+                                    作业评审完成
                                 </a>
                             @elseif($detail['status']==17 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/bidDelivery/{{ $detail['id'] }}" class="btn btn-primary bor-radius2">

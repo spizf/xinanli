@@ -1837,7 +1837,7 @@ class DetailController extends IndexController
         }
         $result = WorkModel::bidDelivery($data);
         if($result){
-            $changes= TaskModel::where('id', $data['task_id'])->update(['status' => 18,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
+            $changes= TaskModel::where('id', $data['task_id'])->update(['status' => 18,'checked_at'=>date('Y-m-d H:i:s',time()),'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
             if($changes){
                 return redirect()->to('/task/'.$data['task_id']);
             }else{
