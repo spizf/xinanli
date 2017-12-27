@@ -241,7 +241,7 @@ class DetailController extends IndexController
         $agree = AgreementModel::where('code_name','task_delivery')->first();
 
         //是否仲裁中
-        $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
+        $is_arbitration = TaskReasonModel::where('task_id',$id)->where('nums',$detail['zc_status']+1)->first();
 
         $view = [
             'detail'=>$detail,
@@ -377,7 +377,9 @@ class DetailController extends IndexController
         $evade_one = WorkModel::where('task_id',$id)->where('status','2')->first();
         $evade_two = TaskModel::where('id',$id)->first();
         $pid = DB::table('cate')->where('id',$evade_two['cate_id'])->value('pid');
-        $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
+        $worke = explode('-',$evade_one['workexpert']);
+        $reiewe = explode('-',$evade_one['reviewexpert']);
+        $name = array_merge($worke,$reiewe);
         //是否为消防或职业病
         if ($pid==167 || $pid==168){
             if ($evade_two['zc_status']==1){
@@ -1818,7 +1820,8 @@ class DetailController extends IndexController
     public function bidDeliverCreate(WorkRequest $request)
     {
         $data = $request->except('_token');
-
+        $data['workexpert'] = implode('-',$data['workexpert']);
+        $data['reviewexpert'] = implode('-',$data['reviewexpert']);
        // $data['desc'] = \CommonClass::removeXss($data['desc']);//防sql注入，过滤标签
         $data['desc'] = '';
         $data['workexpert'] = \CommonClass::removeXss($data['workexpert']);//防sql注入，过滤标签
@@ -1973,12 +1976,12 @@ class DetailController extends IndexController
     public function reasonTask(Request $request)
     {
         $reasons = $request->input('reasons');
-        TaskReasonModel::where('user_id',$reasons[2]['value'])->delete();
         $content = [
             'user_id' => $reasons[2]['value'],
             'employer_id' => $reasons[3]['value'],
             'task_id' => $reasons[1]['value'],
-            'reason'  => $reasons[0]['value']
+            'reason'  => $reasons[0]['value'],
+            'nums'  => $reasons[4]['value']
         ];
         if (TaskReasonModel::create($content)){
             return json_encode(['status'=>1]);

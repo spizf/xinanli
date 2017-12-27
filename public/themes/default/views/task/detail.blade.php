@@ -272,9 +272,11 @@
                                     </a>
                                 @endif
                                 @if($detail['zc_status']==0)
+                                        @if(!$is_arbitration)
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请专家仲裁
                                 </a>
+                                        @endif
                                 @elseif($detail['zc_status']==1)
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请二次仲裁
@@ -286,6 +288,12 @@
                                 <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
                                     查看仲裁结果
                                 </a>
+                                @endif
+                                @if($is_arbitration)
+                                    <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
+                                        <br>
+                                        <br>
+                                    <p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>
                                 @endif
                                 @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
@@ -366,6 +374,14 @@
                                     </div>
                                 </div>
                                 <div class="description-main">
+                                    <p class="h4 description-title">产品产量</p>
+                                    <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
+                                        <div class="text">
+                                            {!! $detail['productNum'] !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="description-main">
                                     <p class="h4 description-title">任务详情</p>
                                     <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
                                         <div class="text">
@@ -374,7 +390,7 @@
                                     </div>
                                     <p style="margin-left:20px;"><span class="js_more" style="cursor:pointer;color:#2f55a0"><span class="text">查看更多</span> <i class="fa fa-angle-double-down"></i></span></p>
                                 </div>
-                                <div class="description-main task-taskdisplay">
+                                {{--<div class="description-main task-taskdisplay">
                                     <div>
                                         <p class="h4 description-title">
                                             <b>任务附件
@@ -403,7 +419,7 @@
                                             @endforelse
                                         </ul>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="space"></div>
 
                                 <div class="space"></div>
@@ -1517,12 +1533,12 @@
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
                     <input type="hidden" name="employer_id" value="{{$detail['uid']}}">
+                    <input type="hidden" name="nums" value="{{$detail['zc_status']+1}}">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary subm">提交</button>
-                <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">支付仲裁费</button></a>
             </div>
         </div>
     </div>

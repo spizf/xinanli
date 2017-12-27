@@ -81,25 +81,25 @@
                                 </div>
                                 <div class="col-xs-11 task-mediaAssessR pd-padding0">
                                     @if($evaluate_from==0)
-                                    <div class="target-star starpd"> 付款及时性：</div>
+                                    <div class="target-star starpd"> 付款及时性&nbsp </div>
                                     <div id="function-star1" class="target-star evaluate-back">
                                         <input type="hidden" name="speed_score" id="speed-score" value="5">
                                     </div>
-                                    <div class="target-star starpd">合作愉快度： </div>
+                                    <div class="target-star starpd">合作愉快度&nbsp </div>
                                     <div id="function-star2" class="target-star evaluate-back">
                                         <input type="hidden" name="quality_score" id="quality-score" value="5">
                                     </div>
 
                                     @else
-                                    <div class="target-star starpd"> 工作速度：</div>
+                                    <div class="target-star starpd"> 工作速度&nbsp</div>
                                     <div id="function-star1" class="target-star evaluate-back">
                                         <input type="hidden" name="speed_score" id="speed-score" value="5">
                                     </div>
-                                    <div class="target-star starpd">工作质量： </div>
+                                    <div class="target-star starpd">工作质量&nbsp </div>
                                     <div id="function-star2" class="target-star evaluate-back">
                                         <input type="hidden" name="quality_score" id="quality-score" value="5">
                                     </div>
-                                    <div class="target-star starpd">工作态度： </div>
+                                    <div class="target-star starpd">工作态度&nbsp </div>
                                     <div id="function-star3" class="target-star evaluate-back">
                                         <input type="hidden" name="attitude_score" id="attitude-score" value="5">
                                     </div>

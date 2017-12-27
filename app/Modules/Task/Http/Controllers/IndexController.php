@@ -887,7 +887,7 @@ class IndexController extends BasicIndexController
         $domain = \CommonClass::getDomain();
         
         $taskType = [
-            'xuanshang','zhaobiao'
+            /*'xuanshang',*/'zhaobiao'
         ];
         $rewardModel = TaskTypeModel::whereIn('alias',$taskType)->get()->toArray();
         $taskTypeAlias = TaskTypeModel::getTaskTypeAliasById($task['type_id']);
