@@ -20,6 +20,7 @@ use App\Modules\User\Model\AuthRecordModel;
 use Auth;
 use Illuminate\Http\Request;
 use Gregwar\Image\Image;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Theme;
 
@@ -40,7 +41,8 @@ class UserCenterController extends BasicUserCenterController
         $this->theme->set('keywords','用户中心,管理中心,用户管理中心');
         $this->theme->set('description','用户中心，用户管理中心。');
 
-        
+
+
         PromoteModel::settlementByUid(Auth::id());
 
         
@@ -156,6 +158,36 @@ class UserCenterController extends BasicUserCenterController
             'my_task' => $my_task_data,
             'domain' => $domain,
         ];
+
+        /*专家仲裁的任务筛选*/
+        $expert_work = '';
+        if (DB::table("experts")->where('name',Auth::user()['name'])->first()){
+            $expert_work = DB::table("experts")->where('name',Auth::user()['name'])->first();
+        }
+        if ($expert_work)
+        {
+            if ($expert_work->position_level == 1)
+            {
+                $experts = DB::table('arbitration_expert')->select('task_id')->where('experts','like','%'.Auth::user()['id'].'%')->get();
+                $group = '';
+                foreach ($experts as $k=>$v){
+                    if ($k){
+                        $group .= '-'.$v->task_id;
+                    }else{
+                        $group .= $v->task_id;
+                    }
+                }
+                $group_s = explode('-',$group);
+                $group_expert = TaskModel::select('task.*', 'us.name as nickname', 'tc.name as category_name', 'ud.avatar')
+                    ->where('task.status','>',2)
+                    ->whereIn('task.id', $group_s)
+                    ->join('user_detail as ud', 'ud.uid', '=', 'task.uid')
+                    ->leftjoin('users as us','us.id','=','task.uid')
+                    ->leftjoin('cate as tc', 'tc.id', '=', 'task.cate_id')
+                    ->orderBy('task.created_at','desc')->limit(5)->get()->toArray();
+                $view['group_experts'] = $group_expert;
+            }
+        }
         $this->theme->set('TYPE',1);
         return $this->theme->scope('user.index', $view)->render();
     }

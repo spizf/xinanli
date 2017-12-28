@@ -11,7 +11,7 @@ $(".subm").click(function () {
         success:function (data) {
             if (data.status =='1') {
                 $('#res').val('');
-                location.reload()
+                location.reload();
                 $.gritter.add({
                     text: '<div><span class="text-center"><h5>提交成功,支付仲裁费后开启仲裁!</h5></span></div>',
                     class_name: 'gritter-info gritter-center'
