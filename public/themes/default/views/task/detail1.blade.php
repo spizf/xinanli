@@ -101,9 +101,9 @@
                                 @elseif($detail['status']==3 && strtotime($detail['begin_at'])>time())
                                 此任务当前处于：<span class="text-primary">审核通过</span>状态
                                 @elseif($detail['status']==3 && strtotime($detail['begin_at'])<time())
-                                此任务当前处于：<span class="text-primary">投稿</span>状态
+                                此任务当前处于：<span class="text-primary">接任务</span>状态
                                 @elseif($detail['status']==4)
-                                此任务当前处于：<span class="text-primary">投稿</span>状态
+                                此任务当前处于：<span class="text-primary">接任务</span>状态
                                 @elseif($detail['status']==5)
                                 此任务当前处于：<span class="text-primary">选稿</span>状态
                                 @elseif($detail['status']==6)
@@ -120,15 +120,15 @@
                                 此任务当前处于：<span class="text-primary">维权</span>状态
                                 @endif
                                 @if($detail['status']==3 && strtotime($detail['begin_at'])>time())
-                                    离投稿开始还剩：
+                                    离接任务开始还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['begin_at'])) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==3 && strtotime($detail['begin_at'])<time())
-                                    离投稿结束还剩：
+                                    离接任务结束还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['delivery_deadline'])) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==4)
-                                    离投稿结束还剩：
+                                    离接任务结束还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['delivery_deadline'])) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==5)
@@ -188,9 +188,9 @@
                             <div>
                             @if(($detail['status']==3 || $detail['status']==4 || $detail['status']==5) && $user_type==3)
                                 @if($task_type_alias == 'xuanshang')
-                                    <a href="/task/workdelivery/{{ $detail['id'] }}"  class="btn btn-primary bor-radius2">立即投稿</a>
+                                    <a href="/task/workdelivery/{{ $detail['id'] }}"  class="btn btn-primary bor-radius2">立即接任务</a>
                                 @elseif($task_type_alias == 'zhaobiao')
-                                    <a href="/task/tenderWork/{{ $detail['id'] }}"  class="btn btn-primary bor-radius2">立即投稿</a>
+                                    <a href="/task/tenderWork/{{ $detail['id'] }}"  class="btn btn-primary bor-radius2">立即接任务</a>
                                 @endif
                             @elseif($detail['status']==5 && $user_type==1 && $has_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] == 0)
                                     <a href="/task/bidBounty/{{$detail['id']}}" class="btn btn-primary bor-radius2">
@@ -299,7 +299,7 @@
                 {{--tab--}}
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="{{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':'' }}" index="1" onclick="rememberTable($(this))">
-                        <a href="#home2" data-toggle="tab" class="text-size16">投稿记录<span class="badge bg-blue">{{ $works_count }}</span></a>
+                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue">{{ $works_count }}</span></a>
                     </li>
                     @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
                     <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
@@ -1031,7 +1031,7 @@
                     </li>
                     <li class="{{ ($detail['status']>=4 && count($works['data'])!=0)?'active':'' }}" data-target="#step1">
                         <span></span>
-                        威客投稿&nbsp;&nbsp;&nbsp;&nbsp;
+                        威客接任务&nbsp;&nbsp;&nbsp;&nbsp;
                         @if($detail['status']>=4 && count($works['data'])!=0)
                             {{ (strtotime($detail['created_at'])>0)?date('Y.m.d',strtotime($works['data'][0]['created_at'])):'' }}
                         @endif

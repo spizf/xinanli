@@ -16,7 +16,7 @@ class CreateWorkTable extends Migration
             $table->increments('id');
             $table->integer('task_id', false)->default(0)->comment('任务ID');
             $table->text('desc')->comment('被关注者id');
-            $table->tinyInteger('status', false)->default(0)->comment('状态 0表示威客投稿 1表示威客中标 2表示威客交付 3表示验收成功 4表示验收失败(交易维权）');
+            $table->tinyInteger('status', false)->default(0)->comment('状态 0表示威客接任务 1表示威客中标 2表示威客交付 3表示验收成功 4表示验收失败(交易维权）');
             $table->tinyInteger('forbidden', false)->default(0)->comment('是否禁用稿件 0表示启用 1表示禁用');
             $table->integer('uid', false)->default(0)->comment('威客ID');
             $table->tinyInteger('bid_by', false)->default(0)->comment('中标选中对象 0表示雇主选中 1表示系统选中');

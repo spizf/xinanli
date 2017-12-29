@@ -593,7 +593,7 @@ class DetailController extends IndexController
     
     public function work($id)
     {
-        $this->theme->setTitle('竞标投稿');
+        $this->theme->setTitle('竞标接任务');
 
         
         $agree = AgreementModel::where('code_name','task_draft')->first();
@@ -628,7 +628,7 @@ class DetailController extends IndexController
         $workModel = new WorkModel();
         $result = $workModel->workCreate($data);
 
-        if(!$result) return redirect()->back()->with('error','投稿失败！');
+        if(!$result) return redirect()->back()->with('error','接任务失败！');
         
         
         $task_delivery = MessageTemplateModel::where('code_name','task_delivery')->where('is_open',1)->where('is_on_site',1)->first();
@@ -758,7 +758,7 @@ class DetailController extends IndexController
         
         if(empty($data['task_id']) || empty($data['work_id']))
         {
-            return redirect()->back()->with(['error'=>'投稿失败']);
+            return redirect()->back()->with(['error'=>'接任务失败']);
         }
         
         if(!WorkModel::isWinBid($data['task_id'],$this->user['id']))
@@ -868,7 +868,7 @@ class DetailController extends IndexController
         $task_data = TaskModel::where('id',$task_id)->first();
         if($task_data['status']!=(3||4) || strtotime($task_data['begin_at'])>time())
         {
-            return ['able' => false, 'errMsg' => '当前任务还未开始投稿！'];
+            return ['able' => false, 'errMsg' => '当前任务还未开始接任务！'];
         }
         
         if (!isset($this->user['id'])) {
@@ -881,7 +881,7 @@ class DetailController extends IndexController
         
         if (TaskModel::isEmployer($task_id, $this->user['id']))
         {
-            return ['able' => false, 'errMsg'=>'你是任务发布者不能投稿！'];
+            return ['able' => false, 'errMsg'=>'你是任务发布者不能接任务！'];
         }
         return ['able'=>true];
     }
@@ -1465,12 +1465,12 @@ class DetailController extends IndexController
     
     public function tenderWork($id)
     {
-        $this->theme->setTitle('竞标投稿');
+        $this->theme->setTitle('竞标接任务');
 
         $uid = Auth::id();
         $task = TaskModel::where('id',$id)->whereIn('status',[3,4,5])->first();
         if(empty($task)){
-            return redirect('/task')->with(array('message' => '任务不存在或不能投稿'));
+            return redirect('/task')->with(array('message' => '任务不存在或不能接任务'));
         }
         
         $agree = AgreementModel::where('code_name','task_draft')->first();
@@ -1725,7 +1725,7 @@ class DetailController extends IndexController
         
         if(empty($data['task_id']) || empty($data['sort']))
         {
-            return redirect()->back()->with(['error'=>'投稿失败']);
+            return redirect()->back()->with(['error'=>'接任务失败']);
         }
         
         if(!WorkModel::isWinBid($data['task_id'],$this->user['id']))
@@ -1831,7 +1831,7 @@ class DetailController extends IndexController
 
         if(empty($data['task_id']))
         {
-            return redirect()->back()->with(['error'=>'投稿失败']);
+            return redirect()->back()->with(['error'=>'接任务失败']);
         }
 
         if(!WorkModel::isWinBid($data['task_id'],$this->user['id']))

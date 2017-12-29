@@ -173,7 +173,7 @@
                             @endfor
                         @endif
                     </h4>
-                    <p class="type"><span><i class="user"></i>{{ str_limit($v['user_name'],5) }}</span><span><i class="num"></i>{{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人投稿</span><span><i class="timer"></i>{{ date('d',time()-strtotime($v['created_at'])) }}天前</span><span><i class="trustee"></i>{{ ($v['bounty_status']==1)?'已托管赏金':'待托管赏金' }}</span></p>
+                    <p class="type"><span><i class="user"></i>{{ str_limit($v['user_name'],5) }}</span><span><i class="num"></i>{{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务</span><span><i class="timer"></i>{{ date('d',time()-strtotime($v['created_at'])) }}天前</span><span><i class="trustee"></i>{{ ($v['bounty_status']==1)?'已托管赏金':'待托管赏金' }}</span></p>
                     <p class="content p-space">
                         {!! strip_tags(htmlspecialchars_decode($v['desc'])) !!}
                     </p>
@@ -205,7 +205,7 @@
             {{--<li class="clearfix">--}}
                 {{--<div class="col-lg-10 list-r">--}}
                     {{--<h4 class="tit"><span class="money"><i class="fa fa-cny"></i>&nbsp;&nbsp;<b>3430.00</b></span>&nbsp;&nbsp;<a href="javascript:;">申请运用微信公众平台常见问题</a>&nbsp;&nbsp;<span class="top">置顶</span></h4>--}}
-                    {{--<p class="type"><span><i class="user"></i>水馒头</span><span><i class="num"></i>10人浏览投稿</span><span><i class="timer"></i>3天前</span><span><i class="trustee"></i>未托管</span></p>--}}
+                    {{--<p class="type"><span><i class="user"></i>水馒头</span><span><i class="num"></i>10人浏览接任务</span><span><i class="timer"></i>3天前</span><span><i class="trustee"></i>未托管</span></p>--}}
                     {{--<p class="content p-space">任务描述：目前，大理市海东新区的多条城市干道正在建设当中，为展示海东新区的新形象，甲方要求将隧道口进行美化，由乙方通过... 念策划、...艺术彩绘、浮雕设计的形式，以大理和海东地方元素，对隧道口进行全方位的美化设计。--}}
                     {{--</p>--}}
                 {{--</div>--}}

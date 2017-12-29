@@ -17,7 +17,7 @@ class CreateTaskRightsTable extends Migration
             $table->tinyInteger('role', false)->default(0)->comment('维权角色 0表示威客维权 1表示雇主维权');
             $table->tinyInteger('type', false)->default(1)->comment('维权类型');
             $table->integer('task_id', false)->default(0)->comment('维权任务id');
-            $table->integer('work_id', false)->default(0)->comment('投稿记录id');
+            $table->integer('work_id', false)->default(0)->comment('接任务记录id');
             $table->text('desc')->comment('维权描述');
             $table->tinyInteger('status', false)->default(0)->comment('状态 0表示未处理 1表示未处理');
             $table->integer('from_uid', false)->default(0)->comment('原告维权者id');

@@ -323,7 +323,7 @@ class ConfigTableSeeder extends Seeder
                 'rule' => '10',
                 'type' => 'task',
                 'title' => '验收期最大时间限制',
-                'desc' => '该功能适用于选稿期结束后有投稿雇主未选稿的时候',
+                'desc' => '该功能适用于选稿期结束后有接任务雇主未选稿的时候',
             ),
             34 => 
             array (
@@ -935,7 +935,7 @@ class ConfigTableSeeder extends Seeder
                 'rule' => '1',
                 'type' => 'bid',
                 'title' => '验收期最大时间限制',
-                'desc' => '该功能适用于选稿期结束后有投稿雇主未选稿的时候',
+                'desc' => '该功能适用于选稿期结束后有接任务雇主未选稿的时候',
             ),
         ));
         

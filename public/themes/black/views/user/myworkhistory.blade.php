@@ -1,5 +1,5 @@
 <div class="g-main g-releasetask">
-    <h4 class="text-size16 cor-blue2f u-title">我的投稿记录</h4>
+    <h4 class="text-size16 cor-blue2f u-title">我的接任务记录</h4>
     <div class="space-12"></div>
     <div class="clearfix g-reletaskhd hidden-xs">
         <form action="/user/myWorkHistory" method="get">
@@ -60,9 +60,9 @@
             <div class="space-10 visible-xs-block"></div>
             <div class="col-sm-11 usernopd">
                 <div class="col-sm-9">
-                    <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span> <a href="">{{ $v['task_title'] }}</a> | 投稿中</div>
+                    <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span> <a href="">{{ $v['task_title'] }}</a> | 接任务中</div>
                     <div class="space-4"></div>
-                    <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110"></i> {{ $v['nickname'] }} <i class="fa fa-eye"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人投稿 <i class="fa fa-clock-o"></i> {{ date('d',strtotime($v['created_at'])) }}天前 <i class="fa fa-unlock-alt"></i> {{ ($v['bounty_status']==1)?'已托管赏金':'待托管赏金' }}</p>
+                    <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110"></i> {{ $v['nickname'] }} <i class="fa fa-eye"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务 <i class="fa fa-clock-o"></i> {{ date('d',strtotime($v['created_at'])) }}天前 <i class="fa fa-unlock-alt"></i> {{ ($v['bounty_status']==1)?'已托管赏金':'待托管赏金' }}</p>
                     <div class="space-4"></div>
                     <p class="cor-gray51">{{ str_limit($v['task_desc'],120) }}</p>
                     <div class="g-userlabel"><a href="">{{ $v['cate_name'] }}</a><a href="">湖北武汉</a></div>

@@ -229,7 +229,7 @@
                                                     </div>
                                                     <div class="checkbox">
                                                         <label class="checkbox-inline">
-                                                            设置投稿时间
+                                                            设置接任务时间
                                                         </label>
                                                     </div>
                                                     <div class=" input-group" style="width:60%;margin-left:20px;">

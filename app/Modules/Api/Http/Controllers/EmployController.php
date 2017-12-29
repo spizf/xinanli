@@ -999,9 +999,9 @@ class EmployController extends ApiBaseController
         $result = EmployWorkModel::employDilivery($data, $uid);
 
         if (!$result) {
-            return $this->formateResponse(1001, '投稿失败');
+            return $this->formateResponse(1001, '接任务失败');
         }
-        return $this->formateResponse(1000, '投稿成功');
+        return $this->formateResponse(1000, '接任务成功');
     }
 
     

@@ -979,7 +979,7 @@ class IndexController extends BasicIndexController
         
         if(date('Ymd',strtotime($delivery_deadline))==date('Ymd',strtotime($begin_at)))
         {
-            return json_encode(['info' => '投稿时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
+            return json_encode(['info' => '接任务时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
         }
         
         $task_bounty_max_limit = \CommonClass::getConfig('task_bounty_max_limit');
@@ -1044,7 +1044,7 @@ class IndexController extends BasicIndexController
         }
         
         if(date('Ymd',strtotime($delivery_deadline))==date('Ymd',strtotime($begin_at))) {
-            return json_encode(['info' => '投稿时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
+            return json_encode(['info' => '接任务时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
         }
         
         if (isset($data['param']) && !empty($data['param'])) {

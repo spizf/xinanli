@@ -911,7 +911,7 @@ class CommonClass
     static function taskSchedulingArtisan()
     {
         //悬赏模式
-        Artisan::call('taskWork');//投稿
+        Artisan::call('taskWork');//接任务
         Artisan::call('taskSelectWork');//选稿
         Artisan::call('taskPublicity');//公示
         Artisan::call('taskDelivery');//选稿
@@ -919,7 +919,7 @@ class CommonClass
         Artisan::call('taskNoStick');//置顶过期
 
         //招标模式
-        Artisan::call('taskBidWork');//投稿
+        Artisan::call('taskBidWork');//接任务
         Artisan::call('taskBidSelectWork');//选稿
         Artisan::call('taskBidDelivery');//选稿
         Artisan::call('taskBidComment');//评论
