@@ -9,7 +9,7 @@
     </div>
     <div class="">
         <div class="g-taskclassify clearfix  table-responsive">
-		    <div class="col-xs-12 clearfix task-type">
+		   {{-- <div class="col-xs-12 clearfix task-type">
                 <div class="row">
                     <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" >任务模式</div>
                     <div class="col-lg-11 col-sm-10  col-xs-12">
@@ -19,7 +19,7 @@
 						@endforeach
                     </div>
                 </div>
-            </div>
+            </div>--}}
             <div class="col-xs-12 clearfix task-type">
                 <div class="row">
                     <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" >任务分类</div>
@@ -147,9 +147,9 @@
         <div class="clearfix g-taskmainhd">
             <div class="pull-left">
                 <a  class="{!! (!isset($merge['desc']))?'g-taskmact':'' !!}" href="{!! URL('task').'?'.http_build_query(array_except($merge,['desc','keywords'])) !!}">综合</a><span>|</span>
-                <a class="{!! (isset($merge['desc']) && $merge['desc']=='created_at')?'g-taskmact':'' !!} g-taskmaintime" href="{!! URL('task').'?'.http_build_query(array_merge($merge,['desc'=>'created_at'])) !!}">发布时间 <i class="glyphicon glyphicon-arrow-{!! (isset($merge['desc']) && $merge['desc']=='created_at')?'up':'down' !!}"></i></a><span>|</span>
+                <a class="{!! (isset($merge['desc']) && $merge['desc']=='created_at')?'g-taskmact':'' !!} g-taskmaintime" href="{!! URL('task').'?'.http_build_query(array_merge($merge,['desc'=>'created_at'])) !!}">发布时间 <i class="glyphicon glyphicon-arrow-{!! (isset($merge['desc']) && $merge['desc']=='created_at')?'up':'down' !!}"></i></a>{{--<span>|</span>
                 <a class="{!! (isset($merge['desc']) && $merge['desc']=='delivery_count')?'g-taskmact':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge($merge,['desc'=>'delivery_count'])) !!}">稿件数</a><span>|</span>
-                <a class="{!! (isset($merge['desc']) && $merge['desc']=='bounty')?'g-taskmact':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge($merge,['desc'=>'bounty'])) !!}">金额</a>
+                <a class="{!! (isset($merge['desc']) && $merge['desc']=='bounty')?'g-taskmact':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge($merge,['desc'=>'bounty'])) !!}">金额</a>--}}
             </div>
             <form action="/task" method="get" />
                 <div class="pull-left g-taskmaininp">
@@ -165,7 +165,7 @@
                 <li class="clearfix"><div class="row">
                     <div class="col-lg-9 col-sm-8">
                         <div class="text-size16">
-                            <b class="cor-orange">@if($v['type_alias'] == "zhaobiao" && $v['bounty_status'] == 0)<strong>可议价</strong>@else￥{{ $v['bounty'] }}@endif</b>
+                            {{--<b class="cor-orange">@if($v['type_alias'] == "zhaobiao" && $v['bounty_status'] == 0)<strong>可议价</strong>@else￥{{ $v['bounty'] }}@endif</b>--}}
                             <a href="{{ URL('task').'/'.$v['id'] }}" target="_blank">
                                 <b>{{ $v['title'] }}</b>
                             </a>
@@ -247,7 +247,7 @@
             @if(count($rightAd))
             <a  href="{!! $rightAd[0]['ad_url'] !!}"><img  src="{!! URL($rightAd[0]['ad_file']) !!}"  alt=""></a>
             @else
-            <img src="{!! Theme::asset()->url('images/mybg.png') !!}" />
+            <img src="{!! Theme::asset()->url('/*images/mybg.png*/') !!}" />
             @endif
         </div>
         <form class="registerform" action="/task/create" method="get">
