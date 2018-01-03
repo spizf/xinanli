@@ -887,7 +887,7 @@ class IndexController extends BasicIndexController
         $domain = \CommonClass::getDomain();
         
         $taskType = [
-            'xuanshang','zhaobiao'
+            /*'xuanshang',*/'zhaobiao'
         ];
         $rewardModel = TaskTypeModel::whereIn('alias',$taskType)->get()->toArray();
         $taskTypeAlias = TaskTypeModel::getTaskTypeAliasById($task['type_id']);
@@ -989,7 +989,7 @@ class IndexController extends BasicIndexController
         
         if(date('Ymd',strtotime($delivery_deadline))==date('Ymd',strtotime($begin_at)))
         {
-            return json_encode(['info' => '投稿时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
+            return json_encode(['info' => '接任务时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
         }
         
         $task_bounty_max_limit = \CommonClass::getConfig('task_bounty_max_limit');
@@ -1054,7 +1054,7 @@ class IndexController extends BasicIndexController
         }
         
         if(date('Ymd',strtotime($delivery_deadline))==date('Ymd',strtotime($begin_at))) {
-            return json_encode(['info' => '投稿时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
+            return json_encode(['info' => '接任务时间最少一天', 'status' => 'n','begin_at'=>$data['begin_at'],'delivery_deadline'=>date('Ymd',strtotime($data['delivery_deadline']))]);
         }
         
         if (isset($data['param']) && !empty($data['param'])) {
@@ -1076,6 +1076,7 @@ class IndexController extends BasicIndexController
         $delivery_deadline = strtotime($delivery_deadline);
         $begin_at = strtotime($begin_at);
         $max_limit_delivery = \CommonClass::getConfig('bid_delivery_max');
+        $test = $max_limit_delivery;
         $max_limit_delivery = $max_limit_delivery * 24 * 3600;
         $deadlineMax = $begin_at + $max_limit_delivery;
         
@@ -1085,7 +1086,7 @@ class IndexController extends BasicIndexController
         }
         if ($deadlineMax < $delivery_deadline) {
             $info = '当前截稿时间最晚可设置为' . date('Y-m-d', $deadlineMax);
-            return json_encode(['info' => $info, 'status' => 'n']);
+            return json_encode(['info' => $info, 'status' => 'n' ,'as'=>$test]);
         }
         $info = '当前截稿时间最晚可设置为' . date('Y-m-d', $deadlineMax);
         $status = 'y';

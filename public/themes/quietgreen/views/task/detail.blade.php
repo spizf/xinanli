@@ -21,9 +21,9 @@
                 @elseif($detail['status']==2)
                     <span class="text-size16">此任务当前处于：<span class="text-primary">后台审核</span>状态</span>
                 @elseif($detail['status']==3)
-                    <span class="text-size16">此任务当前处于：<span class="text-primary">投稿</span>状态</span>
+                    <span class="text-size16">此任务当前处于：<span class="text-primary">接任务</span>状态</span>
                 @elseif($detail['status']==4)
-                    <span class="text-size16">此任务当前处于：<span class="text-primary">投稿</span>状态</span>
+                    <span class="text-size16">此任务当前处于：<span class="text-primary">接任务</span>状态</span>
                 @elseif($detail['status']==5)
                     <span class="text-size16">此任务当前处于：<span class="text-primary">选稿</span>状态</span>
                 @elseif($detail['status']==6)
@@ -40,7 +40,7 @@
             </div>
             <div class="pull-right">
                 @if(($detail['status']==3 || $detail['status']==4 || $detail['status']==5) && $user_type==3)
-                    <a href="/task/workdelivery/{{ $detail['id'] }}" class="btn btn-primary btn-blue bor-radius2 col-xs-12">立即投稿</a>
+                    <a href="/task/workdelivery/{{ $detail['id'] }}" class="btn btn-primary btn-blue bor-radius2 col-xs-12">立即接任务</a>
                 @elseif($detail['status']==7 && $user_type==2 && $is_win_bid)
                     <a href="/task/delivery/{{ $detail['id'] }}"  class="btn btn-primary col-xs-12 btn-blue bor-radius6">去交付</a>
                 @endif
@@ -105,7 +105,7 @@
                                     </li>
                                     <li class="{{ ($detail['status']>=4 && count($works['data'])!=0)?'active':'' }}" data-target="#step1">
                                         <div class="clearfix"><span class="step"><i class="fa fa-chevron-right"></i></span></div>
-                                        <span class="title">威客投稿</span>
+                                        <span class="title">威客接任务</span>
                                         @if($detail['status']>=4 && count($works['data'])!=0)
                                             <span class="title">{{ (strtotime($detail['created_at'])>0)?date('Y.m.d',strtotime($works['data'][0]['created_at'])):'' }}</span>
                                         @endif
@@ -156,7 +156,7 @@
                             <a href="#home" data-toggle="tab" class="text-size16">任务详情</a>
                         </li>
                         <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
-                            <a href="#home2" data-toggle="tab" class="text-size16">投稿记录<span class="badge bg-blue">{{ $works_count }}</span></a>
+                            <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue">{{ $works_count }}</span></a>
                         </li>
                         @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
                         <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==3)?'active':'' }}" index="3" onclick="rememberTable($(this))">
@@ -275,7 +275,7 @@
                                     {{--</li>--}}
                                     {{--<li class="{{ ($detail['status']>=4)?'active':'' }}" data-target="#step1">--}}
                                         {{--<div class="clearfix"><span class="step"><i class="fa fa-chevron-right"></i></span></div>--}}
-                                        {{--<span class="title">威客投稿</span>--}}
+                                        {{--<span class="title">威客接任务</span>--}}
                                         {{--@if($detail['status']>=4 && count($works['data'])!=0)--}}
                                         {{--<span class="title">{{ date('Y.m.d',strtotime($works['data'][0]['created_at'])) }}</span>--}}
                                         {{--@endif--}}
@@ -968,9 +968,9 @@
                         @elseif($detail['status']==3 && strtotime($detail['begin_at'])>time())
                         <p class="h4">此任务当前处于：<span class="text-primary">审核通过</span>状态</p>
                         @elseif($detail['status']==3 && strtotime($detail['begin_at'])<time())
-                        <p class="h4">此任务当前处于：<span class="text-primary">投稿</span>状态</p>
+                        <p class="h4">此任务当前处于：<span class="text-primary">接任务</span>状态</p>
                         @elseif($detail['status']==4)
-                        <p class="h4">此任务当前处于：<span class="text-primary">投稿</span>状态</p>
+                        <p class="h4">此任务当前处于：<span class="text-primary">接任务</span>状态</p>
                         @elseif($detail['status']==5)
                         <p class="h4">此任务当前处于：<span class="text-primary">选稿</span>状态</p>
                         @elseif($detail['status']==6)
@@ -987,15 +987,15 @@
                         <p class="h4">此任务当前处于：<span class="text-primary">维权</span>状态</p>
                         @endif
                         @if($detail['status']==3 && strtotime($detail['begin_at'])>time())
-                            <p>离投稿开始还剩：</p>
+                            <p>离接任务开始还剩：</p>
                             <p class="text-center"><b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['begin_at'])) }}" class="cor-orange text-size22 timer-check"></b></p>
                         @endif
                         @if($detail['status']==3 && strtotime($detail['begin_at'])<time())
-                            <p>离投稿结束还剩：</p>
+                            <p>离接任务结束还剩：</p>
                             <p class="text-center"><b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['delivery_deadline'])) }}" class="cor-orange text-size22 timer-check"></b></p>
                         @endif
                         @if($detail['status']==4)
-                            <p>离投稿结束还剩：</p>
+                            <p>离接任务结束还剩：</p>
                             <p class="text-center"><b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['delivery_deadline'])) }}" class="cor-orange text-size22 timer-check"></b></p>
                         @endif
                         @if($detail['status']==5)
@@ -1036,7 +1036,7 @@
                         @endif
                     </div>
                     @if(($detail['status']==3 || $detail['status']==4 || $detail['status']==5) && $user_type==3)
-                        <div class="text-center"><a href="/task/workdelivery/{{ $detail['id'] }}"  class="btn btn-primary btn-block allbtn btn-blue bor-radius2">立即投稿</a></div>
+                        <div class="text-center"><a href="/task/workdelivery/{{ $detail['id'] }}"  class="btn btn-primary btn-block allbtn btn-blue bor-radius2">立即接任务</a></div>
                     @elseif($detail['status']==7 && $user_type==2 && $is_win_bid && !$is_delivery)
                         <div class="text-center"><a href="/task/delivery/{{ $detail['id'] }}" class="btn btn-primary btn-block allbtn">去交付</a></div>
                     @elseif($user_type==2 && CommonClass::evaluted($v['task_id'],Auth::user()['id'])==0 && $is_delivery)

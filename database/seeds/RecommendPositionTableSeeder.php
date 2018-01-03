@@ -112,7 +112,7 @@ class RecommendPositionTableSeeder extends Seeder
                 'id' => 10,
                 'name' => '同类任务',
                 'code' => 'TASKDELIVERY_SIDE',
-                'position' => '任务竞标投稿_侧边栏',
+                'position' => '任务竞标接任务_侧边栏',
                 'num' => 5,
                 'pic' => NULL,
                 'is_open' => 1,

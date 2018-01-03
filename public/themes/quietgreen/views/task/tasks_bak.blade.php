@@ -170,7 +170,7 @@
                             </div>
                             <p class="cor-gray87">
                                 <i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ str_limit($v['user_name'],5) }}&nbsp;&nbsp;&nbsp;
-                                <i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人投稿&nbsp;&nbsp;&nbsp;
+                                <i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;
                                 <span class="hidden-xs"><i class="fa fa-clock-o cor-grayd2"></i> {{ date('d',time()-strtotime($v['created_at'])) }}天前&nbsp;&nbsp;&nbsp;</span> <i class="fa fa-unlock-alt cor-grayd2"></i> {{ ($v['bounty_status']==1)?'已托管赏金':'待托管赏金' }}</p>
                             <p class="cor-gray51 hidden-xs">{!! strip_tags(htmlspecialchars_decode($v['desc'])) !!} </p>
                         </div>

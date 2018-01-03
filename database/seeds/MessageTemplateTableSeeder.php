@@ -37,7 +37,7 @@ class MessageTemplateTableSeeder extends Seeder
                 'id' => 23,
                 'code_name' => 'task_publish_success',
                 'name' => '任务发布成功',
-                'content' => '&lt;p&gt;尊敬的{{username}}：&lt;/p&gt;&lt;p&gt;您的任务[{{task_number}}]{{task_title}}{{task_status}}，感谢您对{{website}}的信任。如有特殊情况，请致电客服，我们将协助您解决问题。&lt;/p&gt;&lt;p&gt;任务编号：{{task_number}}&lt;/p&gt;&lt;p&gt;任务标题：&lt;a href=&quot;{{href}}&quot; target=&quot;_blank&quot;&gt;{{task_link}}&lt;/a&gt;&lt;/p&gt;&lt;p&gt;任务状态：{{task_status}}&lt;/p&gt;&lt;p&gt;开始时间：{{start_time}}&lt;/p&gt;&lt;p&gt;投稿结束时间：{{manuscript_end_time}}&lt;span id=&quot;transmark&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;--------------------------------------------------------------------------------------------------------------------&lt;/p&gt;&lt;p&gt;此邮件为系统自动发出的邮件，请勿直接回复。&lt;/p&gt;',
+                'content' => '&lt;p&gt;尊敬的{{username}}：&lt;/p&gt;&lt;p&gt;您的任务[{{task_number}}]{{task_title}}{{task_status}}，感谢您对{{website}}的信任。如有特殊情况，请致电客服，我们将协助您解决问题。&lt;/p&gt;&lt;p&gt;任务编号：{{task_number}}&lt;/p&gt;&lt;p&gt;任务标题：&lt;a href=&quot;{{href}}&quot; target=&quot;_blank&quot;&gt;{{task_link}}&lt;/a&gt;&lt;/p&gt;&lt;p&gt;任务状态：{{task_status}}&lt;/p&gt;&lt;p&gt;开始时间：{{start_time}}&lt;/p&gt;&lt;p&gt;接任务结束时间：{{manuscript_end_time}}&lt;span id=&quot;transmark&quot;&gt;&lt;/span&gt;&lt;/p&gt;&lt;p&gt;--------------------------------------------------------------------------------------------------------------------&lt;/p&gt;&lt;p&gt;此邮件为系统自动发出的邮件，请勿直接回复。&lt;/p&gt;',
                 'message_type' => 2,
                 'is_open' => 1,
                 'is_on_site' => 1,

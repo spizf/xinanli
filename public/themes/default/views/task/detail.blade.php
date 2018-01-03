@@ -104,9 +104,9 @@
                                 @elseif($detail['status']==3 && strtotime($detail['begin_at'])>time())
                                 此任务当前处于：<span class="text-primary">审核通过</span>状态
                                 @elseif($detail['status']==3 && strtotime($detail['begin_at'])<time())
-                                此任务当前处于：<span class="text-primary">投稿</span>状态
+                                此任务当前处于：<span class="text-primary">接任务</span>状态
                                 @elseif($detail['status']==4)
-                                此任务当前处于：<span class="text-primary">投稿</span>状态
+                                此任务当前处于：<span class="text-primary">接任务</span>状态
                                 @elseif($detail['status']==5)
                                 此任务当前处于：<span class="text-primary">选稿</span>状态
                               {{--  @elseif($detail['status']==6)
@@ -139,15 +139,15 @@
                                 此任务当前处于：<span class="text-primary">维权</span>状态
                                 @endif
                                 @if($detail['status']==3 && strtotime($detail['begin_at'])>time())
-                                    离投稿开始还剩：
+                                    离接任务开始还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['begin_at'])) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==3 && strtotime($detail['begin_at'])<time())
-                                    离投稿结束还剩：
+                                    离接任务结束还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['delivery_deadline'])) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==4)
-                                    离投稿结束还剩：
+                                    离接任务结束还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['delivery_deadline'])) }}" class="cor-orange text-size22 timer-check"></b>
                                 @endif
                                 @if($detail['status']==5)
@@ -250,15 +250,15 @@
                                 </a>
                             @elseif($detail['status']==14 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/15" class="btn btn-primary bor-radius2">
-                                    作业实施
+                                    作业实施完成
                                 </a>
                             @elseif($detail['status']==15 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/16" class="btn btn-primary bor-radius2">
-                                    报告编写
+                                    报告编写完成
                                 </a>
                             @elseif($detail['status']==16 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/17" class="btn btn-primary bor-radius2">
-                                    作业评审
+                                    作业评审完成
                                 </a>
                             @elseif($detail['status']==17 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/bidDelivery/{{ $detail['id'] }}" class="btn btn-primary bor-radius2">
@@ -272,9 +272,11 @@
                                     </a>
                                 @endif
                                 @if($detail['zc_status']==0)
+                                        @if(!$is_arbitration)
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请专家仲裁
                                 </a>
+                                        @endif
                                 @elseif($detail['zc_status']==1)
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请二次仲裁
@@ -286,6 +288,12 @@
                                 <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
                                     查看仲裁结果
                                 </a>
+                                @endif
+                                @if($is_arbitration)
+                                    <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
+                                        <br>
+                                        <br>
+                                    <p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>
                                 @endif
                                 @elseif($detail['status']==19 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#find-data">
@@ -358,15 +366,31 @@
                             <!--任务描述-->
                             <div class="task-description cor-gray51">
                                 <div class="description-main">
-                                    <p class="h4 description-title">任务详情</p>
+                                    <p class="h4 description-title">生产产品</p>
                                     <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
                                         <div class="text">
                                             {!! $detail['desc'] !!}
                                         </div>
                                     </div>
+                                </div>
+                                <div class="description-main">
+                                    <p class="h4 description-title">产品产量</p>
+                                    <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
+                                        <div class="text">
+                                            {!! $detail['productNum'] !!}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="description-main">
+                                    <p class="h4 description-title">任务详情</p>
+                                    <div class="h5 height-line24 js_moreDetail" style="word-break:break-all;height:50px;overflow:hidden;">
+                                        <div class="text">
+                                            {!! $detail['task_detail'] !!}
+                                        </div>
+                                    </div>
                                     <p style="margin-left:20px;"><span class="js_more" style="cursor:pointer;color:#2f55a0"><span class="text">查看更多</span> <i class="fa fa-angle-double-down"></i></span></p>
                                 </div>
-                                <div class="description-main task-taskdisplay">
+                                {{--<div class="description-main task-taskdisplay">
                                     <div>
                                         <p class="h4 description-title">
                                             <b>任务附件
@@ -395,7 +419,7 @@
                                             @endforelse
                                         </ul>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <div class="space"></div>
 
                                 <div class="space"></div>
@@ -456,7 +480,7 @@
                 {{--tab--}}
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="{{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':'' }}" index="1" onclick="rememberTable($(this))">
-                        <a href="#home2" data-toggle="tab" class="text-size16">投稿记录<span class="badge bg-blue">{{ $works_count }}</span></a>
+                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue">{{ $works_count }}</span></a>
                     </li>
                     @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
                     <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
@@ -1188,7 +1212,7 @@
                     </li>
                     <li class="{{ ($detail['status']>=4 && count($works['data'])!=0)?'active':'' }}" data-target="#step1">
                         <span></span>
-                        威客投稿&nbsp;&nbsp;&nbsp;&nbsp;
+                        威客接任务&nbsp;&nbsp;&nbsp;&nbsp;
                         @if($detail['status']>=4 && count($works['data'])!=0)
                             {{ (strtotime($detail['created_at'])>0)?date('Y.m.d',strtotime($works['data'][0]['created_at'])):'' }}
                         @endif
@@ -1509,12 +1533,12 @@
                     <input type="hidden" name="task_id" value="{{$detail['id']}}">
                     <input type="hidden" name="user_id" value="{{Auth::id()}}">
                     <input type="hidden" name="employer_id" value="{{$detail['uid']}}">
+                    <input type="hidden" name="nums" value="{{$detail['zc_status']+1}}">
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary subm">提交</button>
-                <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">支付仲裁费</button></a>
             </div>
         </div>
     </div>

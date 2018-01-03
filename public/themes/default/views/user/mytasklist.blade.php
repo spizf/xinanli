@@ -74,7 +74,7 @@
             <div class="col-sm-9 col-xs-8">
                 <div class="text-size14 cor-gray51"><span class="cor-orange">@if($v['bounty_status']==0 && $v['alias'] =='zhaobiao')可议价@else￥{{ $v['bounty'] }}@endif</span>&nbsp;&nbsp;<a target="_blank" class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{ $status[$v['status']] }}</div>
                 <div class="space-6"></div>
-                <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ $v['nickname'] }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人投稿&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{$v['show_publish']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i>@if($v['bounty_status']==0)未托管赏金@else 已托管赏金@endif</p>
+                <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ $v['nickname'] }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{$v['show_publish']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i>@if($v['bounty_status']==0)未托管赏金@else 已托管赏金@endif</p>
                 <div class="space-6"></div>
                 <p class="cor-gray51 p-space">{!! strip_tags(htmlspecialchars_decode($v['desc'])) !!} </p>
                 <div class="space-2"></div>

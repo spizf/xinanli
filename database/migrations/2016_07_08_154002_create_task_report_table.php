@@ -15,8 +15,8 @@ class CreateTaskReportTable extends Migration
         Schema::create('task_report', function (Blueprint $table) {
             $table->increments('id');
             $table->tinyInteger('type', false)->default(1)->comment('举报类型 1表示滥发广告 2违规信息 3虚假交换 4涉嫌抄袭 5重复交稿 6其他');
-            $table->integer('task_id', false)->default(0)->comment('举报的投稿的任务id');
-            $table->integer('work_id', false)->default(0)->comment('所举报的投稿记录');
+            $table->integer('task_id', false)->default(0)->comment('举报的接任务的任务id');
+            $table->integer('work_id', false)->default(0)->comment('所举报的接任务记录');
             $table->text('desc')->comment('举报描述');
             $table->tinyInteger('status', false)->default(0)->comment('状态 0表示未处理 1表示未处理');
             $table->integer('from_uid', false)->default(0)->comment('举报用户ID');

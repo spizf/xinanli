@@ -40,7 +40,7 @@
                 <div class="sihetit">四大核心功能</div>
                 <ul class="sihenei">
                     <li class="sihebg01">
-                        <h3>作业全程管控</h3>
+                        <h3>作业过程管控</h3>
                         <div class="neirguan">
                             <p>行业定制检查表，实现评价内容标准、无遗漏</p>
                             <p>评价作业过程全程记录，过控资料云端存储</p>
@@ -57,7 +57,7 @@
                         </div>
                     </li>
                     <li class="sihebg03">
-                        <h3>信用评价系统</h3>
+                        <h3>信用评价体系</h3>
                         <div class="neirguan">
                             <p>多维信用评价规则，综合信息进行测算分析、研究</p>
                             <p>量化信用体系管理，判断其当前信用状态化仲裁机制</p>
@@ -80,15 +80,15 @@
                 <?php /*<p>评价服务双方对评价报告存在争议时，平台专家提供仲裁服务，</br>*/ ?>
                 <div class="fastsev">快速服务</div>
                 <div class="addimgbo">
-                    <span>发布任务需求</span>
+                    <span>企业发布任务</span>
                     <img src="img/youjt.jpg">
-                    <span>服务商投标</span>
+                    <span>服务机构接任务</span>
                     <img src="img/youjt.jpg">
-                    <span>选择，确定中标方</span>
+                    <span>企业选择服务机构</span>
                     <img src="img/youjt.jpg">
-                    <span>签署协议完成工作</span>
+                    <span>签署协议完成作业</span>
                     <img src="img/youjt.jpg">
-                    <span>验收，付款</span>
+                    <span>验收、付款</span>
                     <img src="img/youjt.jpg">
                     <span>双方互评</span>
                 </div>
@@ -193,7 +193,7 @@
             <div class="addnewbotop">
                 <div class="addnewles on">
                     <span>发需求</span>
-                    <b>线上招标轻松省事</b>
+                    <b>线上发布任务轻松省事</b>
                 </div>
                 <div class="addnewles">
                     <span>找任务</span>

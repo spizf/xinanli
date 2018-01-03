@@ -241,7 +241,7 @@ class DetailController extends IndexController
         $agree = AgreementModel::where('code_name','task_delivery')->first();
 
         //是否仲裁中
-        $is_arbitration = TaskReasonModel::where('task_id',$id)->first();
+        $is_arbitration = TaskReasonModel::where('task_id',$id)->where('nums',$detail['zc_status']+1)->first();
 
         $view = [
             'detail'=>$detail,
@@ -377,7 +377,9 @@ class DetailController extends IndexController
         $evade_one = WorkModel::where('task_id',$id)->where('status','2')->first();
         $evade_two = TaskModel::where('id',$id)->first();
         $pid = DB::table('cate')->where('id',$evade_two['cate_id'])->value('pid');
-        $name = array($evade_one['workexpert'],$evade_one['reviewexpert']);
+        $worke = explode('-',$evade_one['workexpert']);
+        $reiewe = explode('-',$evade_one['reviewexpert']);
+        $name = array_merge($worke,$reiewe);
         //是否为消防或职业病
         if ($pid==167 || $pid==168){
             if ($evade_two['zc_status']==1){
@@ -591,7 +593,7 @@ class DetailController extends IndexController
     
     public function work($id)
     {
-        $this->theme->setTitle('竞标投稿');
+        $this->theme->setTitle('竞标接任务');
 
         
         $agree = AgreementModel::where('code_name','task_draft')->first();
@@ -626,7 +628,7 @@ class DetailController extends IndexController
         $workModel = new WorkModel();
         $result = $workModel->workCreate($data);
 
-        if(!$result) return redirect()->back()->with('error','投稿失败！');
+        if(!$result) return redirect()->back()->with('error','接任务失败！');
         
         
         $task_delivery = MessageTemplateModel::where('code_name','task_delivery')->where('is_open',1)->where('is_on_site',1)->first();
@@ -756,7 +758,7 @@ class DetailController extends IndexController
         
         if(empty($data['task_id']) || empty($data['work_id']))
         {
-            return redirect()->back()->with(['error'=>'投稿失败']);
+            return redirect()->back()->with(['error'=>'接任务失败']);
         }
         
         if(!WorkModel::isWinBid($data['task_id'],$this->user['id']))
@@ -866,7 +868,7 @@ class DetailController extends IndexController
         $task_data = TaskModel::where('id',$task_id)->first();
         if($task_data['status']!=(3||4) || strtotime($task_data['begin_at'])>time())
         {
-            return ['able' => false, 'errMsg' => '当前任务还未开始投稿！'];
+            return ['able' => false, 'errMsg' => '当前任务还未开始接任务！'];
         }
         
         if (!isset($this->user['id'])) {
@@ -879,7 +881,7 @@ class DetailController extends IndexController
         
         if (TaskModel::isEmployer($task_id, $this->user['id']))
         {
-            return ['able' => false, 'errMsg'=>'你是任务发布者不能投稿！'];
+            return ['able' => false, 'errMsg'=>'你是任务发布者不能接任务！'];
         }
         return ['able'=>true];
     }
@@ -1463,12 +1465,12 @@ class DetailController extends IndexController
     
     public function tenderWork($id)
     {
-        $this->theme->setTitle('竞标投稿');
+        $this->theme->setTitle('竞标接任务');
 
         $uid = Auth::id();
         $task = TaskModel::where('id',$id)->whereIn('status',[3,4,5])->first();
         if(empty($task)){
-            return redirect('/task')->with(array('message' => '任务不存在或不能投稿'));
+            return redirect('/task')->with(array('message' => '任务不存在或不能接任务'));
         }
         
         $agree = AgreementModel::where('code_name','task_draft')->first();
@@ -1723,7 +1725,7 @@ class DetailController extends IndexController
         
         if(empty($data['task_id']) || empty($data['sort']))
         {
-            return redirect()->back()->with(['error'=>'投稿失败']);
+            return redirect()->back()->with(['error'=>'接任务失败']);
         }
         
         if(!WorkModel::isWinBid($data['task_id'],$this->user['id']))
@@ -1818,7 +1820,8 @@ class DetailController extends IndexController
     public function bidDeliverCreate(WorkRequest $request)
     {
         $data = $request->except('_token');
-
+        $data['workexpert'] = implode('-',$data['workexpert']);
+        $data['reviewexpert'] = implode('-',$data['reviewexpert']);
        // $data['desc'] = \CommonClass::removeXss($data['desc']);//防sql注入，过滤标签
         $data['desc'] = '';
         $data['workexpert'] = \CommonClass::removeXss($data['workexpert']);//防sql注入，过滤标签
@@ -1828,7 +1831,7 @@ class DetailController extends IndexController
 
         if(empty($data['task_id']))
         {
-            return redirect()->back()->with(['error'=>'投稿失败']);
+            return redirect()->back()->with(['error'=>'接任务失败']);
         }
 
         if(!WorkModel::isWinBid($data['task_id'],$this->user['id']))
@@ -1837,7 +1840,7 @@ class DetailController extends IndexController
         }
         $result = WorkModel::bidDelivery($data);
         if($result){
-            $changes= TaskModel::where('id', $data['task_id'])->update(['status' => 18,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
+            $changes= TaskModel::where('id', $data['task_id'])->update(['status' => 18,'checked_at'=>date('Y-m-d H:i:s',time()),'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
             if($changes){
                 return redirect()->to('/task/'.$data['task_id']);
             }else{
@@ -1973,12 +1976,12 @@ class DetailController extends IndexController
     public function reasonTask(Request $request)
     {
         $reasons = $request->input('reasons');
-        TaskReasonModel::where('user_id',$reasons[2]['value'])->delete();
         $content = [
             'user_id' => $reasons[2]['value'],
             'employer_id' => $reasons[3]['value'],
             'task_id' => $reasons[1]['value'],
-            'reason'  => $reasons[0]['value']
+            'reason'  => $reasons[0]['value'],
+            'nums'  => $reasons[4]['value']
         ];
         if (TaskReasonModel::create($content)){
             return json_encode(['status'=>1]);

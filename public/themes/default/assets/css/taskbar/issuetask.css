@@ -592,7 +592,7 @@ section .task-l .taskside-points .taskside-points-border{
 }
 .mission-task .mission-ck .process li{
     position: relative;
-    width:16.6%;
+    width:15.3%;
 }
 .mission-task .mission-ck .process li:before{
     content:'';
@@ -618,6 +618,7 @@ section .task-l .taskside-points .taskside-points-border{
 .mission-task .mission-ck .process li p{
     font-size:12px;
     color:#8a8a8a;
+    width: 120px;
 }
 
 /*.panel-group*/

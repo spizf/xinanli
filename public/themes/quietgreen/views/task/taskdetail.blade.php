@@ -472,7 +472,7 @@
                                         <input type="file" id="id-input-file-2" />
                                     </div>
                                     <div class="text-center">
-                                        <p><span class="fa fa-exclamation-circle text-orange"></span> 请遵守投稿规则，若所投稿件被认定为无效稿件，则可能会受到惩罚</p>
+                                        <p><span class="fa fa-exclamation-circle text-orange"></span> 请遵守接任务规则，若所接任务件被认定为无效稿件，则可能会受到惩罚</p>
                                         <button type="button" class="btn btn-primary btn-blue bor-radius2 btn-big1" data-dismiss="modal">提 交</button>
                                     </div>
                                     <div class="space"></div>

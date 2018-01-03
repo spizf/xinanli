@@ -147,6 +147,7 @@
                                         <span class="Validform_checktip">
                                         </span>
                                     </div>
+
                                     <div class="clearfix  Validform-wysiwyg-editor" >
                                         <label for="name" class="phone text-size14">年规模/产量：</label>
                                         <input type="text" name="productNum" id="form-input-readonly"
@@ -187,7 +188,20 @@
                                                 </span>
                                         @endif
                                     </div>
-                                    <div class="annex">
+                                    <div class="clearfix  Validform-wysiwyg-editor" >
+                                        <label for="name" class="phone text-size14">任务详情：</label>
+
+                                        <textarea name="task_detail"  class="col-xs-12" placeholder="请输入您的项目任务详情"
+                                                  datatype="*" nullmsg="请填写任务详情！"  rows="5"></textarea>
+                                        @if($errors->first('task_detail'))
+                                            <p class="Validform_checktip Validform_wrong">
+                                                {!! $errors->first('task_detail') !!}
+                                            </p>
+                                        @endif
+                                        <span class="Validform_checktip">
+                                        </span>
+                                    </div>
+                                    {{--<div class="annex">
                                         <!--文件上传-->
                                         <div  class="dropzone clea>fix" id="dropzone"
                                               url="{{ URL('task/fileUpload')}}"
@@ -197,23 +211,23 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div id="file_update"></div>
+                                    <div id="file_update"></div>--}}
                                 </div>
                             </li>
                             <li>
-                                <a class="task-tit" href="javascript:;" data-toggle="collapse"
+                                {{--<a class="task-tit" href="javascript:;" data-toggle="collapse"
                                    data-target="#demol">
                                     <span class="ace-icon fa fa-angle-double-down"
                                           data-icon-hide="ace-icon fa fa-angle-double-down"
                                           data-icon-show="ace-icon fa fa fa-angle-double-right">
 
                                     </span> 交易模式
-                                </a>
+                                </a>--}}
                                 <div id="demol" class="panel-group">
                                     @forelse($rewardModel as $k => $type_v)
                                     <div class="panel panel-default">
                                         @if($type_v['alias'] == 'zhaobiao')
-                                        <div class="checkbox panel-heading">
+                                        {{--<div class="checkbox panel-heading">
                                             <label class="z-check z-check-validform"
                                                    data-toggle="collapse"
                                                    data-parent="#demol" href="#ck1">
@@ -228,10 +242,11 @@
                                             <div class=" mission-task">
                                                 <p class="text-size14 cor-gray89">适合建筑设计、网站开发、软件开发、装修设计等周期较长、工作较复杂的项目类需求，需要找人单独服务。发布需求后，服务商会对你的需求报价，你选择一个合适的一对一服务</p>
                                             </div>
-                                        </div>
+                                        </div>--}}
 
-                                        <div class="mission-task panel-collapse collapse
-                                            {{ (!empty(old('zhaobiao')))?'in':'' }}" id="ck1">
+                                        {{--<div class="mission-task panel-collapse collapse
+                                            {{ (!empty(old('zhaobiao')))?'in':'' }}" id="ck1">--}}
+                                            <input type="hidden" name="type_id" value="{{$type_v['id']}}">
                                             <div class="mission-ck z-check-validform-ck">
                                                 <div class="checkbox">
                                                     <label class="checkbox-inline">
@@ -279,7 +294,8 @@
 
                                                 </span>
                                                 <input type="hidden" name="worker_num{{$type_v['alias']}}" value="1">
-                                                <div class="checkbox ">
+                                                <input type="hidden" name="bounty{{$type_v['alias']}}" value="">
+                                                {{--<div class="checkbox ">
                                                     <label class="checkbox-inline">
                                                         您的预算
                                                     </label>
@@ -313,16 +329,16 @@
                                                         <span></span>
                                                         <p>评价</p>
                                                     </li>
-                                                </ul>
+                                                </ul>--}}
                                             </div>
-                                        </div>
+                                        {{--</div>--}}
                                         @endif
                                     </div>
                                     @empty
                                     @endforelse
                                 </div>
                             </li>
-                            <li>
+                            {{--<li>
                                 <a class="task-tit" href="javascript:;" data-toggle="collapse" data-target="#demor">
                                     <span class="ace-icon fa fa-angle-double-down fa-angle-double-{{ (!empty(old('product')))?'down':'right' }}" data-icon-hide="ace-icon fa fa-angle-double-down" data-icon-show="ace-icon fa fa fa-angle-double-right"></span> 增值服务
                                 </a>
@@ -357,7 +373,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                            </li>
+                            </li>--}}
                         </ul>
                     </div>
                     <div class="task-bt">
@@ -388,10 +404,10 @@
                         </div>
                         <input type='hidden' name="slutype" value="1" id="slutype"/>
                         <button class="btn btn-primary btn-blue bor-radius2 btn-big3 preservation" onclick="sluSub(1)">
-                            保存
+                            提交
                         </button>
-                        <a href="javascript:sluSub(2);"  class="text-size14 text-under preview">预览任务</a>
-                        <a href="javascript:sluSub(3);" class="text-size14 text-under not_released">暂不发布</a>
+                        {{--<a href="javascript:sluSub(2);"  class="text-size14 text-under preview">预览任务</a>--}}
+                        {{--<a href="javascript:sluSub(3);" class="text-size14 text-under not_released">暂不发布</a>--}}
                     </div>
                 </form>
             </div>
@@ -430,7 +446,7 @@
     {!! Theme::widget('ueditor')->render() !!}
     {{--{!! Theme::widget('editor',['plugins'=>CommonClass::getEditorInit(['insertImage'])])->render() !!}--}}
     {!! Theme::widget('datepicker')->render() !!}
-    {!! Theme::widget('fileUpload')->render() !!}
+    {{--{!! Theme::widget('fileUpload')->render() !!}--}}
     {!! Theme::asset()->container('custom-js')->usepath()->add('task', 'js/doc/task.js') !!}
     <!--日历 有可能是手机端的，暂时不能删除-->
     {{--{!! Theme::asset()->container('custom-js')->usepath()->add('custom', 'plugins/ace/js/jquery-ui.custom.min.js') !!}--}}

@@ -144,11 +144,11 @@
                        
                         <div class="g-taskhdbg1">实名认证</div>
                         <div class="g-taskhdbg2">资金托管</div>
-                        <div class="g-taskhdbg4">征信体系</div>
+                        <div class="g-taskhdbg4">信用体系</div>
                         <div class="g-taskhdbg6">
                     		专家仲裁
                     	</div>
-                         <div class="g-taskhdbg5">作业管控</div>
+                         <div class="g-taskhdbg5">评价管控</div>
                       <!--<div class="g-taskhdbg3">全额退款</div>-->
                     </div>
                 </div>

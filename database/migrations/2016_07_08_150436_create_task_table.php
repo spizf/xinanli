@@ -39,7 +39,7 @@ class CreateTaskTable extends Migration
             $table->integer('area', false)->default(0)->comment('地区');
 
             $table->integer('view_count', false)->default(0)->comment('浏览次数');
-            $table->integer('delivery_count', false)->default(0)->comment('投稿数量');
+            $table->integer('delivery_count', false)->default(0)->comment('接任务数量');
             $table->integer('uid', false)->nullable()->comment('用户ID');
             $table->string('username',32)->nullable()->comment('用户名');
             $table->tinyInteger('worker_num', false)->nullable()->comment('服务商数量');

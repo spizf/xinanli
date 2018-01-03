@@ -26,12 +26,13 @@
                             <script id="editor" name="desc" type="text/plain" style="height:300px;"></script>
                             <input type="hidden" name="desc" id="discription-edit" datatype="*1-5000" nullmsg="描述不能为空" errormsg="字数超过限制" >
                         </div>
+                                    <br>
                         <div class="clearfix"> <label class="">请输入作业专家：</label>
-                        <input type="text" placeholder=""  name="workexpert"  class="inputxt" datatype="zh2-4" errormsg="请输入2到4位中文字符" nullmsg="请输入作业专家！" >
+                        <input type="text" placeholder=""  name="workexpert[]"  class="inputxt work_" datatype="zh2-4" errormsg="请输入2到4位中文字符" nullmsg="请输入作业专家！" > <span class="label label-primary add_work">添加</span>
                         </div>
                         <div class="space"></div>
                         <div class="clearfix"><label class="">请输入评审专家：</label>
-                        <input type="text" placeholder=""  name="reviewexpert"  class="inputxt" datatype="zh2-4" errormsg="请输入2到4位中文字符" nullmsg="请输入评审专家">　
+                        <input type="text" placeholder=""  name="reviewexpert[]"  class="inputxt review_" datatype="zh2-4" errormsg="请输入2到4位中文字符" nullmsg="请输入评审专家"> <span class="label label-primary add_review">添加</span>
                         </div>
                         <div class="space"></div>
                         <label class="">请上传证明材料及评价报告：</label>
@@ -160,3 +161,5 @@
 {!! Theme::asset()->container('custom-js')->usepath()->add('checkbox', 'js/doc/checkbox.js') !!}
 {!! Theme::asset()->container('specific-css')->usepath()->add('validform-css','plugins/jquery/validform/css/style.css') !!}
 {!! Theme::asset()->container('specific-js')->usepath()->add('validform-js','plugins/jquery/validform/js/Validform_v5.3.2_min.js') !!}
+{{--添加专家输入框--}}
+{!! Theme::asset()->container('custom-js')->usepath()->add('add_work','js/add_work.js') !!}

@@ -16,7 +16,7 @@
         <div class="col-xs-12 list-l ">
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="active">
-                        <a href="#home" data-toggle="tab" class="text-size16">我要投稿</a>
+                        <a href="#home" data-toggle="tab" class="text-size16">我要接任务</a>
                     </li>
                 </ul>
                 <form action="/task/workCreate" method="post" id="form">

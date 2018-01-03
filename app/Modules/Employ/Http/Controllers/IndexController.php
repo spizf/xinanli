@@ -375,9 +375,9 @@ class IndexController extends BasicIndexController
         $result = EmployWorkModel::employDilivery($data, $uid);
 
         if (!$result)
-            return redirect()->back()->with(['error' => '投稿失败！']);
+            return redirect()->back()->with(['error' => '接任务失败！']);
 
-        return redirect()->back()->with(['message' => '投稿成功！']);
+        return redirect()->back()->with(['message' => '接任务成功！']);
     }
 
     

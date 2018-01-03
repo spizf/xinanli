@@ -13,7 +13,7 @@
         <div class="col-xs-12 list-l ">
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="active">
-                        <a href="#home" data-toggle="tab" class="text-size16">我要投稿</a>
+                        <a href="#home" data-toggle="tab" class="text-size16">我要接任务</a>
                     </li>
                 </ul>
                 <form action="/task/workCreate" method="post" id="form">
@@ -37,14 +37,14 @@
                             </div>
                             <!--编辑器-->
                             <div class="clearfix">
-                                <p class="text-size14">投稿说明：</p>
+                                <p class="text-size14">接任务说明：</p>
                                 <script id="editor" name="desc" type="text/plain" style="height:300px;"></script>
 
                                 <input type="hidden" name="desc" id="discription-edit" value
                                        datatype="*1-5000" nullmsg="描述不能为空" errormsg="字数超过限制" >
                             </div>
                             <div class="annex">
-                                <p class="text-size14">投稿附件：</p>
+                                <p class="text-size14">接任务附件：</p>
                                 <!--文件上传-->
                                 <div action=" " class="dropzone clearfix" id="dropzone"
                                      url="/task/ajaxAttatchment" deleteurl="/task/delAttatchment">

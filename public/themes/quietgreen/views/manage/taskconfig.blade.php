@@ -127,7 +127,7 @@
                                     <div class="widget-body ">
                                         <div class="widget-main flow-foot  minHeight249" >
                                             <div id="dt-list-1">
-                                                <p class="well well-sm"> 声明：该功能适用于选稿期结束后有投稿雇主未选稿时</p>
+                                                <p class="well well-sm"> 声明：该功能适用于选稿期结束后有接任务雇主未选稿时</p>
                                                 <div >
                                                     {{--<lable>--}}
                                                         {{--<input type="text" name="{{ $config['task_sys_help_people']['id'] }}" value="{{ $config['task_sys_help_people']['rule'] }}" class="change_ids"> 人中标平分佣金,不填写则默认关闭--}}

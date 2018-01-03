@@ -104,7 +104,7 @@ class TaskController extends ApiBaseController
             $status = [
                     2=>'审核中',
                     3=>'定时发布',
-                    4=>'投稿中',
+                    4=>'接任务中',
                     5=>'选稿中',
                     6=>'选稿中',
                     7=>'交付中',
@@ -157,7 +157,7 @@ class TaskController extends ApiBaseController
             $status = [
                 2=>'审核中',
                 3=>'定时发布',
-                4=>'投稿中',
+                4=>'接任务中',
                 5=>'选稿中',
                 6=>'选稿中',
                 7=>'交付中',
@@ -208,7 +208,7 @@ class TaskController extends ApiBaseController
 
             'province.required' => '请选择省份',
             'city.required' => '请选择城市',
-            'delivery_deadline.required' => '请选择投稿截止时间',
+            'delivery_deadline.required' => '请选择接任务截止时间',
             'begin_at.required' => '请选择任务开始时间',
             'phone.required' => '请输入手机号'
         ]);
@@ -386,7 +386,7 @@ class TaskController extends ApiBaseController
         $workModel = new WorkModel();
         $result = $workModel->workCreate($data);
         if(!$result){
-            return $this->formateResponse(2003,'投稿失败');
+            return $this->formateResponse(2003,'接任务失败');
         }
 
         return $this->formateResponse(1000,'success');
@@ -691,17 +691,17 @@ class TaskController extends ApiBaseController
             
             if($task->uid == $this->uid){
                 $data['status'] = 0;
-                $data['message'] = '你是任务发布者，无法投稿';
+                $data['message'] = '你是任务发布者，无法接任务';
             }
             
             $work = WorkModel::where('task_id',$task_id)->where('uid',$this->uid)->first();
             if($work){
                 $data['status'] = 0;
-                $data['message'] = '你已投稿或中标';
+                $data['message'] = '你已接任务或中标';
             }
         }else{
             $data['status'] = 0;
-            $data['message'] = '任务不存在，无法投稿';
+            $data['message'] = '任务不存在，无法接任务';
         }
 
         return $data;

@@ -72,7 +72,7 @@ jQuery(function($) {
                 break;
             case 'TASKDELIVERY_RIGHT_BUTTOM':
                 var html = '<span class="cor-gray87"><i class="fa fa-exclamation-circle cor-orange text-size18 red"></i>' +
-                    '位于任务竞标投稿_右下方广告，图片尺寸建议大小为285px*400px</span>';
+                    '位于任务竞标接任务_右下方广告，图片尺寸建议大小为285px*400px</span>';
                 break;
             case 'NEWSINFO_RIGHT_TOP':
                 var html = '<span class="cor-gray87"><i class="fa fa-exclamation-circle cor-orange text-size18 red"></i>' +

@@ -279,7 +279,7 @@ function ajaxReport()
     });
     $('.jbchat-text').val('');
 }
-//ajax投稿分页
+//ajax接任务分页
 function ajaxPageWorks(obj)
 {
     var url = obj.attr('url');
@@ -476,7 +476,7 @@ $('#contactMe').on('click',function(){
     });
 });
 
-//联系投稿人
+//联系接任务人
 $('.contactHe').on('click',function(){
     var js_id = $(this).attr('data-values');
     $('#contactHeId').val(js_id);

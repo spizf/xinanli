@@ -14,7 +14,7 @@ function ajaxAxis(obj)
                 "<\/b><span><i><\/i><\/span><\/div><div class=\"col-md-1\"><img src=\""+data.domain+'/'+data.my_tasks[i].datas[s].avatar+"\" onerror=\""+data.domain+'/'+data.my_tasks[i].datas[s].avatar+",$(this))\"><\/div>" +
                 "<div class=\"col-md-11\"><div class=\"col-md-9\"><div class=\"text-size14 cor-gray51\"><span class=\"cor-orange\">￥"+data.my_tasks[i].datas[s].bounty+"<\/span> " +
                 "<a href=\"#\">"+data.my_tasks[i].datas[s].title+"<\/a> | "+data.my_tasks[i].datas[s].status_text+"<\/div><div class=\"space-4\"><\/div><p class=\"cor-gray87\"><i class=\"ace-icon fa fa-user bigger-110\"><\/i>"+data.my_tasks[i].datas[s].nickname+"" +
-                "<i class=\"fa fa-eye\"><\/i> "+data.my_tasks[i].datas[s].view_count+"人浏览/"+data.my_tasks[i].datas[s].delivery_count+"人投稿 <i class=\"fa fa-clock-o\"><\/i> " +
+                "<i class=\"fa fa-eye\"><\/i> "+data.my_tasks[i].datas[s].view_count+"人浏览/"+data.my_tasks[i].datas[s].delivery_count+"人接任务 <i class=\"fa fa-clock-o\"><\/i> " +
                 ""+data.my_tasks[i].datas[s].task_axis_endat+"天前 <i class=\"fa fa-unlock-alt\"><\/i>" ;
                 if(data.my_tasks[i].datas[s].bounty_status==1)
                 {

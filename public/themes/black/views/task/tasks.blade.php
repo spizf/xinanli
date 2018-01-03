@@ -190,7 +190,7 @@
                                 <div class="clearfix taskList-footer">
                                     <div class="col-xs-6">
                                         <div class="row">
-                                            <i class="fa fa-eye"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人投稿
+                                            <i class="fa fa-eye"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务
                                         </div>
                                     </div>
                                     <div class="col-xs-6">
