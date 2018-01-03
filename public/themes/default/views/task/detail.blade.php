@@ -109,8 +109,8 @@
                                 此任务当前处于：<span class="text-primary">投稿</span>状态
                                 @elseif($detail['status']==5)
                                 此任务当前处于：<span class="text-primary">选稿</span>状态
-                                @elseif($detail['status']==6)
-                                此任务当前处于：<span class="text-primary">公示</span>状态
+                              {{--  @elseif($detail['status']==6)
+                                此任务当前处于：<span class="text-primary">公示</span>状态--}}
                                 @elseif($detail['status']==12)
                                 此任务当前处于：<span class="text-primary">已接单</span>状态
                                 @elseif($detail['status']==13)
