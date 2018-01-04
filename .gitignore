@@ -2,9 +2,11 @@
 Homestead.yaml
 Homestead.json
 public/attachment
-storage/framework/cache/*
-storage/framework/sessions/*
-storage/framework/views/*
+storage/framework/cache/
+storage/framework/sessions/
+storage/framework/views/
 .env
 .idea/
 
+views
+cache
