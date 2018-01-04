@@ -131,12 +131,11 @@
                 </div>
                 <ul class="g-taskmainlist">
                     @if(!empty($list))
-
                     @foreach($list as $item)
                     <li class="clearfix">
                         <div class="col-sm-2 col-xs-2 m-serivcebox">
                             <div class="row">
-                                <img src="@if($item->avatar){!! URL($item->avatar) !!} @else {!! Theme::asset()->url('images/default_avatar.png') !!} @endif" class="img-responsive" onerror="onerrorImage('{{ Theme::asset()->url('images/employ/bg2.jpg')}}',$(this))">
+                                <img src="@if($item->shoppic){!! URL($item->shoppic) !!} @else {!! Theme::asset()->url('images/default_avatar.png') !!} @endif" class="img-responsive" onerror="onerrorImage('{{ Theme::asset()->url('images/employ/bg2.jpg')}}',$(this))">
                             </div>
                             @if($item->is_recommend == 1 && $item->shop_status == 1 && $item->shopId)
                             <span class="u-serviceimgico">荐</span>
@@ -144,7 +143,7 @@
                         </div>
                         <div class="col-sm-8 col-xs-10 nopdr">
                             <div class="">
-                                <a class="cor-blue2f text-size18 text-blod "href="@if($item->shop_status == 1 && $item->shopId) {!! url('shop/'.$item->shopId) !!} @else{!! URL('bre/serviceEvaluateDetail/'.$item->id) !!}@endif" target="_blank">{!! $item->name !!}
+                                <a class="cor-blue2f text-size18 text-blod "href="@if($item->shop_status == 1 && $item->shopId) {!! url('shop/'.$item->shopId) !!} @else{!! URL('bre/serviceEvaluateDetail/'.$item->id) !!}@endif" target="_blank">{!! $item->shopname !!}
                                     {{--<span class="s-servicericon s-icob1"></span><span class="s-servicericon s-ico1"></span><span class="s-servicericon s-icoa1" ></span>--}}
                                     &nbsp;
                                     @if(isset($item->auth) && $item->auth['bank'] == true)

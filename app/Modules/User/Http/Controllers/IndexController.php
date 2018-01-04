@@ -98,8 +98,13 @@ class IndexController extends UserCenterController
 
         $status = UserModel::where('mobile', $mobile)->first();
         if (empty($status)){
-            $status = 'y';
-            $info = '';
+            if(\App\Modules\User\Http\Controllers\Auth\AuthController::checkAnhuanjia($mobile,0)){
+                $status = 'y';
+                $info = '';
+            }else {
+                $info = '手机已在安环家注册,请直接使用安环家账号登录';
+                $status = 'n';
+            }
         } else {
             $info = '手机已占用';
             $status = 'n';

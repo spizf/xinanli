@@ -298,6 +298,12 @@ class IndexController extends \App\Http\Controllers\IndexController
             }
         }
 
+        /*添加店铺名称，和封面*/
+        foreach ($list as $ke=>$va){
+            $shopName = ShopModel::select('shop_name','shop_pic')->where('uid',$va->id)->first();
+            $list[$ke]['shopname'] = $shopName['shop_name'];
+            $list[$ke]['shoppic'] = $shopName['shop_pic'];
+        }
         
         $preArr = UserDetailModel::join('district', 'user_detail.province', '=', 'district.id')->select('district.name','user_detail.uid')->whereIn('user_detail.uid', $arrUid)->get()->toArray();
         $cityArr = UserDetailModel::join('district', 'user_detail.city', '=', 'district.id')->select('district.name','user_detail.uid')->whereIn('user_detail.uid', $arrUid)->get()->toArray();
