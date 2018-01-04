@@ -3,7 +3,7 @@
     <div class="g-taskprocess hidden-xs">
         <div class="row">
             <div class="col-md-4 col-xs-4"><div class="g-taskpro1 pull-left"><span>免费发布任务</span><p>100%免费发布</p></div><div class="g-taskproico1 pull-right">></div></div>
-            <div class="col-md-4 col-xs-4"><div class="g-taskpro2 pull-left"><span>第三方评价机构</span><p>多家第三方评价机构，择优合作</p></div><div class="g-taskproico2 pull-right">></div></div>
+            <div class="col-md-4 col-xs-4"><div class="g-taskpro2 pull-left"><span>评价机构</span><p>多家评价机构，择优合作</p></div><div class="g-taskproico2 pull-right">></div></div>
             <div class="col-md-4 col-xs-4"><div class="g-taskpro3"><span>资金托管</span><p>平台资金托管，服务有保障</p></div></div>
         </div>
     </div>
@@ -198,7 +198,7 @@
                                     <i class="u-tasktime"></i>
                                     <span class="cor-red">{{ CommonClass::changeTimeType(strtotime($v['delivery_deadline'])-time())}}</span> 后截止投标
                                 @elseif($v['status']==5)
-                                    任务选稿中
+                                    任务选标中
                                 @elseif($v['status']==6)
                                     任务公示中
                                 @elseif($v['status']==7)

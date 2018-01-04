@@ -377,7 +377,7 @@
                         </ul>
                     </div>
                     <div class="task-bt">
-                        <h3><strong>结算清单</strong></h3>
+                        {{--<h3><strong>结算清单</strong></h3>
                         <p class="text-size14">托管赏金：<span>￥<span id="bounty_money">0</span></span></p>
                         <div style="display:none;" id="service-box">
                             <p>增值服务：</p>
@@ -388,7 +388,7 @@
                                 </p>
                             @endforeach
                         </div>
-                        <p class="text-size14">应付总额 <span>￥<span id="total-price">0</span></span></p>
+                        <p class="text-size14">应付总额 <span>￥<span id="total-price">0</span></span></p>--}}
                         <div class="clearfix text-size12">
                             <label class="inline task-validform-right">
                                 @if(!empty($agree))

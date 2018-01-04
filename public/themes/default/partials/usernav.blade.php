@@ -87,7 +87,7 @@
         <ul class="nav navbar-nav topborbtmul topborbtmul-nav nofloat">
             @if(Theme::get('TYPE') == 1)<li class="hidden-sm hActive"> @else <li class="hidden-sm "> @endif<a class="topborbtm" href="/user/index">我的主页</a></li>
             @if(Theme::get('TYPE') == 2)<li class="hidden-sm hidden-md hActive"> @else <li class="hidden-sm hidden-md"> @endif <a class="topborbtm" href="/user/myTasksList">我是企业</a></li>
-            @if(Theme::get('TYPE') == 3)<li class="hidden-sm hidden-md hActive"> @else <li class="hidden-sm hidden-md "> @endif <a class="topborbtm" href="/user/acceptTasksList">我是第三方评价机构</a></li>
+            @if(Theme::get('TYPE') == 3)<li class="hidden-sm hidden-md hActive"> @else <li class="hidden-sm hidden-md "> @endif <a class="topborbtm" href="/user/acceptTasksList">我是评价机构</a></li>
             <li class="z-navactive pdtom480">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                     更多 <b class="caret"></b>

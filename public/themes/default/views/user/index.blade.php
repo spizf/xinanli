@@ -133,7 +133,7 @@
                             <p class="cor-gray51 text-size14">这儿潜伏着哪些任务？</p>
                             <p class="cor-gray51 text-size14">他们都有哪些需求？</p>
                             <div class="space-10"></div>
-                            <div class="g-userhintbtn"><a href="/user/enterpriseAuth">认证成第三方评价机构</a></div>
+                            <div class="g-userhintbtn"><a href="/user/enterpriseAuth">认证成评价机构</a></div>
                             <div class="space-20"></div>
                         </div>
                     </div>

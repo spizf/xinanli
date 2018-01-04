@@ -51,7 +51,7 @@
                 <p class="g-userimgupinp g-userimgupbor-validform">
                     <input class="inputxt Validform_error input-large" type="text" name="shop_name"
                            @if(isset($shop_info->shop_name) && !empty($shop_info->shop_name))value="{!! $shop_info->shop_name !!}" @endif
-                           datatype="*2-10" nullmsg="请填写店铺名称！" errormsg="店铺名称字数超过限制">
+                           datatype="*2-20" nullmsg="请填写店铺名称！" errormsg="店铺名称字数超过限制">
                 </p>
             </div>
             <div class="clearfix g-userimgupbor task-casehid"><p class="pull-left h5 cor-gray51">店铺介绍</p>

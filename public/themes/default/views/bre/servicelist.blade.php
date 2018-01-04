@@ -131,6 +131,7 @@
                 </div>
                 <ul class="g-taskmainlist">
                     @if(!empty($list))
+
                     @foreach($list as $item)
                     <li class="clearfix">
                         <div class="col-sm-2 col-xs-2 m-serivcebox">

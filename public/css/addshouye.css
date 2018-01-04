@@ -82,7 +82,7 @@
 .addimgbo span {
 	display: block;
 	float: left;
-	width: 156px;
+	width: 117px;
 	height: 42px;
 	border: 1px solid #2f549f;
 	border-radius: 5px;
@@ -95,7 +95,7 @@
 .addimgbo img {
 	display: block;
 	float: left;
-	margin: 14px 18px;
+	margin: 14px 2px;
 }
 
 .allg {

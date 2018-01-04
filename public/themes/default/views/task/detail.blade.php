@@ -1262,7 +1262,7 @@
                     </li>
                     <li class="{{ ($detail['status']>=4 && count($works['data'])!=0)?'active':'' }}" data-target="#step1">
                         <span></span>
-                        第三方评价机构提供方案并报价&nbsp;&nbsp;&nbsp;&nbsp;
+                        评价机构提供方案并报价&nbsp;&nbsp;&nbsp;&nbsp;
                         @if($detail['status']>=4 && count($works['data'])!=0)
                             {{ (strtotime($detail['created_at'])>0)?date('Y.m.d',strtotime($works['data'][0]['created_at'])):'' }}
                         @endif

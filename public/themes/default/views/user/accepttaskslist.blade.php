@@ -19,7 +19,9 @@
 				</div>
 				<div class="col-lg-6 col-sm-10  col-xs-12 g-task-select">
 					 @foreach($task_type as $Vtt)
+						 @if($Vtt->name!='悬赏模式')
 					<a class="{!! (!isset($merge['type']) || $merge['type']==$Vtt->id)?'bg-blue':'' !!}" href="{!! URL('user/acceptTasksList').'?'.http_build_query(array_merge(array_except($merge,'page'), ['type'=>$Vtt->id])) !!}">{{$Vtt->name}}（@if(isset($Vtt->counts)){{$Vtt->counts}}@else 0 @endif）</a>
+						@endif
 				  @endforeach	
 				</div>
 				<div class="pull-right">

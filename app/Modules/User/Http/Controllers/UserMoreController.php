@@ -752,7 +752,7 @@ class UserMoreController extends UserCenterController
 		if($taskType[0]['alias'] == 'xuanshang' && !isset($data['type'])){
 			$taskStatus=[
 				1=>'工作中', 
-				2=>'选稿中',
+				2=>'选标中',
 				3=>'交付中',
 				4=>'已结束',
 				5=>'其他'
@@ -763,7 +763,7 @@ class UserMoreController extends UserCenterController
 				case 'xuanshang':
 				$taskStatus=[
 					1=>'工作中', 
-					2=>'选稿中',
+					2=>'选标中',
 					3=>'交付中',
 					4=>'已结束',
 					5=>'其他'
@@ -772,7 +772,7 @@ class UserMoreController extends UserCenterController
 					2=>'已发布',
 					3=>'工作中',
 					4=>'工作中',
-					5=>'选稿中',
+					5=>'选标中',
 					6=>'工作中',
 					7=>'交付中',
 					8=>'已结束',
@@ -938,7 +938,7 @@ class UserMoreController extends UserCenterController
                     2=>'审核中',
                     3=>'工作中',
                     4=>'工作中',
-                    5=>'选稿中',
+                    5=>'选标中',
                     6=>'工作中',
                     7=>'交付中',
                     8=>'已结束',

@@ -66,7 +66,7 @@ class HomeController extends IndexController
         $this->theme->set('complaints_user',$user);
 
         
-        $task = TaskModel::where('task.status','>',2)->where('task.bounty_status',1)
+        $task = TaskModel::where('task.status','>',2)/*->where('task.bounty_status',1)*/
             ->where('task.begin_at','<',date('Y-m-d H:i:s',time()))
             ->join('users','users.id','=','task.uid')
             ->leftJoin('user_detail','user_detail.uid','=','task.uid')

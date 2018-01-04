@@ -24,7 +24,7 @@
                 <p class="cor-gray97">服务热线：{!! Theme::get('site_config')['phone'] !!}</p>
                 <p class="cor-gray97">Email：{!! Theme::get('site_config')['Email'] !!}</p>
             </div>
-            <div class="col-lg-3 focusus visible-lg-block hidden-sm hidden-md hidden-xs col-left">
+            <div class="col-lg-3 focusus visible-lg-block hidden-sm hidden-md hidden-xs col-left" style="padding-top:0;">
                 <div class="cor-gray71 text-size14 focusushd"><span>关注我们</span></div>
                 <div class="space-8"></div>
                 <div class="clearfix">
