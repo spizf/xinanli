@@ -273,7 +273,7 @@
             <div  class="item <?php if($key == 0): ?>active <?php endif; ?> item-banner<?php echo $key+1; ?>" >
                 <a href="<?php echo $value['ad_url']; ?>" target="_blank">
                     <div>
-                        <img src="<?php echo URL($value['ad_file']); ?>" alt="..." class="img-responsive itm-banner" data-adaptive-background='<?php echo $key+1; ?>'>
+                        <img src="<?php echo URL($value['ad_file']); ?>" alt="..." class="" data-adaptive-background='<?php echo $key+1; ?>'>
                     </div>
                 </a>
             </div>

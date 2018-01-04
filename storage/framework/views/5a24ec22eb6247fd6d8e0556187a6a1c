@@ -107,9 +107,9 @@
                                 <?php elseif($detail['status']==3 && strtotime($detail['begin_at'])>time()): ?>
                                 此任务当前处于：<span class="text-primary">审核通过</span>状态
                                 <?php elseif($detail['status']==3 && strtotime($detail['begin_at'])<time()): ?>
-                                此任务当前处于：<span class="text-primary">投稿</span>状态
+                                此任务当前处于：<span class="text-primary">接任务</span>状态
                                 <?php elseif($detail['status']==4): ?>
-                                此任务当前处于：<span class="text-primary">投稿</span>状态
+                                此任务当前处于：<span class="text-primary">接任务</span>状态
                                 <?php elseif($detail['status']==5): ?>
                                 此任务当前处于：<span class="text-primary">选稿</span>状态
                                 <?php elseif($detail['status']==6): ?>
@@ -126,15 +126,15 @@
                                 此任务当前处于：<span class="text-primary">维权</span>状态
                                 <?php endif; ?>
                                 <?php if($detail['status']==3 && strtotime($detail['begin_at'])>time()): ?>
-                                    离投稿开始还剩：
+                                    离接任务开始还剩：
                                     <b  delivery_deadline="<?php echo e(date('Y/m/d H:i:s',strtotime($detail['begin_at']))); ?>" class="cor-orange text-size22 timer-check"></b>
                                 <?php endif; ?>
                                 <?php if($detail['status']==3 && strtotime($detail['begin_at'])<time()): ?>
-                                    离投稿结束还剩：
+                                    离接任务结束还剩：
                                     <b  delivery_deadline="<?php echo e(date('Y/m/d H:i:s',strtotime($detail['delivery_deadline']))); ?>" class="cor-orange text-size22 timer-check"></b>
                                 <?php endif; ?>
                                 <?php if($detail['status']==4): ?>
-                                    离投稿结束还剩：
+                                    离接任务结束还剩：
                                     <b  delivery_deadline="<?php echo e(date('Y/m/d H:i:s',strtotime($detail['delivery_deadline']))); ?>" class="cor-orange text-size22 timer-check"></b>
                                 <?php endif; ?>
                                 <?php if($detail['status']==5): ?>
@@ -206,9 +206,9 @@
                             <div>
                             <?php if(($detail['status']==3 || $detail['status']==4 || $detail['status']==5) && $user_type==3): ?>
                                 <?php if($task_type_alias == 'xuanshang'): ?>
-                                    <a href="/task/workdelivery/<?php echo e($detail['id']); ?>"  class="btn btn-primary bor-radius2">立即投稿</a>
+                                    <a href="/task/workdelivery/<?php echo e($detail['id']); ?>"  class="btn btn-primary bor-radius2">立即接任务</a>
                                 <?php elseif($task_type_alias == 'zhaobiao'): ?>
-                                    <a href="/task/tenderWork/<?php echo e($detail['id']); ?>"  class="btn btn-primary bor-radius2">立即投稿</a>
+                                    <a href="/task/tenderWork/<?php echo e($detail['id']); ?>"  class="btn btn-primary bor-radius2">立即接任务</a>
                                 <?php endif; ?>
                             <?php elseif($detail['status']==5 && $user_type==1 && $has_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] == 0): ?>
                                     <a href="/task/bidBounty/<?php echo e($detail['id']); ?>" class="btn btn-primary bor-radius2">
@@ -365,7 +365,7 @@
                 <?php /*tab*/ ?>
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="<?php echo e(((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':''); ?>" index="1" onclick="rememberTable($(this))">
-                        <a href="#home2" data-toggle="tab" class="text-size16">投稿记录<span class="badge bg-blue"><?php echo e($works_count); ?></span></a>
+                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue"><?php echo e($works_count); ?></span></a>
                     </li>
                     <?php if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1)): ?>
                     <li class="<?php echo e((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':''); ?>" index="2" onclick="rememberTable($(this))">
@@ -1102,7 +1102,7 @@
                     </li>
                     <li class="<?php echo e(($detail['status']>=4 && count($works['data'])!=0)?'active':''); ?>" data-target="#step1">
                         <span></span>
-                        威客投稿&nbsp;&nbsp;&nbsp;&nbsp;
+                        威客接任务&nbsp;&nbsp;&nbsp;&nbsp;
                         <?php if($detail['status']>=4 && count($works['data'])!=0): ?>
                             <?php echo e((strtotime($detail['created_at'])>0)?date('Y.m.d',strtotime($works['data'][0]['created_at'])):''); ?>
 
