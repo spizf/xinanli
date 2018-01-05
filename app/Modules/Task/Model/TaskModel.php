@@ -27,7 +27,7 @@ class TaskModel extends Model
         'title', 'desc', 'type_id', 'cate_id', 'phone', 'region_limit', 'status', 'bounty', 'bounty_status', 'created_at', 'updated_at',
         'verified_at', 'begin_at', 'end_at', 'delivery_deadline', 'show_cash', 'real_cash', 'deposit_cash', 'province', 'city', 'area',
         'view_count', 'delivery_count', 'uid', 'username', 'worker_num', 'selected_work_at', 'publicity_at', 'checked_at', 'comment_at',
-        'top_status', 'task_success_draw_ratio', 'task_fail_draw_ratio', 'engine_status', 'work_status','productNum', 'contacts', 'industry','task_detail'
+        'top_status', 'task_success_draw_ratio', 'task_fail_draw_ratio', 'engine_status', 'work_status','productNum', 'contacts', 'industry','task_detail','company_name'
     ];
     public function province()
     {
@@ -295,7 +295,8 @@ class TaskModel extends Model
                 //add by xl 发布需求增加年产量联系人
                 'productNum'=>$data['productNum'],
                 'contacts'=>$data['contacts'],
-                'industry'=>$data['industry']
+                'industry'=>$data['industry'],
+                'company_name'=>$data['company_name']
 			   ]);
 			    $result['id']=$data['task_id'];
 			}else{

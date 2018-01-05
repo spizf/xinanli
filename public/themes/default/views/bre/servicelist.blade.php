@@ -246,14 +246,14 @@
                     <span class="input-group-addon">
                     <i class="u-tasksideico1"></i>
                     </span>
-                <select disabled readonly="true" name="type"><option value="1" >悬赏任务</option></select>
+                <select disabled readonly="true" name="type"><option value="1" >资金托管</option></select>
                 </div>
                 <div class="space-6"></div>
                 <div class="input-group">
                             <span class="input-group-addon">
                             <i class="u-tasksideico2"></i>
                             </span>
-                    <input id="form-field-mask-2" class="form-control input-mask-phone" name="title"  type="text" placeholder="需求标题,如：logo设计" />
+                    <input id="form-field-mask-2" class="form-control input-mask-phone" name="title"  type="text" placeholder="需求标题,如：某某项目评价" />
                 </div>
                 <div class="space-6"></div>
                 <div class="input-group">

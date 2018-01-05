@@ -154,7 +154,7 @@ return [
         //HMVC provider
         Caffeinated\Modules\ModulesServiceProvider::class,
         //DebugBar provider
-       // Barryvdh\Debugbar\ServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
         //Themes provider
         Teepluss\Theme\ThemeServiceProvider::class,
 
@@ -234,7 +234,7 @@ return [
         //HMVC module
         'Module' => Caffeinated\Modules\Facades\Module::class,
         //DebugBar
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+//        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         //Theme
         'Theme' => Teepluss\Theme\Facades\Theme::class,
 

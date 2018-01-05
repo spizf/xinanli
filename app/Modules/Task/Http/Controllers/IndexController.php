@@ -62,7 +62,7 @@ class IndexController extends BasicIndexController
         }
         
         $data = $request->all();
-        
+        /*查询子分类*/
         if (isset($data['category']) && $data['category']!=0) {
             $category = TaskCateModel::findByPid([intval($data['category'])]);
             $pid = $data['category'];
@@ -73,9 +73,11 @@ class IndexController extends BasicIndexController
             }
         } else {
             
-            $category = TaskCateModel::findByPid([0]);
+//            $category = TaskCateModel::findByPid([0]);
             $pid = 0;
         }
+        /*获取父级分类*/
+        $category_one = TaskCateModel::findByPid([0]);
 
         if (isset($data['province'])) {
             $area_data = DistrictModel::findTree(intval($data['province']));
@@ -198,7 +200,8 @@ class IndexController extends BasicIndexController
             'list_array' => $lists,
             'list'=>$list,
             'merge' => $data,
-            'category' => $category,
+//            'category' => $category,
+            'categoryone' => $category_one,
             'pid' => $pid,
             'area' => $area_data,
             'area_pid' => $area_pid,
@@ -210,6 +213,10 @@ class IndexController extends BasicIndexController
             'task_service' => $task_service,
 			'task_type'=>$taskType
         ];
+        /*判断是否查询子分类*/
+        if (isset($category)){
+            $view['category'] = $category;
+        }
         if($this->themeName=='quietgreen')
         {
             $view = array_merge($view,[
