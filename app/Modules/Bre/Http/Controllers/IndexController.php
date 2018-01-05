@@ -97,11 +97,11 @@ class IndexController extends \App\Http\Controllers\IndexController
             $searchName = $request->get('service_name') ? $request->get('service_name') : $request->get('keywords');
             $list = UserModel::select('user_detail.sign', 'users.name', 'user_detail.avatar', 'users.id','users.email_status','user_detail.employee_praise_rate','user_detail.shop_status','shop.is_recommend','shop.id as shopId')
                 ->leftJoin('user_detail', 'users.id', '=', 'user_detail.uid')
-                ->leftJoin('shop','user_detail.uid','=','shop.uid')->where('users.status', '<>',2)->where('users.name','like',"%".$searchName."%");
+                ->leftJoin('shop','user_detail.uid','=','shop.uid')->where('users.status', '<>',2)->where('user_type',2)->where('users.name','like',"%".$searchName."%");
         }else{
             $list = UserModel::select('user_detail.sign', 'users.name', 'user_detail.avatar', 'users.id','users.email_status','user_detail.employee_praise_rate','user_detail.shop_status','shop.is_recommend','shop.id as shopId')
                 ->leftJoin('user_detail', 'users.id', '=', 'user_detail.uid')
-                ->leftJoin('shop','user_detail.uid','=','shop.uid')->where('users.status','<>', 2);
+                ->leftJoin('shop','user_detail.uid','=','shop.uid')->where('users.status','<>', 2)->where('user_type',2);
         }
         
         if ($request->get('category')) {
