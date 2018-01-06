@@ -54,6 +54,7 @@
                             <p>政府专家库评审专家提供服务，保证服务专业性</p>
                             <p>参照行业评审要点，提供标准化、流程化仲裁机制</p>
                             <p>规范仲裁过程，保障技术仲裁程序公正操作便捷</p>
+                            <p>平台随机匹配专家进行技术仲裁，保证仲裁的公正客观性</p>
                         </div>
                     </li>
                     <li class="sihebg03">
@@ -82,13 +83,19 @@
                 <div class="addimgbo">
                     <span>企业发布任务</span>
                     <img src="img/youjt.jpg">
-                    <span>服务机构接任务</span>
+                    <span>评价机构接任务</span>
                     <img src="img/youjt.jpg">
-                    <span>企业选择服务机构</span>
+                    <span>企业选择评价机构</span>
                     <img src="img/youjt.jpg">
-                    <span>签署协议完成作业</span>
+                    <span>双方签署协议</span>
                     <img src="img/youjt.jpg">
-                    <span>验收、付款</span>
+                    <span>选择资金托管</span>
+                    <img src="img/youjt.jpg">
+                    <span>线下完成作业</span>
+                    <img src="img/youjt.jpg">
+                    <span>选择专家仲裁</span>
+                    <img src="img/youjt.jpg">
+                    <span>付款</span>
                     <img src="img/youjt.jpg">
                     <span>双方互评</span>
                 </div>
@@ -650,7 +657,7 @@
                         <li class="col-md-4 col-sm-5 col-xs-6 g-taskItem">
                             <p class="p-space"><a class="cor-gray51 s-hometit" href="/task/<?php echo e($v1['id']); ?>" target="_blank"><?php echo e($v1['title']); ?></a></p>
                             <p class="p-space mg-margin">
-                                <span class="cor-orange s-homewrap1 p-space"><?php if($v1['show_cash']): ?>￥<?php echo e($v1['show_cash']); ?><?php else: ?> ￥0 <?php endif; ?></span>
+                                <?php /*<span class="cor-orange s-homewrap1 p-space"><?php if($v1['show_cash']): ?>￥<?php echo e($v1['show_cash']); ?><?php else: ?> ￥0 <?php endif; ?></span>*/ ?>
                                 <span class="s-homewrap1 p-space"><?php echo e($v1['name']); ?>发布</span>
                                 <span class="s-homewrap1 p-space"><?php echo e($v1['delivery_count']); ?>投标</span>
                             </p>
@@ -664,23 +671,24 @@
     <!--最新动态-->
     <div class="col-lg-3  g-taskright hidden-md hidden-sm hidden-xs col-left col-right">
         <h4 class=" text-size24 cor-gray45">最新动态</h4>
-        <div class="space-8"></div>
+        <div class="space-8" style="margin: 0 0 7px;"></div>
         <div class="b-border txtMarquee-top u-rightwrap1 clearfix">
             <div class="bd clearfix">
                 <ul class="mg-margin  clearfix">
                     <?php if($active): ?>
                         <?php foreach($active as $k2 => $v2): ?>
+                            <?php if($v2['title']): ?>
                             <li class="u-rlistitem clearfix">
-                                <p class="text-size14 s-hometit">
+                                <p class="text-size14 s-hometit" style="white-space:normal">
                                     <i class="fa fa-circle-thin cor-grayC2 text-size12"></i>
                                     <a href="/bre/serviceCaseList/<?php echo e($v2['uid']); ?>" class="cor-blue2f" target="_blank"><?php echo e($v2['name']); ?></a>
                                     接受了任务：<a href="/task/<?php echo e($v2['task_id']); ?>" target="_blank"><?php echo e($v2['title']); ?></a>
                                 </p>
 
                                 <div class="clearfix cor-grayC2">
-                                    <span class="pull-left">赏金：<span class="cor-orange"><?php if($v2['show_cash']): ?>
+                                    <?php /*<span class="pull-left">赏金：<span class="cor-orange"><?php if($v2['show_cash']): ?>
                                                 ￥<?php echo e($v2['show_cash']); ?><?php else: ?> ￥0 <?php endif; ?></span>
-                                    </span>
+                                    </span>*/ ?>
                                     <span class="pull-right"><?php if(intval((time() - strtotime($v2['created_at']))/60) > 60): ?>
                                             1小时前 <?php else: ?> <?php echo e(intval((time() - strtotime($v2['created_at']))/60)); ?>
 
@@ -688,6 +696,7 @@
                                     </span>
                                 </div>
                             </li>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                     <?php endif; ?>
                 </ul>

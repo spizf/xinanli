@@ -1,7 +1,7 @@
 <div class="g-taskbarnav employ-nav">
     <div class="container clearfix col-left">
         <div class="clearfix">
-            <div class="pull-left tit">雇佣服务商</div>
+            <div class="pull-left tit">雇佣评价机构</div>
             <ul class="list-inline hidden-xs">
                 <li>
                     <span>填写需求</span>

@@ -181,7 +181,7 @@
                         </div>
                         <p class="cor-gray87">
                             <i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> <?php echo e(str_limit($v['user_name'],5)); ?>&nbsp;&nbsp;&nbsp;
-                            <i class="fa fa-eye cor-grayd2"></i> <?php echo e($v['view_count']); ?>人浏览/<?php echo e($v['delivery_count']); ?>人投稿&nbsp;&nbsp;&nbsp;
+                            <i class="fa fa-eye cor-grayd2"></i> <?php echo e($v['view_count']); ?>人浏览/<?php echo e($v['delivery_count']); ?>人接任务&nbsp;&nbsp;&nbsp;
                             <span class="hidden-xs">
                                 <i class="fa fa-clock-o cor-grayd2"></i>
                                 <?php echo e($v['show_publish']); ?>&nbsp;&nbsp;&nbsp;

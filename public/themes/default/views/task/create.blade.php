@@ -56,6 +56,20 @@
                                         <span class="Validform_checktip">
                                         </span>
                                     </div>
+                                    <div class="clearfix  Validform-wysiwyg-editor">
+                                        <label for="name" class="phone text-size14">公司名称：</label>
+                                        <input type="text" name="company_name" value="{!! old('company_name') !!}"
+                                               id="form-input-readonly"
+                                               placeholder="请输入您的公司名称"
+                                               datatype="*" nullmsg="请填写公司名称！" >
+                                        @if($errors->first('company_name'))
+                                            <p class="Validform_checktip Validform_wrong">
+                                                {!! $errors->first('company_name') !!}
+                                            </p>
+                                        @endif
+                                        <span class="Validform_checktip">
+                                        </span>
+                                    </div>
                                     <div class="task-bar">
                                         <label for="name" class="phone text-size14">地区：</label>
                                         <span id="area_select">

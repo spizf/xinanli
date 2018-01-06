@@ -436,8 +436,8 @@ $('#morecate').on('click',function(){
 function checkprovince(obj){
     var id = obj.value;
     $.get('/task/ajaxcity',{'id':id},function(data){
-        var html = '';
-        var area = '';
+        var html = '<option value=\"\">请选择城市</option>';
+        var area = '<option value=\"\">请选择地区</option>';
         for(var i in data.province){
             html+= "<option value=\""+data.province[i].id+"\">"+data.province[i].name+"<\/option>";
         }
@@ -456,7 +456,7 @@ function checkprovince(obj){
 function checkcity(obj){
     var id = obj.value;
     $.get('/task/ajaxarea',{'id':id},function(data){
-        var html = '';
+        var html = '<option value="">请选择地区</option>';
         for(var i in data){
             html += "<option value=\""+data[i].id+"\">"+data[i].name+"<\/option>";
         }

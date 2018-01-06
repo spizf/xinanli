@@ -1,4 +1,3 @@
-
 <nav>
     <div class="g-taskbarnav homemenu-taskbarnav">
         <div class="container clearfix">
@@ -135,10 +134,12 @@
                                 <div id="home" class="tab-pane fade in active">
                                     <ul class="mg-margin">
                                         @if(!empty(Theme::get('notice')['notice_article']))
-                                            @foreach(Theme::get('notice')['notice_article'] as $item)
-                                            <li>
+                                            @foreach(Theme::get('notice')['notice_article'] as $kk=>$item)
+                                                @if($kk<3)
+                                            <li style="margin-top: 10px;">
                                                 <p><a class="text-under cor-gray8f" href="/article/{!! $item['id'] !!}">&middot; {!! $item['title'] !!}</a></p>
                                             </li>
+                                                @endif
                                              @endforeach
                                         @endif
                                     </ul>

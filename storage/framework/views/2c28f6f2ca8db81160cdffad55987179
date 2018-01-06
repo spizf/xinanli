@@ -78,7 +78,7 @@
                     <div class="col-sm-9 col-xs-8">
                         <div class="text-size14 cor-gray51"><span class="cor-orange">￥<?php echo e($v['bounty']); ?></span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/<?php echo e($v['id']); ?>"><?php echo e($v['title']); ?></a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<?php echo e($v['status_text']); ?></div>
                         <div class="space-6"></div>
-                        <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> <?php echo e($v['nickname']); ?>&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> <?php echo e($v['view_count']); ?>人浏览/<?php echo e($v['delivery_count']); ?>人投稿&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> <?php echo e($v['show_publish']); ?>&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> <?php if($v['bounty_status']==0): ?>未托管赏金<?php else: ?> 已托管赏金<?php endif; ?></p>
+                        <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> <?php echo e($v['nickname']); ?>&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> <?php echo e($v['view_count']); ?>人浏览/<?php echo e($v['delivery_count']); ?>人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> <?php echo e($v['show_publish']); ?>&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> <?php if($v['bounty_status']==0): ?>未托管赏金<?php else: ?> 已托管赏金<?php endif; ?></p>
                         <div class="space-6"></div>
                         <p class="cor-gray51 p-space"><?php echo str_limit(strip_tags(htmlspecialchars_decode($v['desc'])),120); ?></p>
                         <div class="space-2"></div>

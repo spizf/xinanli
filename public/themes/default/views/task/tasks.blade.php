@@ -25,6 +25,23 @@
                     <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" >任务分类</div>
                     <div class="col-lg-11 col-sm-10  col-xs-12">
                         <a class="{!! (!isset($merge['category']) || $merge['category']==$pid)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,['keywords','page']),['category'=>0])) !!}">全部</a>
+                        @foreach(array_slice($categoryone,0,7) as $v)
+                            <a class="{!! (isset($merge['category']) && $merge['category']==$v['id'])?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['category'=>$v['id']])) !!}">{{ $v['name'] }}</a>
+                        @endforeach
+                        @if(count($categoryone)>7)
+                            <div class="pull-right select-fa-angle-down">
+                                <i class="fa fa-angle-down text-size14 show-next"></i>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            @if(isset($category))
+            <div class="col-xs-12 clearfix task-type">
+                <div class="row">
+                    <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" >子分类</div>
+                    <div class="col-lg-11 col-sm-10  col-xs-12">
+                        <a class="{!! (!isset($merge['category']) || $merge['category']==$pid)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,['keywords','page']),['category'=>0])) !!}">全部</a>
                         @foreach(array_slice($category,0,7) as $v)
                             <a class="{!! (isset($merge['category']) && $merge['category']==$v['id'])?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['category'=>$v['id']])) !!}">{{ $v['name'] }}</a>
                         @endforeach
@@ -36,30 +53,31 @@
                     </div>
                 </div>
             </div>
-            {{--筛选内容--}}
-            @if(count($category)>7)
-            <div class="col-xs-12 clearfix service-type">
-                <div class="row">
-                    <div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" ></div>
-                    <div class="col-lg-11 col-sm-10 col-xs-12">
-                        @foreach(array_slice($category,7,(count($category)-7)) as $v)
-                            <a class="{!! (isset($merge['category']) && $merge['category']==$v['id'])?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['category'=>$v['id']])) !!}">{{ $v['name'] }}</a>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
             @endif
-            <div class="collapse col-xs-12 task-filter-content" id="collapseExample">
-                <div class="well clearfix task-well-content">
-                    <a class="{!! (!isset($merge['category']) || $merge['category']==$pid)?'':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,['keywords','page']),['category'=>$pid])) !!}">全部</a>
-                    @foreach($category as $v)
-                        <a  data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="{!! (isset($merge['category']) && $merge['category']==$v['id'])?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['category'=>$v['id']])) !!}">{{ $v['name'] }}</a>
-                    @endforeach
-                    <button type="button" class="close task-filter-close cor-blue2f" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                        <span aria-hidden="true" class="cor-blue2f">&times;</span>
-                    </button>
-                </div>
-            </div>
+            {{--筛选内容--}}
+            {{--@if(count($category)>7)--}}
+            {{--<div class="col-xs-12 clearfix service-type">--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12" ></div>--}}
+                    {{--<div class="col-lg-11 col-sm-10 col-xs-12">--}}
+                        {{--@foreach(array_slice($category,7,(count($category)-7)) as $v)--}}
+                            {{--<a class="{!! (isset($merge['category']) && $merge['category']==$v['id'])?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['category'=>$v['id']])) !!}">{{ $v['name'] }}</a>--}}
+                        {{--@endforeach--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--@endif--}}
+            {{--<div class="collapse col-xs-12 task-filter-content" id="collapseExample">--}}
+                {{--<div class="well clearfix task-well-content">--}}
+                    {{--<a class="{!! (!isset($merge['category']) || $merge['category']==$pid)?'':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,['keywords','page']),['category'=>$pid])) !!}">全部</a>--}}
+                    {{--@foreach($category as $v)--}}
+                        {{--<a  data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" class="{!! (isset($merge['category']) && $merge['category']==$v['id'])?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['category'=>$v['id']])) !!}">{{ $v['name'] }}</a>--}}
+                    {{--@endforeach--}}
+                    {{--<button type="button" class="close task-filter-close cor-blue2f" data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample">--}}
+                        {{--<span aria-hidden="true" class="cor-blue2f">&times;</span>--}}
+                    {{--</button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
             <div class="col-xs-12 clearfix">
                 <div class="row">
                     <div class="col-lg-1 col-sm-2 col-md-2 cor-gray51 text-size14 col-xs-12">任务状态</div>

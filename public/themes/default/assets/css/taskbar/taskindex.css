@@ -104,7 +104,8 @@
 	height: 55px;
 	line-height: 55px;
 	border-bottom: 1px solid #eaeaea;
-	overflow-x: auto;
+	/*overflow-x: auto;*/
+	overflow: hidden;
 }
 .g-taskmainhd a {
 	color: #898989;
