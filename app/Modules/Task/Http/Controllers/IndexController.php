@@ -240,7 +240,6 @@ class IndexController extends BasicIndexController
     {
 
         $this->theme->setTitle('发布任务');
-
         
         $agree = AgreementModel::where('code_name','task_publish')->first();
 
@@ -250,7 +249,7 @@ class IndexController extends BasicIndexController
         $category_all = TaskCateModel::findByPid([0],['id']);
         $category_all = array_flatten($category_all);
         $category_all = TaskCateModel::findByPid($category_all);
-        
+
         $province = DistrictModel::findTree(0);
         
         $city = DistrictModel::findTree($province[0]['id']);
