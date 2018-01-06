@@ -161,6 +161,7 @@ class UserCenterController extends BasicUserCenterController
 
         /*专家仲裁的任务筛选*/
         $expert_work = '';
+        $view['group_experts'] = array();
         if (DB::table("experts")->where('name',Auth::user()['name'])->first()){
             $expert_work = DB::table("experts")->where('name',Auth::user()['name'])->first();
         }
@@ -168,7 +169,8 @@ class UserCenterController extends BasicUserCenterController
         {
             if ($expert_work->position_level == 1)
             {
-                $experts = DB::table('arbitration_expert')->select('task_id')->where('experts','like','%'.Auth::user()['id'].'%')->get();
+
+                $experts = DB::table('arbitration_expert')->select('task_id')->where('experts','like','%'.$expert_work->id.'%')->get();
                 $group = '';
                 foreach ($experts as $k=>$v){
                     if ($k){
