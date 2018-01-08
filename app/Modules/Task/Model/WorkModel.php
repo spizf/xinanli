@@ -415,7 +415,7 @@ class WorkModel extends Model
                 }
 
 
-                UserDetailModel::where('uid', $data['uid'])->increment('balance', $paySection['price']);
+//                UserDetailModel::where('uid', $data['uid'])->increment('balance', $paySection['price']);
 
                 $finance_data = [
                     'action' => 2,
@@ -432,7 +432,7 @@ class WorkModel extends Model
                 if(empty($isFinish)){
                     TaskModel::where('id',$data['task_id'])->update(['status'=>8,'comment_at'=>date('Y-m-d H:i:s',time())]);
                 }*/
-                TaskModel::where('id',$data['task_id'])->update(['status'=>999,'update_at'=>date('Y-m-d H:i:s',time())]);
+                TaskModel::where('id',$data['task_id'])->update(['status'=>999,'updated_at'=>date('Y-m-d H:i:s',time())]);
 
             });
             
