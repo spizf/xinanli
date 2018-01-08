@@ -496,7 +496,7 @@ class CommonClass
     static function pie($id)
     {
         $pie_json = '[{ "label": "工作中",  "data": 38.7, "color": "#68BC31"},
-        { "label": "选稿中",  "data": 24.5, "color": "#2091CF"},
+        { "label": "选标中",  "data": 24.5, "color": "#2091CF"},
         { "label": "交付中",  "data": 8.2, "color": "#AF4E96"},
         { "label": "已结束",  "data": 18.6, "color": "#DA5430"},
         { "label": "其他",  "data": 10, "color": "#FEE074"}]';
@@ -511,7 +511,7 @@ class CommonClass
         //当前工作中的任务
         $work_task = TaskModel::where('uid',$id)->whereIn('status',[3,4,6])->count();
         $percent[] = ($work_task/$task)*100;
-        //当前选稿中的任务
+        //当前选标中的任务
         $choose_task = TaskModel::where('uid',$id)->where('status',5)->count();
         $percent[] = ($choose_task/$task)*100;
         //交付中的任务
@@ -783,7 +783,7 @@ class CommonClass
     static function myTaskPie($id)
     {
         $pie_json = '[{ "label": "工作中",  "data": 38.7, "color": "#68BC31"},
-        { "label": "选稿中",  "data": 24.5, "color": "#2091CF"},
+        { "label": "选标中",  "data": 24.5, "color": "#2091CF"},
         { "label": "交付中",  "data": 8.2, "color": "#AF4E96"},
         { "label": "已结束",  "data": 18.6, "color": "#DA5430"},
         { "label": "其他",  "data": 10, "color": "#FEE074"}]';
@@ -800,7 +800,7 @@ class CommonClass
         //当前工作中的任务
         $work_task = TaskModel::whereIn('id',$task_id)->whereIn('status',[3,4,6])->count();
         $percent[] = number_format($work_task/$task,1)*10;
-        //当前选稿中的任务
+        //当前选标中的任务
         $choose_task = TaskModel::whereIn('id',$task_id)->where('status',5)->count();
         $percent[] = number_format($choose_task/$task,1)*10;
         //交付中的任务
@@ -912,16 +912,16 @@ class CommonClass
     {
         //悬赏模式
         Artisan::call('taskWork');//接任务
-        Artisan::call('taskSelectWork');//选稿
+        Artisan::call('taskSelectWork');//选标
         Artisan::call('taskPublicity');//公示
-        Artisan::call('taskDelivery');//选稿
+        Artisan::call('taskDelivery');//选标
         Artisan::call('taskComment');//评论
         Artisan::call('taskNoStick');//置顶过期
 
         //招标模式
         Artisan::call('taskBidWork');//接任务
-        Artisan::call('taskBidSelectWork');//选稿
-        Artisan::call('taskBidDelivery');//选稿
+        Artisan::call('taskBidSelectWork');//选标
+        Artisan::call('taskBidDelivery');//选标
         Artisan::call('taskBidComment');//评论
     }
 

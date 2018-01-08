@@ -112,7 +112,7 @@ class TaskBidWork extends Command
                 
                 $messageVariableArr = [
                     'task_title'=>$task['title'],
-                    'reason'=>'超过选稿限制时间没有选择稿件中标',
+                    'reason'=>'超过选标限制时间没有选择稿件中标',
                 ];
                 $message = MessageTemplateModel::sendMessage('task_failed',$messageVariableArr);
                 $data = [

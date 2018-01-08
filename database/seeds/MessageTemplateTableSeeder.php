@@ -156,8 +156,8 @@ class MessageTemplateTableSeeder extends Seeder
             array (
                 'id' => 33,
                 'code_name' => 'Automatic_choose',
-                'name' => '自动选稿',
-            'content' => '&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;尊敬的 {{username}}：&lt;/p&gt;&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;您参与的任务{{task_number}}进行了自动选稿，任务信息：&lt;/p&gt;&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;任务标题：&lt;a href=&quot;{{href}}&quot; target=&quot;_blank&quot;&gt;{{task_title}}&lt;/a&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;感谢您对{{website&lt;span id=&quot;transmark&quot;&gt;&lt;/span&gt;}}的信任。如有特殊情况，请致电客服&lt;/p&gt;',
+                'name' => '自动选标',
+            'content' => '&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;尊敬的 {{username}}：&lt;/p&gt;&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;您参与的任务{{task_number}}进行了自动选标，任务信息：&lt;/p&gt;&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;任务标题：&lt;a href=&quot;{{href}}&quot; target=&quot;_blank&quot;&gt;{{task_title}}&lt;/a&gt;&lt;/p&gt;&lt;p style=&quot;margin-top: 5px; margin-bottom: 5px; color: rgb(0, 0, 0); font-family: sans-serif; font-size: 16px; line-height: normal;&quot;&gt;感谢您对{{website&lt;span id=&quot;transmark&quot;&gt;&lt;/span&gt;}}的信任。如有特殊情况，请致电客服&lt;/p&gt;',
                 'message_type' => 2,
                 'is_open' => 1,
                 'is_on_site' => 1,

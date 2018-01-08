@@ -20,7 +20,7 @@ class TaskBidSelectWork extends Command
     protected $signature = 'taskBidSelectWork';
 
     
-    protected $description = '悬赏模式选稿超出时间';
+    protected $description = '悬赏模式选标超出时间';
 
     
     public function __construct()
@@ -116,7 +116,7 @@ class TaskBidSelectWork extends Command
                 
                 $messageVariableArr = [
                     'task_title'=>$task['title'],
-                    'reason'=>'超过选稿限制时间没有选择稿件中标',
+                    'reason'=>'超过选标限制时间没有选择稿件中标',
                 ];
                 $message = MessageTemplateModel::sendMessage('task_failed',$messageVariableArr);
                 $data = [

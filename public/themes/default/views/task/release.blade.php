@@ -280,7 +280,7 @@
                                                         </li>
                                                         <li class="pull-left">
                                                             <span></span>
-                                                            <p>雇主选稿</p>
+                                                            <p>雇主选标</p>
                                                         </li>
                                                         <li class="pull-left">
                                                             <span></span>

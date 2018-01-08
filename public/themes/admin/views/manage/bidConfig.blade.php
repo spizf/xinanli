@@ -75,7 +75,7 @@
 														<td> <input type="text" name="bid_new_user_registration_time_limit" value="{{$config['bid_new_user_registration_time_limit']['rule']}}" class="change_ids">&nbsp;&nbsp;小时（大于等于0的整数小时，设为0即无注册时间限制）</td>
 													</tr>
 													<tr>
-														<td class="col-sm-2 flow-money text-right">选稿时间设置：</td>
+														<td class="col-sm-2 flow-money text-right">选标时间设置：</td>
 														<td> <input type="text" name="bid_select_work" value="{{$config['bid_select_work']['rule']}}" class="change_ids">&nbsp;&nbsp;天（大于等于1的整数天）</td>
 													</tr>
 													<tr>

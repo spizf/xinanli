@@ -126,7 +126,7 @@ class UserCenterController extends BasicUserCenterController
                 2 => '赏金托管',
                 3 => '审核通过',
                 4 => '威客交稿',
-                5 => '雇主选稿',
+                5 => '雇主选标',
                 6 => '任务公示',
                 7 => '交付验收',
                 8 => '双方互评',

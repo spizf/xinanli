@@ -127,7 +127,7 @@
                                     <div class="widget-body ">
                                         <div class="widget-main flow-foot  minHeight249" >
                                             <div id="dt-list-1">
-                                                <p class="well well-sm"> 声明：该功能适用于选稿期结束后有接任务雇主未选稿时</p>
+                                                <p class="well well-sm"> 声明：该功能适用于选标期结束后有接任务雇主未选标时</p>
                                                 <div >
                                                     {{--<lable>--}}
                                                         {{--<input type="text" name="{{ $config['task_sys_help_people']['id'] }}" value="{{ $config['task_sys_help_people']['rule'] }}" class="change_ids"> 人中标平分佣金,不填写则默认关闭--}}
@@ -137,7 +137,7 @@
                                                 </div>
                                                 <div>
                                                     <lable>
-                                                        系统自动选稿规则：
+                                                        系统自动选标规则：
                                                         <select name="{{ $config['task_sys_help_rule']['id'] }}" class="change_ids">
                                                             <option value="1" {{ ($config['task_sys_help_rule']['rule']==1)?'selected':'' }}>最先交稿</option>
                                                             <option value="2" {{ ($config['task_sys_help_rule']['rule']==2)?'selected':'' }}>威客好评率</option>
@@ -226,7 +226,7 @@
                                                         <td> <input type="text" name="{{ $config['task_vote_time']['id'] }}" value="{{ $config['task_vote_time']['rule'] }}" class="change_ids"> 小时（大于等于0的整数小时，设为0即无注册时间限制）</td>
                                                     </tr>
                                                     <tr>
-                                                        <td class="col-sm-2 flow-money text-right">选稿时间设置：</td>
+                                                        <td class="col-sm-2 flow-money text-right">选标时间设置：</td>
                                                         <td> <input type="text" name="{{ $config['task_select_work']['id'] }}" value="{{ $config['task_select_work']['rule'] }}" class="change_ids"> 天(大于等于1的整数天)</td>
                                                     </tr>
                                                     <tr>

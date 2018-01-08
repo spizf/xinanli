@@ -695,7 +695,7 @@ class DetailController extends IndexController
             return redirect()->back()->with(['error'=>'当前中标人数已满！']);
         }
 
-        return redirect()->back()->with(['massage'=>'选稿成功！']);
+        return redirect()->back()->with(['massage'=>'选标成功！']);
     }
 
     

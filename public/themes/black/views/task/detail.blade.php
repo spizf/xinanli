@@ -23,7 +23,7 @@
                 @elseif($detail['status']==4)
                     <span class="text-size16">此任务当前处于：<span class="text-primary">接任务</span>状态</span>
                 @elseif($detail['status']==5)
-                    <span class="text-size16">此任务当前处于：<span class="text-primary">选稿</span>状态</span>
+                    <span class="text-size16">此任务当前处于：<span class="text-primary">选标</span>状态</span>
                 @elseif($detail['status']==6)
                     <span class="text-size16">此任务当前处于：<span class="text-primary">公示</span>状态</span>
                 @elseif($detail['status']==7)
@@ -110,7 +110,7 @@
                                     </li>
                                     <li class="{{ ($detail['status']>=5 && count($works['data'])!=0)?'active':'' }}" data-target="#step1">
                                         <div class="clearfix"><span class="step"><i class="fa fa-chevron-right"></i></span></div>
-                                        <span class="title">雇主选稿</span>
+                                        <span class="title">雇主选标</span>
                                         @if($detail['status']>=5 && count($works['data'])!=0)
                                             @foreach($works['data'] as $v)
                                                 @if($v['status']==1)
@@ -280,7 +280,7 @@
                                     {{--</li>--}}
                                     {{--<li class="{{ ($detail['status']>=5)?'active':'' }}" data-target="#step1">--}}
                                         {{--<div class="clearfix"><span class="step"><i class="fa fa-chevron-right"></i></span></div>--}}
-                                        {{--<span class="title">雇主选稿</span>--}}
+                                        {{--<span class="title">雇主选标</span>--}}
                                         {{--@if($detail['status']>=5 && count($works['data'])!=0)--}}
                                             {{--@foreach($works['data'] as $v)--}}
                                                 {{--@if($v['status']==1)--}}
@@ -970,7 +970,7 @@
                         @elseif($detail['status']==4)
                         <p class="h4">此任务当前处于：<span class="text-primary">接任务</span>状态</p>
                         @elseif($detail['status']==5)
-                        <p class="h4">此任务当前处于：<span class="text-primary">选稿</span>状态</p>
+                        <p class="h4">此任务当前处于：<span class="text-primary">选标</span>状态</p>
                         @elseif($detail['status']==6)
                         <p class="h4">此任务当前处于：<span class="text-primary">公示</span>状态</p>
                         @elseif($detail['status']==7)
@@ -1001,7 +1001,7 @@
                                 {!!  $task_select_work = CommonClass::getConfig('task_select_work') !!}
                                 {!!  $task_select_work = $task_select_work*24*3600 !!}
                             </div>
-                            <p>离选稿结束还剩：</p>
+                            <p>离选标结束还剩：</p>
                             <p class="text-center"><b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['selected_work_at'])+$task_select_work) }}" class="cor-orange text-size22 timer-check"></b></p>
                         @endif
                         @if($detail['status']==6)

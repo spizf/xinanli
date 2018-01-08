@@ -323,7 +323,7 @@ class ConfigTableSeeder extends Seeder
                 'rule' => '10',
                 'type' => 'task',
                 'title' => '验收期最大时间限制',
-                'desc' => '该功能适用于选稿期结束后有接任务雇主未选稿的时候',
+                'desc' => '该功能适用于选标期结束后有接任务雇主未选标的时候',
             ),
             34 => 
             array (
@@ -376,7 +376,7 @@ class ConfigTableSeeder extends Seeder
                 'alias' => 'task_select_work',
                 'rule' => '3',
                 'type' => 'task',
-                'title' => '选稿时间限制',
+                'title' => '选标时间限制',
                 'desc' => '大于等于1的整数天',
             ),
             40 => 
@@ -916,7 +916,7 @@ class ConfigTableSeeder extends Seeder
                 'alias' => 'bid_select_work',
                 'rule' => '1',
                 'type' => 'bid',
-                'title' => '选稿时间设置',
+                'title' => '选标时间设置',
                 'desc' => '大于等于1的整数天',
             ),
             100 => 
@@ -935,7 +935,7 @@ class ConfigTableSeeder extends Seeder
                 'rule' => '1',
                 'type' => 'bid',
                 'title' => '验收期最大时间限制',
-                'desc' => '该功能适用于选稿期结束后有接任务雇主未选稿的时候',
+                'desc' => '该功能适用于选标期结束后有接任务雇主未选标的时候',
             ),
         ));
         
