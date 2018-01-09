@@ -240,6 +240,7 @@
                     @endif
                     @endif
                         @if(Auth::user()['user_type']==3)
+                            @if(isset($group_experts))
                             @if(count($group_experts)>0)
                                 <ul id="userrelease" class="{{ (count($group_experts)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs active fade in dialogs">
 
@@ -270,6 +271,7 @@
                                      <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task/create" target="_blank">发布任务</a>吧</li>
                                      @endif--}}
                                 </ul>
+                            @endif
                             @endif
                             @if(count($group_experts)==0)
                                 <ul id="userrelease" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">

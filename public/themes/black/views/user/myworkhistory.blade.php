@@ -14,7 +14,7 @@
                 <select class="form-control" name="status">
                     <option value="0" {{ (empty($_GET['status']) || $_GET['status']==0)?'selected':'' }}>状态</option>
                     <option value="1" {{ (!empty($_GET['status']) && $_GET['status']==1)?'selected':'' }}>工作中</option>
-                    <option value="2" {{ (!empty($_GET['status']) && $_GET['status']==2)?'selected':'' }}>选稿中</option>
+                    <option value="2" {{ (!empty($_GET['status']) && $_GET['status']==2)?'selected':'' }}>选标中</option>
                     <option value="3" {{ (!empty($_GET['status']) && $_GET['status']==3)?'selected':'' }}>交付中</option>
                     <option value="4" {{ (!empty($_GET['status']) && $_GET['status']==4)?'selected':'' }}>已结束</option>
                 </select>

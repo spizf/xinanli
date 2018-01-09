@@ -86,7 +86,7 @@
                                 </li>
                                 <li class="" data-target="#step1">
                                     <div class="clearfix"><span class="step"><i class="fa fa-chevron-right"></i></span></div>
-                                    <span class="title">雇主选稿</span>
+                                    <span class="title">雇主选标</span>
                                 </li>
                                 <li data-target="#step1">
 

@@ -66,7 +66,7 @@
                     <div class="col-lg-11 col-sm-10 col-md-10 col-xs-12">
                         <a class="{!! (!isset($merge['status']))?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_except(array_except($merge,['keywords','paeg']),'status')) !!}">全部</a>
                         <a class="{!! (isset($merge['status']) && $merge['status']==1)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>1])) !!}">工作中</a>
-                        <!--<a class="{!! (isset($merge['status']) && $merge['status']==2)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>2])) !!}">选稿中</a>
+                        <!--<a class="{!! (isset($merge['status']) && $merge['status']==2)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>2])) !!}">选标中</a>
                         <a class="{!! (isset($merge['status']) && $merge['status']==3)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>3])) !!}">交付中</a> -->
                         <a class="{!! (isset($merge['status']) && $merge['status']==12)?'bg-blue':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>12])) !!}">已完成</a>
                     </div>
@@ -198,7 +198,7 @@
                                     <i class="u-tasktime"></i>
                                     <span class="cor-red">{{ CommonClass::changeTimeType(strtotime($v['delivery_deadline'])-time())}}</span> 后截止投标
                                 @elseif($v['status']==5)
-                                    任务选稿中
+                                    任务选标中
                                 @elseif($v['status']==6)
                                     任务公示中
                                 @elseif($v['status']==7)

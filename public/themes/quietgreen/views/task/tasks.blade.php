@@ -49,7 +49,7 @@
                          @if(isset($merge['status']) && $merge['status']==1)
                             <span>工作中</span> <b class="fa fa-angle-down"></b>
                         @elseif(isset($merge['status']) && $merge['status']==2)
-                            <span>选稿中</span> <b class="fa fa-angle-down"></b>
+                            <span>选标中</span> <b class="fa fa-angle-down"></b>
                         @elseif(isset($merge['status']) && $merge['status']==3)
                             <span>交付中</span> <b class="fa fa-angle-down"></b>
                         @elseif(isset($merge['status']) && $merge['status']==4)
@@ -66,7 +66,7 @@
                             <li><a data-value="工作中" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>1])) !!}">工作中</a></li>
                         @endif
                         @if(!isset($merge['status']) || $merge['status']!=2)
-                            <li><a data-value="选稿中" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>2])) !!}">选稿中</a></li>
+                            <li><a data-value="选标中" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>2])) !!}">选标中</a></li>
                         @endif
                         @if(!isset($merge['status']) || $merge['status']!=3)
                             <li><a data-value="交付中" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>3])) !!}">交付中</a></li>

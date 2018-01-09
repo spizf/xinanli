@@ -35,7 +35,7 @@
             </a>
             <a class="{!! (isset($merge['status']) && $merge['status']==2)?'mactive':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>2])) !!}">
                 <i class="task-ico task-ico2"></i>
-                选稿中
+                选标中
             </a>
             <a class="{!! (isset($merge['status']) && $merge['status']==3)?'mactive':'' !!}" href="{!! URL('task').'?'.http_build_query(array_merge(array_except($merge,'page'), ['status'=>3])) !!}">
                 <i class="task-ico task-ico3"></i>
@@ -171,7 +171,7 @@
                                         {{ CommonClass::changeTimeType(strtotime($v['delivery_deadline'])-time())}} 后截止投标
                                     @elseif($v['status']==5)
                                         <span class="task-ico task-ico2"></span>
-                                        任务选稿中
+                                        任务选标中
                                     @elseif($v['status']==6)
                                         <span class="task-ico task-ico3"></span>
                                         任务公示中
