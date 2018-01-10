@@ -38,6 +38,17 @@
                                             <span class="t-ico t-ico3"></span>
                                             截止时间：{{ date('Y-m-d', strtotime($detail['delivery_deadline'])) }}
                                         </li>
+                                        {{--中标之后显示企业联系人和联系方式，只能第三方评价机构可以看到--}}
+                                        @if($detail['status']>=5 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $usertype == 2)
+                                        <li class="cor-gray51 clearfix p-space">
+                                            <span class="t-ico"></span>
+                                            联系人：{{ $detail['contacts'] }}
+                                        </li>
+                                        <li class="cor-gray51 clearfix p-space">
+                                            <span class="t-ico t-ico3"></span>
+                                            联系方式：{{ $detail['phone'] }}
+                                        </li>
+                                        @endif
                                         <li class="cor-gray51 clearfix p-space">
                                             <span class="t-ico t-ico1"></span>
                                             分类：{{ $detail['cate_name'] }}
