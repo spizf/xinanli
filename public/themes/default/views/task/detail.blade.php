@@ -248,7 +248,7 @@
                                 <a href="/task/changeWibBid/{{$detail['id']}}/4" class="btn btn-primary bor-radius2">
                                     暂不接
                                 </a>
-                            @elseif($detail['status']==12 && $user_type==1 && $has_bid && $task_type_alias == 'zhaobiao' && $usertype == 1 )
+                            @elseif($detail['status']==12 && ($user_type==1 || $detail['user_name']==Auth::user()['name']) && $has_bid && $task_type_alias == 'zhaobiao')
                                 <a href="/task/signContract/{{$detail['id']}}/13" class="btn btn-primary bor-radius2">
                                     签订合同
                                 </a>
