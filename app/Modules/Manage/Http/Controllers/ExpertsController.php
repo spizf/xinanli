@@ -287,14 +287,24 @@ class ExpertsController extends ManageController
             return redirect('manage/experts')->with(['message' => '操作成功']);
     }
     public function arbitration(){
-        $list['list']=DB::table('experts_task')
+        /*$list['list']=DB::table('experts_task')
             ->select('experts.*','task.*','task.status as t_status','experts_task.*','users.name as uname','users.mobile as mobile')
             ->leftJoin('experts','experts_task.experts_id','=','experts.id')
             ->leftJoin('task','experts_task.task_id','=','task.id')
             ->leftJoin('users','task.uid','=','users.id')
             ->where('experts_task.status','!=','0')
             ->orderBy('experts_task.status')
-            ->paginate(12);//dd($list);
+            ->paginate(12);*///dd($list);
+        $list['list'] = DB::table('arbitration_expert')->get();
+        foreach ($list['list'] as $ke => $va){
+            $list_arr = explode('-',$va->experts);
+            $list['list'][$ke]->ex_ls = $list_arr;
+            $list['list'][$ke]->ex_name_zh = DB::table('experts')->select('name','id')->whereIn('id',$va->ex_ls)->where('position_level',1)->get();//组长
+            $list['list'][$ke]->ex_name_z = DB::table('experts')->select('name','id')->whereIn('id',$va->ex_ls)->where('position_level',2)->get();//组员
+            $list['list'][$ke]->user_task = DB::table('task')->select('users.name','task.title','task.status')->where('task.id',$va->task_id)->leftJoin('users','task.uid','=','users.id')->first();//发任务人和任务名称
+            $list['list'][$ke]->user_work = DB::table('work')->select('users.name')->where('work.task_id',$va->task_id)->where('work.status','1')->leftJoin('users','work.uid','=','users.id')->first();//接任务方
+            $list['list'][$ke]->user_zc = DB::table('task_reason')->select('users.name','task_reason.reason')->where('task_reason.nums',$va->num-1)->leftJoin('users','task_reason.user_id','=','users.id')->first();
+        }
         return $this->theme->scope('manage.expertsItemList',$list)->render();
     }
     public function expertsTaskOver($status,$id){

@@ -37,11 +37,11 @@
                 </th>
                 <th>申请仲裁用户名</th>
                 <th>任务标题</th>
-                <th>仲裁专家名</th>
-                <th>用户联系方式</th>
+                <th>仲裁专家组长</th>
+                <th>仲裁专家组长</th>
                 <th>专家联系方式</th>
                 <th>申诉原因</th>
-                <th>申诉时间</th>
+                <th>申诉</th>
                 <th>申诉状态</th>
                 <th>操作</th>
             </tr>
@@ -53,43 +53,33 @@
                     <td class="center">
                         <label class="position-relative">
                             <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>{!! $item->id !!}
+                            <span class="lbl"></span>
                         </label>
                     </td>
                     <td>
-                        {!! $item->uname !!}
+                        {{$item->user_zc->name}}
                     </td>
-                    <td><a target="view_window" href="{!! url('/task',$item->task_id) !!}">{!! $item->title !!}</a></td>
-                    <td>{!! $item->name !!}</td>
-                    <td>{!! $item->mobile !!}</td>
-                    <td>{!! $item->phone !!}</td>
-                    <td title="{!! $item->detail !!}">
-                        <?php echo strlen ($item->detail)>15 ? mb_substr($item->detail,0,15).'...':$item->detail;?>
+                    <td><a target="view_window" href="{!! url('/task',$item->task_id) !!}">{{$item->user_task->title}}</a></td>
+                    <td>@foreach($item->ex_name_zh as $va) <a href="{!! url('/experts/detail',$va->id) !!}">{{$va->name}}</a> @endforeach</td>
+                    <td>@foreach($item->ex_name_z as $val) <a href="{!! url('/experts/detail',$val->id) !!}">{{$val->name}}</a> @endforeach</td>
+                    <td></td>
+                    <td>
+                        {{$item->user_zc->reason}}
                     </td>
                     <td>
-                       {!! $item->time !!}
+
                     </td>
                     <td>
-                        @if($item->status==1)
-                            未线下解决
-                        @elseif($item->status==2)
-                            @if($item->t_status!==10)
-                                已线下解决(任务继续进行)
-                            @else
-                                已线下解决(任务失败)
-                            @endif
-                        @endif
+                        @if($item->user_task->status == 19) 仲裁中 @else 已结束 @endif
                     </td>
                     <td>
                         <div class="btn-group">
-                            @if($item->status==1)
-                            <a class="btn btn-xs btn-info" href="{!! url('manage/expertsTaskOver/1/' . $item->id) !!}">
-                                <i class="fa fa-edit"></i>仲裁成功
+                            <a class="btn btn-xs btn-info" href="">
+                                <i class="fa fa-edit"></i>已处理
                             </a>
-                            <a style="background-color: red!important;" class="btn btn-xs btn-info" href="{!! url('manage/expertsTaskOver/0/' . $item->id) !!}">
-                                <i class="fa fa-edit"></i>仲裁失败
+                            <a style="background-color: red!important;" class="btn btn-xs btn-info" href="">
+                                <i class="fa fa-edit"></i>不处理
                             </a>
-                            @endif
                         </div>
                     </td>
                 </tr>
@@ -107,7 +97,7 @@
                 <div class="dataTables_paginate paging_bootstrap text-right row">
                     <!-- 分页列表 -->
                     {{--{!! $list->appends($search)->render() !!}--}}
-                    {!! $list->render() !!}
+                    {{--{!! $list->render() !!}--}}
                 </div>
             </div>
         </div>
