@@ -94,6 +94,8 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	Route::post('/ajaxBidRights','DetailController@ajaxBidRights')->name('ajaxBidRights');
 	//专家提交仲裁报告
 	Route::post('/submitAccessory','DetailController@submitAccessory')->name('submitAccessory');
+	//仲裁附件提交
+	Route::post('/reasonAccessory','DetailController@reasonAccessory')->name('reasonAccessory');
     //申请仲裁
     Route::post('/submitExperts','IndexController@submitExperts')->name('submitExperts');
     //add by xl

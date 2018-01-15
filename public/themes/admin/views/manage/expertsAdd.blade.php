@@ -13,6 +13,13 @@
 			</p>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 联系方式：</p>
+			<p class="col-sm-4">
+				<input type="text" id="form-field-1"  class="col-xs-10 col-sm-5" name="tell" datatype="*" nullmsg="请输入专家联系方式" errormsg="请输入专家联系方式">
+				{{--<span class="help-inline col-xs-12 col-sm-7"><i class="light-red ace-icon fa fa-asterisk"></i></span>--}}
+			</p>
+		</div>
+		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 专家头像：</p>
 			<div class="col-sm-4">
 				<div class="memberdiv pull-left">

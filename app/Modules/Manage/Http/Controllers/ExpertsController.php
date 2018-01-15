@@ -14,6 +14,7 @@ use App\Modules\User\Model\DistrictModel;
 use App\Modules\User\Model\UserModel;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -126,6 +127,7 @@ class ExpertsController extends ManageController
         }
         $data = [
             'name' => $request->get('name'),
+            'tell' => $request->get('tell'),
             'position' => $request->get('position'),
             'position_level' => $request->get('position_level'),
             'addr' => implode('-',$request->get('addr')),
@@ -156,6 +158,7 @@ class ExpertsController extends ManageController
         $now = time();
         $userArr = array(
             'name' => $request->get('name'),
+//            'mobile' => $request->get('tell'),//怕专家手机号已经注册过账号所以没加
             'password' => UserModel::encryptPassword('123456', $salt),
             'alternate_password' => UserModel::encryptPassword('123456', $salt),
             'salt' => $salt,
@@ -295,17 +298,52 @@ class ExpertsController extends ManageController
             ->where('experts_task.status','!=','0')
             ->orderBy('experts_task.status')
             ->paginate(12);*///dd($list);
-        $list['list'] = DB::table('arbitration_expert')->get();
+        $list['list'] = DB::table('arbitration_expert')->paginate(12);
         foreach ($list['list'] as $ke => $va){
             $list_arr = explode('-',$va->experts);
             $list['list'][$ke]->ex_ls = $list_arr;
             $list['list'][$ke]->ex_name_zh = DB::table('experts')->select('name','id')->whereIn('id',$va->ex_ls)->where('position_level',1)->get();//组长
             $list['list'][$ke]->ex_name_z = DB::table('experts')->select('name','id')->whereIn('id',$va->ex_ls)->where('position_level',2)->get();//组员
-            $list['list'][$ke]->user_task = DB::table('task')->select('users.name','task.title','task.status')->where('task.id',$va->task_id)->leftJoin('users','task.uid','=','users.id')->first();//发任务人和任务名称
+            $list['list'][$ke]->user_task = DB::table('task')->select('users.name','task.title','task.updated_at','task.status')->where('task.id',$va->task_id)->leftJoin('users','task.uid','=','users.id')->first();//发任务人和任务名称
             $list['list'][$ke]->user_work = DB::table('work')->select('users.name')->where('work.task_id',$va->task_id)->where('work.status','1')->leftJoin('users','work.uid','=','users.id')->first();//接任务方
-            $list['list'][$ke]->user_zc = DB::table('task_reason')->select('users.name','task_reason.reason')->where('task_reason.nums',$va->num-1)->leftJoin('users','task_reason.user_id','=','users.id')->first();
+            $list['list'][$ke]->user_zc = DB::table('task_reason')->select('users.name','users.mobile','task_reason.reason')->where('task_reason.nums',$va->num-1)->leftJoin('users','task_reason.user_id','=','users.id')->first();//仲裁原因，仲裁人,联系方式
         }
         return $this->theme->scope('manage.expertsItemList',$list)->render();
+    }
+    /*仲裁列表详情*/
+    public function arbitrationDetail($id)
+    {
+        $list['list'] = DB::table('arbitration_expert')->where('id',$id)->first();
+            $list_arr = explode('-',$list['list']->experts);
+            $list['list']->ex_ls = $list_arr;
+            $list['list']->ex_name_zh = DB::table('experts')->whereIn('id',$list['list']->ex_ls)->where('position_level',1)->get();//组长
+            $list['list']->ex_name_z = DB::table('experts')->whereIn('id',$list['list']->ex_ls)->where('position_level',2)->get();//组员
+            $list['list']->user_zc = DB::table('task_reason')->select('users.name','users.mobile','task_reason.reason')->where('task_reason.nums',$list['list']->num-1)->leftJoin('users','task_reason.user_id','=','users.id')->first();//仲裁原因，仲裁人,联系方式
+        return $this->theme->scope('manage.arbitrationdetail',$list)->render();
+    }
+    /*仲裁详情提交*/
+    public function arbitrationSubmit(Request $request)
+    {
+        $result_experts = '';
+        if (isset($request->result_experts)){
+            $result_experts = implode('-',$request->result_experts);
+        }
+        $data = [
+            'headman' => $request->headman,
+            'result_experts' => $result_experts
+        ];
+        $reason = [
+            'reason' => $request->reason
+        ];
+        DB::table('arbitration_expert')->whereId($request->id)->update($data);
+        DB::table('task_reason')->where('task_id',$request->task_id)->where('nums',$request->num-1)->update($reason);
+        return redirect('manage/arbitrationDetail/'.$request->id)->with(['message' => '保存成功']);
+    }
+    /*仲裁列表删除*/
+    public function arbitrationDel($id)
+    {
+        DB::table('arbitration_expert')->whereId($id)->delete();
+        return redirect('manage/arbitration')->with(['message' => '删除成功']);
     }
     public function expertsTaskOver($status,$id){
         //失败

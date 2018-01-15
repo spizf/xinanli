@@ -30,55 +30,55 @@
             <tr>
                 <th class="center">
                     <label class="position-relative">
-                        <input type="checkbox" class="ace" />
-                        <span class="lbl"></span>
-                        UID
+                        {{--<input type="checkbox" class="ace" />--}}
+                        <span class="lbl">序号</span>
                     </label>
                 </th>
-                <th>申请仲裁用户名</th>
                 <th>任务标题</th>
-                <th>仲裁专家组长</th>
-                <th>仲裁专家组长</th>
-                <th>专家联系方式</th>
+                <th>申请仲裁用户名</th>
+                <th>仲裁用户联系方式</th>
+                <th>仲裁专家</th>
+                {{--<th>仲裁专家组员</th>--}}
                 <th>申诉原因</th>
-                <th>申诉</th>
+                <th>申诉时间</th>
                 <th>申诉状态</th>
                 <th>操作</th>
             </tr>
             </thead>
             <form >
             <tbody>
-                @foreach($list as $item)
+                @foreach($list as $ke=>$item)
                 <tr>
                     <td class="center">
                         <label class="position-relative">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl"></span>
+                            {{--<input type="checkbox" class="ace" />--}}
+                            <span class="lbl">{{$ke+1}}</span>
                         </label>
                     </td>
+                    <td><a target="view_window" href="{!! url('/task',$item->task_id) !!}">{{$item->user_task->title}}</a></td>
                     <td>
                         {{$item->user_zc->name}}
                     </td>
-                    <td><a target="view_window" href="{!! url('/task',$item->task_id) !!}">{{$item->user_task->title}}</a></td>
-                    <td>@foreach($item->ex_name_zh as $va) <a href="{!! url('/experts/detail',$va->id) !!}">{{$va->name}}</a> @endforeach</td>
-                    <td>@foreach($item->ex_name_z as $val) <a href="{!! url('/experts/detail',$val->id) !!}">{{$val->name}}</a> @endforeach</td>
-                    <td></td>
+                    <td>{{$item->user_zc->mobile}}</td>
+                    <td>详情列表查看</td>
+                    {{--<td>@foreach($item->ex_name_zh as $va) <a href="{!! url('/experts/detail',$va->id) !!}">{{$va->name}}</a> @endforeach</td>--}}
+                    {{--<td>@foreach($item->ex_name_z as $val) <a href="{!! url('/experts/detail',$val->id) !!}">{{$val->name}}</a> @endforeach</td>--}}
                     <td>
                         {{$item->user_zc->reason}}
                     </td>
                     <td>
-
+                        {{$item->user_task->updated_at}}
                     </td>
                     <td>
-                        @if($item->user_task->status == 19) 仲裁中 @else 已结束 @endif
+                        @if($item->user_task->status == 19) 仲裁中 @else 已线下解决(任务继续进行) @endif
                     </td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn btn-xs btn-info" href="">
-                                <i class="fa fa-edit"></i>已处理
+                            <a class="btn btn-xs btn-info" href="/manage/arbitrationDetail/{{$item->id}}">
+                                <i class="fa fa-edit"></i>详情
                             </a>
-                            <a style="background-color: red!important;" class="btn btn-xs btn-info" href="">
-                                <i class="fa fa-edit"></i>不处理
+                            <a style="background-color: red!important;" class="btn btn-xs btn-info" href="/manage/arbitrationDel/{{$item->id}}">
+                                <i class="fa fa-trash-o"></i>删除
                             </a>
                         </div>
                     </td>
@@ -97,7 +97,7 @@
                 <div class="dataTables_paginate paging_bootstrap text-right row">
                     <!-- 分页列表 -->
                     {{--{!! $list->appends($search)->render() !!}--}}
-                    {{--{!! $list->render() !!}--}}
+                    {!! $list->render() !!}
                 </div>
             </div>
         </div>
