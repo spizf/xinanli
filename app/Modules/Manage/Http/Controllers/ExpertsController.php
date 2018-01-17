@@ -187,23 +187,38 @@ class ExpertsController extends ManageController
             if($addr) {
                 DB::table('district')->whereId($addr[0])->increment('experts_num');
             }
-            return redirect('manage/experts')->with(['message' => '操作成功']);
+            return redirect('manage/experts')->with(['message' => '添加成功']);
         }
     }
     public function expertsEditHandle(Request $request){
         $cate=$request->get('cate');
-        foreach($cate as $k=>$v){
-            if($v=='0'){
+        $industry=$request->get('industry');
+        $son_industry=$request->get('son_industry');
+        $str='';
+        foreach ($cate as $k=>$v){
+            if ($v==0){
                 unset($cate[$k]);
+                unset($industry[$k]);
+                unset($son_industry[$k]);
+            }
+        }
+        //筛选仲裁专家用
+        foreach($cate as $k=>$v){
+            if($k){
+                $str.=','.$v.'-'.$industry[$k].'-'.$son_industry[$k];
+            }else{
+                $str.=$v.'-'.$industry[$k].'-'.$son_industry[$k];
             }
         }
         $data = [
             'name' => $request->get('name'),
+            'tell' => $request->get('tell'),
             'position' => $request->get('position'),
             'position_level' => $request->get('position_level'),
             'addr' => implode('-',$request->get('addr')),
             'add_time' => date('Y-m-d H:i:s',time()),
             'year' => $request->get('year'),
+            'cates' => $str,
             'cate' => implode(',',$cate),
             'level' => $request->get('level'),
             'recommend' => $request->get('recommend'),
@@ -230,6 +245,7 @@ class ExpertsController extends ManageController
         if ($status)
             return redirect('manage/experts')->with(['message' => '操作成功']);
     }
+    /*专家信息修改页面*/
     public function expertsEdit($id){
         $data['experts']=DB::table('experts')->where('id',$id)->first();
         $data['addr']=DB::table('district')->where('upid',0)->get();
@@ -240,6 +256,14 @@ class ExpertsController extends ManageController
         $data['experts']->cate=explode(',',$data['experts']->cate);
         $data['experts']->un_time=date('d/m/Y',strtotime($data['experts']->un_time));
         $data['experts']->un_cer_time=date('d/m/Y',strtotime($data['experts']->un_cer_time));
+        $field = \DB::table('field')->where('pid',0)->get();
+        $data['field'] = $field;
+        $data['experts']->cates = explode(',',$data['experts']->cates);
+        $data['experts']->arr = array();
+        foreach ($data['experts']->cates as $val){
+            $arr = explode('-',$val);
+            $data['experts']->arr = array_merge($data['experts']->arr,$arr);
+        }
         $actArr=[];
         if(is_array($data['cate'])) {
             foreach ($data['cate'] as $v) {
@@ -306,7 +330,7 @@ class ExpertsController extends ManageController
             $list['list'][$ke]->ex_name_z = DB::table('experts')->select('name','id')->whereIn('id',$va->ex_ls)->where('position_level',2)->get();//组员
             $list['list'][$ke]->user_task = DB::table('task')->select('users.name','task.title','task.updated_at','task.status')->where('task.id',$va->task_id)->leftJoin('users','task.uid','=','users.id')->first();//发任务人和任务名称
             $list['list'][$ke]->user_work = DB::table('work')->select('users.name')->where('work.task_id',$va->task_id)->where('work.status','1')->leftJoin('users','work.uid','=','users.id')->first();//接任务方
-            $list['list'][$ke]->user_zc = DB::table('task_reason')->select('users.name','users.mobile','task_reason.reason')->where('task_reason.nums',$va->num-1)->leftJoin('users','task_reason.user_id','=','users.id')->first();//仲裁原因，仲裁人,联系方式
+            $list['list'][$ke]->user_zc = DB::table('task_reason')->join('users','task_reason.user_id','=','users.id')->select('users.name','users.mobile','task_reason.reason')->where('task_reason.nums',$va->num)->where('task_reason.task_id',$va->task_id)->first();//仲裁原因，仲裁人,联系方式
         }
         return $this->theme->scope('manage.expertsItemList',$list)->render();
     }
@@ -318,7 +342,7 @@ class ExpertsController extends ManageController
             $list['list']->ex_ls = $list_arr;
             $list['list']->ex_name_zh = DB::table('experts')->whereIn('id',$list['list']->ex_ls)->where('position_level',1)->get();//组长
             $list['list']->ex_name_z = DB::table('experts')->whereIn('id',$list['list']->ex_ls)->where('position_level',2)->get();//组员
-            $list['list']->user_zc = DB::table('task_reason')->select('users.name','users.mobile','task_reason.reason')->where('task_reason.nums',$list['list']->num-1)->leftJoin('users','task_reason.user_id','=','users.id')->first();//仲裁原因，仲裁人,联系方式
+            $list['list']->user_zc = DB::table('task_reason')->select('users.name','users.mobile','task_reason.reason')->where('task_reason.nums',$list['list']->num)->leftJoin('users','task_reason.user_id','=','users.id')->where('task_reason.task_id',$list['list']->task_id)->first();//仲裁原因，仲裁人,联系方式
         return $this->theme->scope('manage.arbitrationdetail',$list)->render();
     }
     /*仲裁详情提交*/
@@ -336,7 +360,7 @@ class ExpertsController extends ManageController
             'reason' => $request->reason
         ];
         DB::table('arbitration_expert')->whereId($request->id)->update($data);
-        DB::table('task_reason')->where('task_id',$request->task_id)->where('nums',$request->num-1)->update($reason);
+        DB::table('task_reason')->where('task_id',$request->task_id)->where('nums',$request->num)->update($reason);
         return redirect('manage/arbitrationDetail/'.$request->id)->with(['message' => '保存成功']);
     }
     /*仲裁列表删除*/

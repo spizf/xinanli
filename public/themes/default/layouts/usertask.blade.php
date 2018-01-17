@@ -27,6 +27,15 @@
     <link rel="stylesheet" href="/themes/default/assets/css/{!! Theme::get('color') !!}/style.css">
     <link rel="stylesheet" href="/themes/default/assets/css/{!! Theme::get('color') !!}/user.css">
     {!! Theme::asset()->container('custom-css')->styles() !!}
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?949b5c339862bc29eee5b0502946fa77";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 </head>
 <body>
 <header>

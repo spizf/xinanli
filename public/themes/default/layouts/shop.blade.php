@@ -35,6 +35,15 @@
     <link rel="stylesheet" href="/themes/default/assets/css/{!! Theme::get('color') !!}/style2.css">
     <!--编辑器-->
     <script src="/themes/default/assets/plugins/ace/js/ace-extra.min.js"></script>
+    <script>
+        var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?949b5c339862bc29eee5b0502946fa77";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
 <body>
 <input style="display:none;" value="{!! Theme::get('SHOPID') !!}" id="shopId">
 <header>

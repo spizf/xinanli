@@ -16,6 +16,7 @@
                     {{--{!! config('kppw.kppw_powered_by') !!}
                     {!! config('kppw.kppw_version') !!}--}}
                     {!! Theme::get('site_config')['copyright'] !!}{!! Theme::get('site_config')['record_number'] !!}
+                    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272420864'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272420864%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
                 </p>
             </div>
             <div class="col-lg-3 g-contact visible-lg-block hidden-sm hidden-md hidden-xs">
@@ -48,6 +49,7 @@
         </div>
     </div>
 </div>
+
 {!! Theme::get('site_config')['statistic_code'] !!}
 {!! Theme::widget('popup')->render() !!}
 {{--{!! Theme::widget('statement')->render() !!}--}}
