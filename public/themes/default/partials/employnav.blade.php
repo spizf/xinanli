@@ -24,7 +24,7 @@
                     @endif
                 </li>
                 <li>
-                    <span >服务商工作</span>
+                    <span >评价机构工作</span>
                     <div class="{{ (Theme::get('employ_bounty_status')==1 && in_array(Theme::get('employ_status'),[1,2,3,4]))?'active':'' }}">4</div>
                 </li>
                 <li>

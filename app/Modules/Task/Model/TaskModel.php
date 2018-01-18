@@ -175,13 +175,13 @@ class TaskModel extends Model
                     $status = [5];
                     break;
                 case 3:
-                    $status = [6, 7];
+                    $status = [3];
                     break;
                 case 4:
-                    $status = [8, 9];
+                    $status = [4];
                     break;
-				case 12:
-				   $status = [8, 9,10];
+				case 999:
+				   $status = [999];
                    break;
             }
             $query->whereIn('task.status', $status);

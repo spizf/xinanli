@@ -93,7 +93,7 @@
             </div>
             <div class="col-lg-3 hidden-xs hidden-md hidden-sm col-left">
                 <div class="needs-sidebar">
-                    <h4 class="text-center">被雇佣服务商信息</h4>
+                    <h4 class="text-center">被雇佣评价机构信息</h4>
                     <div class="needs-sidebar-wrap">
                         <div class="wrap1">
                             <img src="{{ $domain.'/'.$employ_data['avatar'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/employ/bg2.jpg')}}',$(this))" alt=""/>
