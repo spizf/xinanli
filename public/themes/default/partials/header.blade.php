@@ -30,9 +30,8 @@
                                 </div>
                             </li>
                             <li class="pull-left"><a class="g-taskbarbor" @if(!empty(Theme::get('help_center')))href="/article/aboutUs/{!! Theme::get('help_center') !!}"@endif>帮助中心</a></li>
-                            <li class="pull-left g-taskbarli"><a class="g-nomdright g-taskbarbor" href="javascript:;">分类导航 <i
-                                            class="fa fa-caret-down"></i></a>
-                                <div class="g-taskbardown1">
+                            <li class="pull-left"><a class="g-nomdright g-taskbarbor" href="http://www.anhuanjia.com">安环家入口 </a>
+                               {{-- <div class="g-taskbardown1">
                                     @if(!empty(Theme::get('task_cate')))
                                         @foreach(Theme::get('task_cate') as $k => $v)
                                             @if(isset($v['pid']) && $v['pid'] == 0)
@@ -40,7 +39,7 @@
                                             @endif
                                         @endforeach
                                     @endif
-                                </div>
+                                </div>--}}
                             </li>
                         </ul>
                     </div>
@@ -72,9 +71,8 @@
                                 </div>
                             </li>
                             <li class="pull-left"><a class="g-taskbarbor" @if(!empty(Theme::get('help_center')))href="/article/aboutUs/{!! Theme::get('help_center') !!}"@endif>帮助中心</a></li>
-                            <li class="pull-left g-taskbarli"><a class="g-nomdright g-taskbarbor" href="javascript:;">分类导航 <i
-                                            class="fa fa-caret-down"></i></a>
-                                <div class="g-taskbardown1">
+                            <li class="pull-left "><a class="g-nomdright g-taskbarbor" href="http://www.anhuanjia.com">安环家入口 </a>
+                                {{--<div class="g-taskbardown1">
                                     @if(!empty(Theme::get('task_cate')))
                                         @foreach(Theme::get('task_cate') as $k => $v)
                                             @if(isset($v['pid']) && $v['pid'] == 0)
@@ -82,7 +80,7 @@
                                             @endif
                                         @endforeach
                                     @endif
-                                </div>
+                                </div>--}}
                             </li>
                         </ul>
                     </div>
