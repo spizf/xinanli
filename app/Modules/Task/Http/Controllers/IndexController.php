@@ -238,7 +238,6 @@ class IndexController extends BasicIndexController
     
     public function create(Request $request)
     {
-
         $this->theme->setTitle('发布任务');
         
         $agree = AgreementModel::where('code_name','task_publish')->first();
