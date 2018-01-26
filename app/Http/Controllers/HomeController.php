@@ -581,6 +581,10 @@ class HomeController extends IndexController
         return $data['field'];
     }
     public function fastAddTask(Request $request){
+        $user = Auth::User();
+        if(empty($user)){
+            return redirect()->to('/login/')->with(['message'=>'请先登录！']);
+        }
         $authMobileInfo = session('auth_mobile_info');
         $data = $request->except('_token');
         $task_percentage = \CommonClass::getConfig('bid_percentage');

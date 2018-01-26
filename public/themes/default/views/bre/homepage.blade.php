@@ -207,7 +207,7 @@
                     <b>快速寻找任务</b>
                 </div>
                 <div class="addnewles" style="border-left:1px solid #eeeeee;border-right:1px solid #eeeeee;">
-                    <span>仲裁专家</span>
+                    <span>专家仲裁</span>
                     <b>过程公平公正</b>
                 </div>
             </div>

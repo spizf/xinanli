@@ -51,6 +51,7 @@ class IndexController extends BasicIndexController
     
     public function tasks(Request $request)
     {
+        $this->theme->set('now_menu','/task');
         
         $seoConfig = ConfigModel::getConfigByType('seo');
         if(!empty($seoConfig['seo_task']) && is_array($seoConfig['seo_task'])){
@@ -231,7 +232,7 @@ class IndexController extends BasicIndexController
 
         
         \CommonClass::taskScheduling();
-        $this->theme->set('now_menu','/task');
+
         return $this->theme->scope('task.tasks', $view)->render();
     }
 

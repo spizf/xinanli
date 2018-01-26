@@ -368,7 +368,37 @@ class DetailController extends IndexController
     /*return array(expert)*/
     public function getExperts($expert_arr)
     {
-        return DB::table('experts')->whereIn('id',$expert_arr)->get();
+        $data['experts'] =  DB::table('experts')->whereIn('experts.id',$expert_arr)->select('experts.*','position.position')
+            ->leftJoin('position','experts.position','=','position.id')
+            ->get();
+        foreach($data['experts'] as $k=>$v){
+            foreach($v as $kk=>$vv) {
+                $data['experts'][$k]->user=DB::table('users')->where('name',$v->name)->first();
+                if($kk=='addr') {
+                    $data['experts'][$k]->addr=explode('-',$vv);
+                    foreach($data['experts'][$k]->addr as $key=>$item){
+                        if($item!==0) {
+                            $distirct = DB::table('district')->whereId($item)->first();
+                            if($distirct) {
+                                $data['experts'][$k]->addr[$key] = $distirct->name;
+                            }
+                        }
+                    }
+                }
+                if($kk=='cate') {
+                    $data['experts'][$k]->cate=explode('-',$vv);
+                    foreach($data['experts'][$k]->cate as $key=>$item){
+                        if($item!==0) {
+                            $distirct = DB::table('cate')->whereId($item)->first();
+                            if($distirct) {
+                                $data['experts'][$k]->cate[$key] = $distirct->name;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $data['experts'];
     }
     
     /*推荐仲裁专家*/

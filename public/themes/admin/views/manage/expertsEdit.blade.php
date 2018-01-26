@@ -12,6 +12,13 @@
 			</p>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
+			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 联系方式：</p>
+			<p class="col-sm-4">
+				<input type="text" id="form-field-1"  class="col-xs-10 col-sm-5" value="{!! $experts->tell !!}" name="tell" datatype="*" nullmsg="请输入专家联系方式" errormsg="请输入专家联系方式">
+				{{--<span class="help-inline col-xs-12 col-sm-7"><i class="light-red ace-icon fa fa-asterisk"></i></span>--}}
+			</p>
+		</div>
+		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 入驻时间：</p>
 			<p class="col-sm-4">
 				<zz style="line-height: 34px;font-size: 20px">{!! $experts->add_time !!}</zz>
@@ -163,30 +170,64 @@
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1" >擅长领域</p>
-			<p class="col-sm-4" id="cate">
-				@foreach($experts->cate as $v)
-				<select name="cate[]"  id="select" onchange="changeAppendSelect(this)">
-					<option value="0">移除</option>
-					@if(is_array($cate))
-						@foreach($cate as $item)
-							<option value="{!! $item->id !!}"
-									@if($v==$item->id)
-										selected
-									@endif
-							>{!! $item->name !!}</option>
+			<div class="col-sm-7 fields">
+				@foreach( $experts->cates as $val)
+				<div style="width:80%;height:100%;float: left;">
+					<select name="cate[]" class="selectwd" id="select">
+						<option value="0">请选择擅长的领域</option>
+						@if(is_array($cate))
+							@foreach($cate as $item)
+								@if(explode('-',$val)[0]==$item->id)
+								<option value="{!! $item->id !!}" selected="selected">{!! $item->name !!}</option>
+								@else
+								<option value="{!! $item->id !!}">{!! $item->name !!}</option>
+								@endif
+							@endforeach
+						@endif
+					</select>
+					<select name="industry[]" id="field" class="selectwd">
+						<option value="0">请选择行业</option>
+						@foreach($field as $v)
+							@if(explode('-',$val)[1] == $v->id)
+								<option value="{{$v->id}}" selected="selected">{{$v->name}}</option>
+							@else
+								<option value="{{$v->id}}">{{$v->name}}</option>
+							@endif
 						@endforeach
-					@endif
-				</select>
+					</select>
+					<select name="son_industry[]" id="field1" class="selectwd">
+						<option value="{{explode('-',$val)[2]}}">{{\DB::table('field')->whereId(explode('-',$val)[2])->first()->name}}</option>
+					</select>
+				</div>
 				@endforeach
-				<select name="cate[]"  id="select" onchange="changeAppendSelect(this)">
-					<option value="0">请选择擅长的领域</option>
-					@if(is_array($cate))
-						@foreach($cate as $item)
-							<option value="{!! $item->id !!}">{!! $item->name !!}</option>
-						@endforeach
-					@endif
-				</select>
-			</p>
+				<br>
+			</div>
+			<button type="button" class="btn btn-primary btn-sm add_son">继续添加领域</button>
+			<script>
+                $(document).on('change','#field',function(){
+                    var that = $(this);
+                    if(!!this.value){
+                        $.ajax({
+                            type:'GET',
+                            url:"/getField/"+this.value,
+                            success:function(data){
+                                var str='<option value="0">请选择子行业</option>';
+                                for(var i=0;i<data.length;i++) {
+                                    str += "<option value='" + data[i].id + "'>"+data[i].name+"</option>";
+                                }
+                                that.parent('div').find('#field1').html(str);
+                            }
+                        });
+                    }else{
+                        layer.msg('请先选择一个行业类型！');
+                    }
+                });
+                $(".add_son").click(function () {
+                    var strs = '<div style="width:80%;height:100%;float: left;"><select name="cate[]" class="selectwd" id="select"><option value="0">请选择擅长的领域</option>@if(is_array($cate))@foreach($cate as $item)<option value="{!! $item->id !!}">{!! $item->name !!}</option>@endforeach @endif</select> <select name="industry[]" id="field" class="selectwd"><option value="0">请选择行业</option>@foreach($field as $v)<option value="{{$v->id}}">{{$v->name}}</option>@endforeach</select> <select name="son_industry[]" id="field1" class="selectwd"><option value="0">请选择子行业</option></select></div><br>';
+                    $(".fields").append(strs);
+                });
+
+			</script>
 		</div>
 		<div class="bankAuth-bottom clearfix col-xs-12">
 			<p class="col-sm-1 control-label no-padding-left" for="form-field-1"> 专家等级：</p>

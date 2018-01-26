@@ -64,10 +64,11 @@
                                     </ul>
                                 </div>
                             @else
+                                {{--自定义菜单部分（真费劲找的！）--}}
                                 @for($i=0;$i<count(Theme::get('nav_list'));$i++)
                                     @if(Theme::get('nav_list')[$i]['is_show'] == 1)
                                         <a href="{!! Theme::get('nav_list')[$i]['link_url'] !!}"
-                                           @if(Theme::get('nav_list')[$i]['is_new_window'] == 1)target="_blank" @endif @if(Theme::get('nav_list')[$i]['link_url'] == $_SERVER['REQUEST_URI']) class="z-navHome" @endif>
+                                           @if(Theme::get('nav_list')[$i]['is_new_window'] == 1)target="_blank" @endif @if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')) class="z-navHome" @endif>
                                             {!! Theme::get('nav_list')[$i]['title'] !!}
                                         </a>
                                     @endif

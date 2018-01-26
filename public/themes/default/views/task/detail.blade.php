@@ -248,7 +248,7 @@
                                 <a href="/task/changeWibBid/{{$detail['id']}}/4" class="btn btn-primary bor-radius2">
                                     暂不接
                                 </a>
-                            @elseif($detail['status']==12 && $user_type==1 && $has_bid && $task_type_alias == 'zhaobiao' && $usertype == 1 )
+                            @elseif($detail['status']==12 && ($user_type==1 || $detail['user_name']==Auth::user()['name']) && $has_bid && $task_type_alias == 'zhaobiao')
                                 <a href="/task/signContract/{{$detail['id']}}/13" class="btn btn-primary bor-radius2">
                                     签订合同
                                 </a>
@@ -313,6 +313,7 @@
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
+                                @if(isset($group_two))
                                 @elseif($detail['status']==19 && $user_type == 3 && (Auth::user()['name']==$group_two[0]->name || Auth::user()['name']==$group_two[1]->name) && $task_type_alias == 'zhaobiao')
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#message-data">
                                         通知双方补充冲裁资料
@@ -320,6 +321,7 @@
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#submit-data">
                                         提交仲裁报告
                                     </a>
+                                    @endif
                             @elseif($detail['status']==999 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 @if(CommonClass::evaluted($detail['id'],Auth::user()['id'])==0)
                                     <a target="_blank" href="{{ URL('/task/evaluate').'?'.http_build_query(['id'=>$detail['id'],'work_id'=>isset($delivery['data'][0]['id']) ? $delivery['data'][0]['id'] : 1]) }}" class="btn btn-primary bor-radius2">
@@ -1596,11 +1598,48 @@
                 <h4 class="modal-title">仲裁专家</h4>
             </div>
                 <div class="modal-body">
+                    <p>提示：您的专家仲裁申请已成功提交，系统为您匹配了以下仲裁专家，请您耐心等侯！</p>
                     <div class="zongjian">
                         @if(!empty($expertss))
                         @foreach($expertss as $k=>$item)
-                            {{$expertss[$k]->name}}
-                        @endforeach
+                                <div class="zongjianle" style="width: 226px;margin-right: 10px;" data="20">
+                                <div class="touxiang zongjianle2">
+                                    <img src="{!! url($item->head_img) !!}">
+                                </div>
+                                <h3>{!! $item->name !!}</h3>
+                                <h4>{!! $item->position !!}</h4>
+                                <div class="xinxi zongjianle2">
+                                    <dl>
+                                        <dd>{!! $item->year !!}年工作经验</dd>
+                                        <dd>{!! $item->addr[0] !!}</dd>
+                                        <dd>{!! $item->addr[1] !!}</dd>
+                                    </dl>
+                                </div>
+                                <div class="shanchang zongjianle2">
+                                    @foreach($item->cate as $v)
+                                        <a href="">{!! $v !!}</a>
+                                    @endforeach
+                                </div>
+                                <div class="dubox zongjianle2" style="margin: 24px 8px;">
+                                    <dl>
+                                        <dt>{!! $item->recommend !!}</dt>
+                                        <dd>推荐指数</dd>
+                                    </dl>
+                                    <span style="margin: 0;"></span>
+                                    <dl>
+                                        <dt>{!! $item->satisfaction !!}%</dt>
+                                        <dd>满意度</dd>
+                                    </dl>
+                                    <span style="margin: 0;"></span>
+                                    <dl>
+                                        <dt>{!! $item->ask_num !!}</dt>
+                                        <dd>服务量</dd>
+                                    </dl>
+                                </div>
+                                <div class="liji">
+                                </div>
+                                </div>
+                            @endforeach
                         @else
                             暂无推荐专家！
                         @endif

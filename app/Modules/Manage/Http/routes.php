@@ -448,4 +448,10 @@ Route::group(['prefix' => 'manage', 'middleware' => ['manageauth', 'RolePermissi
     Route::get('/changeTaskStatus/{id}/{status}','TaskController@changeTaskStatus')->name('fastTask');
 
     Route::post('/showExpertsAddr','ExpertsController@showExpertsAddr')->name('fastTask');
+    //仲裁列表详情
+    Route::get('/arbitrationDetail/{id}','ExpertsController@arbitrationDetail')->name('arbitrationDetail');
+    //仲裁列表删除
+    Route::get('/arbitrationDel/{id}','ExpertsController@arbitrationDel')->name('arbitrationDel');
+    //仲裁详情保存
+    Route::post('/arbitrationSubmit','ExpertsController@arbitrationSubmit')->name('arbitrationSubmit');
 });
