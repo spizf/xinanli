@@ -44,7 +44,8 @@
                             <div class="widget-main loginmain loginmain-container">
                                 <div class="space-6"></div>
                                 <h4 class=" lighter bigger text-left mg-margin" >帐号登录</h4>
-                                <hr class="bor-grayD5">
+                                <hr class="bor-grayD5"  style="margin-bottom:0px">
+                                <div style="margin-top:10px;margin-bottom: 10px"><i class="fa fa-rss" aria-hidden="true"></i> 可直接使用安环家账号登录</div>
                                 <form class="login-form" method="post" action="{!! url('login') !!}" >
                                     {!! csrf_field() !!}
                                     <label class="block clearfix">
@@ -79,15 +80,15 @@
                                         <img src="{!! $code !!}" alt="" class="pull-right" onclick="flushCode(this)">
                                     </div>
                                     @endif
-                                    <div style="font-size: 14px;margin-bottom: 35px">
-                                        <div style="float:left;line-height: 1.2;">
-                                            <span style="height:35px;line-height: 35px">使用安环家账号登录</span>
-                                        </div>
-                                        <div style="float:right;line-height: 1.2">
-                                            <input name="is_other" type="checkbox" data-size="small" style="float:right">
-                                        </div>
-                                    </div>
-                                    <div style="clear:both"></div>
+                                    {{--<div style="font-size: 14px;margin-bottom: 35px">--}}
+                                        {{--<div style="float:left;line-height: 1.2;">--}}
+                                            {{--<span style="height:35px;line-height: 35px">使用安环家账号登录</span>--}}
+                                        {{--</div>--}}
+                                        {{--<div style="float:right;line-height: 1.2">--}}
+                                            {{--<input name="is_other" type="checkbox" data-size="small" style="float:right">--}}
+                                        {{--</div>--}}
+                                    {{--</div>--}}
+                                    {{--<div style="clear:both"></div>--}}
                                     <script>
                                         $('[name="is_other"]').bootstrapSwitch({
                                             onText:"是",
@@ -124,36 +125,36 @@
                                         <a href="{!! url('register') !!}" class="pull-left cor-blue text-under">免费注册</a>
                                         <a href="{!! url('password/email') !!}" class="pull-right cor-blue text-under">忘记密码？</a>
                                     </div>
-                                    <div class="space-6"></div>
-                                   {{-- <div class="text-center cor-gray97">
-                                        <span class="s-loginline"></span>&nbsp;&nbsp;&nbsp; 可使用以下账号直接登录 &nbsp;&nbsp;&nbsp;<span class="s-loginline"></span>
-                                    </div>
-                                    <div class="space-6"></div>
-                                    <div class="clearfix">
-                                        <ul class="list-inline clearfix social-login text-center mg-margin">
-                                            @if(isset($oauth['qq_api']['status']))
-                                                <li>
-                                                    <a href="{!! url('oauth/qq') !!}">
-                                                        <i class="fa fa-qq text-danger s-bgqq"></i>
-                                                    </a>
-                                                </li>
-                                            @endif
-                                            @if(isset($oauth['sina_api']['status']))
-                                                <li>
-                                                    <a href="{!! url('oauth/weibo') !!}">
-                                                        <i class="fa fa-weibo text-danger s-bgqq s-bgweibo"></i>
-                                                    </a>
-                                                </li>
-                                            @endif
-                                            @if(isset($oauth['wechat_api']['status']))
-                                                <li>
-                                                    <a href="{!! url('oauth/weixinweb') !!}">
-                                                        <i class="fa fa-weixin text-blue s-bgqq s-bgweixin"></i>
-                                                    </a>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>--}}
+                                    {{--<div class="space-6"></div>--}}
+                                    {{--<div class="text-center cor-gray97">--}}
+                                        {{--<span class="s-loginline"></span>&nbsp;&nbsp;&nbsp; 可使用以下账号直接登录 &nbsp;&nbsp;&nbsp;<span class="s-loginline"></span>--}}
+                                    {{--</div>--}}
+                                    {{--<div class="space-6"></div>--}}
+                                    {{--<div class="clearfix">--}}
+                                        {{--<ul class="list-inline clearfix social-login text-center mg-margin">--}}
+                                            {{--@if(isset($oauth['qq_api']['status']))--}}
+                                                {{--<li>--}}
+                                                    {{--<a href="{!! url('oauth/qq') !!}">--}}
+                                                        {{--<i class="fa fa-qq text-danger s-bgqq"></i>--}}
+                                                    {{--</a>--}}
+                                                {{--</li>--}}
+                                            {{--@endif--}}
+                                            {{--@if(isset($oauth['sina_api']['status']))--}}
+                                                {{--<li>--}}
+                                                    {{--<a href="{!! url('oauth/weibo') !!}">--}}
+                                                        {{--<i class="fa fa-weibo text-danger s-bgqq s-bgweibo"></i>--}}
+                                                    {{--</a>--}}
+                                                {{--</li>--}}
+                                            {{--@endif--}}
+                                            {{--@if(isset($oauth['wechat_api']['status']))--}}
+                                                {{--<li>--}}
+                                                    {{--<a href="{!! url('oauth/weixinweb') !!}">--}}
+                                                        {{--<i class="fa fa-weixin text-blue s-bgqq s-bgweixin"></i>--}}
+                                                    {{--</a>--}}
+                                                {{--</li>--}}
+                                            {{--@endif--}}
+                                        {{--</ul>--}}
+                                    {{--</div>--}}
                                 </form>
                             </div><!-- /widget-main -->
                         </div><!-- /widget-body -->

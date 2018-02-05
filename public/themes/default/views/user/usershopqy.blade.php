@@ -71,6 +71,7 @@
                                 @endif
                             </select>
                         </p>
+                        <br>
                         <p class="g-userimgupinp g-userimgupbor-validform">
                             <input class="inputxt Validform_error input-large" datatype="*" nullmsg="请填写注册地址！"
                                    type="text" placeholder="详细地址"  name="address" value="">&nbsp;&nbsp;&nbsp;

@@ -24,10 +24,10 @@ class ExpertsController extends BasicIndexController
     public function expertsList($cate_id=null,$addr_id=null){
         $num=12;
         $seoConfig = ConfigModel::getConfigByType('seo');
-        if(!empty($seoConfig['seo_task']) && is_array($seoConfig['seo_task'])){
-            $this->theme->setTitle($seoConfig['seo_task']['title']);
-            $this->theme->set('keywords',$seoConfig['seo_task']['keywords']);
-            $this->theme->set('description',$seoConfig['seo_task']['description']);
+        if(!empty($seoConfig['seo_article']) && is_array($seoConfig['seo_article'])){
+            $this->theme->setTitle($seoConfig['seo_article']['title']);
+            $this->theme->set('keywords',$seoConfig['seo_article']['keywords']);
+            $this->theme->set('description',$seoConfig['seo_article']['description']);
         }else{
             $this->theme->setTitle('仲裁专家列表');
         }

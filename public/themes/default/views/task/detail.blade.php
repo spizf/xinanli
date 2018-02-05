@@ -1,3 +1,15 @@
+<style>
+    .zongjianle_item {
+        background: url(../../assets/images/num2.jpg) top center repeat-y;
+        width: 228px;
+        height: 323px;
+        float: left;
+        margin-right: 6px;
+    }
+    .hide {
+        display: none;
+    }
+</style>
 <script>
     /*ajax获取token*/
     var token="{{csrf_field()}}";
@@ -263,6 +275,30 @@
                                 <a href="/task/changeStatus/{{$detail['id']}}/15" class="btn btn-primary bor-radius2">
                                     作业实施完成
                                 </a>
+                                    @if($detail['zc_status']==0)
+                                        @if(!$is_arbitration)
+                                            <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
+                                                申请专家仲裁
+                                            </a>
+                                        @endif
+                                    @elseif($detail['zc_status']==1)
+                                        <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
+                                            申请二次仲裁
+                                        </a>
+                                        <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
+                                            查看仲裁结果
+                                        </a>
+                                    @elseif($detail['zc_status']==2)
+                                        <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
+                                            查看仲裁结果
+                                        </a>
+                                    @endif
+                                    @if($is_arbitration)
+                                        <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
+                                        <br>
+                                        <br>
+                                        <p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>
+                                    @endif
                             @elseif($detail['status']==15 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/16" class="btn btn-primary bor-radius2">
                                     报告编写完成
@@ -1388,61 +1424,61 @@
                 </ul>
                 @endif
             </div>
-            @if($experts)
-                <div class="zongjianle" style="float: none; margin:0;width:auto;margin-top:20px;height:528px;"  data="{!! $experts->id !!}">
-                    <div class="fuwutop zongjianle2">
-                        <span style="margin-left: 20px;">服务仲裁专家</span>
-                    </div>
-                    <div class="touxiang zongjianle2">
-                        <img src="{!! url($experts->head_img) !!}">
-                    </div>
-                    <h3>{!! $experts->name !!}</h3>
-                    <h4>{!! $experts->position !!}</h4>
-                    <div class="xinxi zongjianle2">
-                        <dl>
-                            <dd>{!! $experts->year !!}年工作经验</dd>
-                            @if(isset($experts->addr[0]))
-                                <dd>{!! $experts->addr[0] !!}</dd>
-                            @endif
-                            @if(isset($experts->addr[1]))
-                                <dd>{!! $experts->addr[1] !!}</dd>
-                            @endif
-                        </dl>
-                    </div>
-                    <div class="shanchang zongjianle2">
-                        @foreach($experts->cate as $v)
-                            <a href="">{!! $v !!}</a>
-                        @endforeach
-                    </div>
-                    <div class="dubox zongjianle2">
-                        <dl>
-                            <dt>{!! $experts->recommend !!}</dt>
-                            <dd>推荐指数</dd>
-                        </dl>
-                        <span></span>
-                        <dl>
-                            <dt>{!! $experts->satisfaction !!}%</dt>
-                            <dd>满意度</dd>
-                        </dl>
-                        <span></span>
-                        <dl>
-                            <dt>{!! $experts->ask_num !!}</dt>
-                            <dd>咨询量</dd>
-                        </dl>
-                    </div>
-                    <div class="liji">
-                        @if($experts->user)
-                            <a href="javascript:;" title="联系TA"  class="taskmessico" data-toggle="modal" data-target="#myModalgz" data-values="{!! $experts->user->id !!}" data-id="{!! Theme::get('is_IM_open') !!}" >立即免费在线咨询</a>
-                        @endif
-                    </div>
-                    <script>
-                        $('.liji .taskmessico').removeAttr('onblur');
-                        $('.zongjianle2').click(function(){
-                            location.href="{!! url('experts/detail') !!}"+'/'+$(this).parent().attr('data');
-                        });
-                    </script>
-                </div>
-            @endif
+            {{--@if($experts)--}}
+                {{--<div class="zongjianle" style="float: none; margin:0;width:auto;margin-top:20px;height:528px;"  data="{!! $experts->id !!}">--}}
+                    {{--<div class="fuwutop zongjianle2">--}}
+                        {{--<span style="margin-left: 20px;">服务仲裁专家</span>--}}
+                    {{--</div>--}}
+                    {{--<div class="touxiang zongjianle2">--}}
+                        {{--<img src="{!! url($experts->head_img) !!}">--}}
+                    {{--</div>--}}
+                    {{--<h3>{!! $experts->name !!}</h3>--}}
+                    {{--<h4>{!! $experts->position !!}</h4>--}}
+                    {{--<div class="xinxi zongjianle2">--}}
+                        {{--<dl>--}}
+                            {{--<dd>{!! $experts->year !!}年工作经验</dd>--}}
+                            {{--@if(isset($experts->addr[0]))--}}
+                                {{--<dd>{!! $experts->addr[0] !!}</dd>--}}
+                            {{--@endif--}}
+                            {{--@if(isset($experts->addr[1]))--}}
+                                {{--<dd>{!! $experts->addr[1] !!}</dd>--}}
+                            {{--@endif--}}
+                        {{--</dl>--}}
+                    {{--</div>--}}
+                    {{--<div class="shanchang zongjianle2">--}}
+                        {{--@foreach($experts->cate as $v)--}}
+                            {{--<a href="">{!! $v !!}</a>--}}
+                        {{--@endforeach--}}
+                    {{--</div>--}}
+                    {{--<div class="dubox zongjianle2">--}}
+                        {{--<dl>--}}
+                            {{--<dt>{!! $experts->recommend !!}</dt>--}}
+                            {{--<dd>推荐指数</dd>--}}
+                        {{--</dl>--}}
+                        {{--<span></span>--}}
+                        {{--<dl>--}}
+                            {{--<dt>{!! $experts->satisfaction !!}%</dt>--}}
+                            {{--<dd>满意度</dd>--}}
+                        {{--</dl>--}}
+                        {{--<span></span>--}}
+                        {{--<dl>--}}
+                            {{--<dt>{!! $experts->ask_num !!}</dt>--}}
+                            {{--<dd>咨询量</dd>--}}
+                        {{--</dl>--}}
+                    {{--</div>--}}
+                    {{--<div class="liji">--}}
+                        {{--@if($experts->user)--}}
+                            {{--<a href="javascript:;" title="联系TA"  class="taskmessico" data-toggle="modal" data-target="#myModalgz" data-values="{!! $experts->user->id !!}" data-id="{!! Theme::get('is_IM_open') !!}" >立即免费在线咨询</a>--}}
+                        {{--@endif--}}
+                    {{--</div>--}}
+                    {{--<script>--}}
+                        {{--$('.liji .taskmessico').removeAttr('onblur');--}}
+                        {{--$('.zongjianle2').click(function(){--}}
+                            {{--location.href="{!! url('experts/detail') !!}"+'/'+$(this).parent().attr('data');--}}
+                        {{--});--}}
+                    {{--</script>--}}
+                {{--</div>--}}
+            {{--@endif--}}
             @if(count($hotList))
             <div class=" taskside1 taskside">
                 <h4 class="mg-margin text-size14 cor-gray51"><strong>{!! $targetName !!}</strong></h4>
@@ -1603,6 +1639,8 @@
                         @if(!empty($expertss))
                         @foreach($expertss as $k=>$item)
                                 <div class="zongjianle" style="width: 226px;margin-right: 10px;" data="20">
+                                <div class="zongjianle_item"></div>
+                                <div class="hide zongjianle_info">
                                 <div class="touxiang zongjianle2">
                                     <img src="{!! url($item->head_img) !!}">
                                 </div>
@@ -1639,6 +1677,7 @@
                                 <div class="liji">
                                 </div>
                                 </div>
+                                </div>
                             @endforeach
                         @else
                             暂无推荐专家！
@@ -1651,6 +1690,50 @@
         </div>
     </div>
 </div>
+<script>
+
+
+
+    function numRand() {
+        var x = 9999999999; //上限
+        var y = 1111111111; //下限
+        var rand = parseInt(Math.random() * (x - y + 1) + y);
+
+        return rand;
+    }
+
+    var isBegin = false;
+    $(function () {
+        var u = 323;
+        $('.btn').click(function () {
+            if (isBegin) return false;
+            isBegin = true;
+            $(".zongjianle_item").css('backgroundPositionY', 0);
+
+            var result = numRand();
+
+            var num_arr = (result + '').split('');
+            $(".zongjian .zongjianle_item").each(function (index) {
+
+                var that = $(this);
+                setTimeout(function () {
+
+                    that.animate({
+                        backgroundPositionY: -(u * 60) - (u * num_arr[index])
+                    }, {
+                        duration: 6000 + index * 3000,
+                        easing: "easeInOutCirc",
+                        complete: function () {
+                            that.hide();
+                            that.siblings('.zongjianle_info').removeClass('hide');
+                            if (index == 9) isBegin = false;
+                        }
+                    });
+                }, index * 30);
+            });
+        });
+    });
+</script>
 {{--通知双方补充仲裁资料--}}
 <div class="modal" id="message-data" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
     <div class="modal-dialog" >
@@ -1795,6 +1878,8 @@
 
 {{--仲裁弹窗ajax-js--}}
 {!! Theme::asset()->container('custom-js')->usepath()->add('zc_alert','js/zc_alert.js') !!}
+{{--仲裁专家筛选效果--}}
+{!! Theme::asset()->container('custom-js')->usepath()->add('easing','js/easing.js') !!}
 
 
 {{--{!! Theme::asset()->container('custom-js')->usepath()->add('checkbox', 'js/doc/checkbox.js') !!}--}}

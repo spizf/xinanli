@@ -34,8 +34,8 @@ class AuthController extends IndexController
 
     use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
-    
-    protected $redirectPath = '/user/index';
+    /*登录后跳转地址*/
+    protected $redirectPath = '/';
 
     
     protected $loginPath = '/login';
@@ -129,63 +129,44 @@ class AuthController extends IndexController
         if ($request->get('code') && !\CommonClass::checkCode($request->get('code'))) {
             $error['code'] = '请输入正确的验证码';
         } else {
-            if($request->is_other == 1){
-                $res=UserModel::where('email', $request->get('username'))
-                    ->orWhere('mobile', $request->get('username'))
-                    ->where('is_other',0)
-                    ->first();
-                if($res){
-                    $error['username'] = "该手机号或邮箱已在系统注册，请用优评100账号登录";
-                    return redirect($this->loginPath())->withInput($request->only('username', 'remember'))->withErrors($error);
-                }
-            }
             if (!UserModel::checkPassword($request->get('username'), $request->get('password'))) {
                 //判断是否选择使用安环家账号登录
-                if ($request->is_other == 1) {
-                    try {
-                        $url = 'http://www.anhuanjia.com/api/loginApi.php';
-                        $post_data['name'] = $request->get('username');
-                        $post_data['password'] = $request->get('password');
-                        $post_data['token'] = md5('xinanli'.md5(date('Ymd',time()).'xinanli'));
-                        $output=json_decode(self::curl($url,$post_data,1),true);
-                        if ($output['status'] == true) {
-                            $data['mobile'] = $output['mobile'];
-                            $data['email'] = $output['email'];
-                            $res=UserModel::where('email', $data['email'])
-                                ->orWhere('mobile', $data['mobile'])
-                                ->first();
-                            if($res){
-                                $error['username'] = "该手机号或邮箱已在系统注册，请用优评100账号登录";
-                                return redirect($this->loginPath())->withInput($request->only('username', 'remember'))->withErrors($error);
-                            }
-                            $data['name'] = $output['name']."(安环家)";
-                            $data['salt'] = str_random(4);
-                            $data['password'] = UserModel::encryptPassword($request->get('password'), $data['salt']);
-                            $data['alternate_password'] = UserModel::encryptPassword($data['password'], $data['salt']);
-                            $data['status'] = 1;
-                            $data['source'] = 1;
-                            $data['is_other'] = 1;
-                            $res=UserModel::insertGetId($data);
-                            if($res===false){
-                                $error['password'] = '请输入正确的安环家帐号或密码';
-                            }
-                            DB::table('user_detail')->insert([
-                                'uid' => $res,
-                                'mobile' => $data['mobile']
-                            ]);
-                        } else {
-                            $error['password'] = '请输入正确的安环家帐号或密码';
+                try {
+                    $url = 'http://www.anhuanjia.com/api/loginApi.php';
+                    $post_data['name'] = $request->get('username');
+                    $post_data['password'] = $request->get('password');
+                    $post_data['token'] = md5('xinanli'.md5(date('Ymd',time()).'xinanli'));
+                    $output=json_decode(self::curl($url,$post_data,1),true);
+                    if ($output['status'] == true) {
+                        $data['name'] = $output['name'];
+                        $data['email'] = $output['email'];
+                        $data['mobile'] = $output['mobile'];
+                        $data['salt'] = str_random(4);
+                        $data['password'] = UserModel::encryptPassword($request->get('password'), $data['salt']);
+                        $data['alternate_password'] = UserModel::encryptPassword($data['password'], $data['salt']);
+                        $data['status'] = 1;
+                        $data['source'] = 1;
+                        $data['is_other'] = 1;
+                        $data['created_at'] = date('Y-m-d H:i:s',time());
+                        $data['updated_at'] = date('Y-m-d H:i:s',time());
+                        $res=UserModel::insertGetId($data);
+                        if($res===false){
+                            $error['password'] = '请输入正确的帐号或密码';
                         }
-                    } catch (\Exception $e) {
-                        $error['password'] = '请输入正确的安环家帐号或密码';
+                        DB::table('user_detail')->insert([
+                            'uid' => $res,
+                            'mobile' => $data['mobile']
+                        ]);
+                    } else {
+                        $error['password'] = '请输入正确的帐号或密码';
                     }
-                }else {
-                    $error['password'] = '请输入正确的帐号或密码';
+                } catch (\Exception $e) {
+                    $error['password'] = '请输入正确的帐号或密码';//.$e;
                 }
-            } else {
+            }
+            if(empty($error)) {
                 $user = UserModel::where('email', $request->get('username'))
                     ->orWhere('name', $request->get('username'))
-                    ->orWhere('name', $request->get('username').'(安环家)')
                     ->orWhere('mobile', $request->get('username'))
                     ->first();
                 if (!empty($user) && $user->status == 2) {
@@ -286,27 +267,25 @@ class AuthController extends IndexController
         }
         return back()->withErrors(['code' => '请输入正确的验证码']);
     }
-
-    
     public function sendMobileCode(Request $request)
     {
         $arr = $request->except('_token');
 
-        $res = [
-            'id' => 'e20876c0cecee2f36887c48eaf85639d',
-            'key' => '28f1e7dcd36e1af44273146ea8a19605'
-        ];
-        session_start();
-        $data = array(
-            "user_id" => $_SESSION['user_id'], 
-            "client_type" => "web", 
-            "ip_address" => $_SERVER["SERVER_ADDR"] 
-        );
-        $GtSdk = $this->GtSdk = new \GeetestLib($res['id'], $res['key']);
+//        $res = [
+//            'id' => 'e20876c0cecee2f36887c48eaf85639d',
+//            'key' => '28f1e7dcd36e1af44273146ea8a19605'
+//        ];
+//        session_start();
+//        $data = array(
+//            "user_id" => isset($_SESSION['user_id'])?$_SESSION['user_id']:"",
+//            "client_type" => "web",
+//            "ip_address" => $_SERVER["SERVER_ADDR"]
+//        );
+//        $GtSdk = $this->GtSdk = new \GeetestLib($res['id'], $res['key']);
         
-        if ($_SESSION['gtserver'] == 1) {
-            $result = $GtSdk->success_validate($request->geetest_challenge, $request->geetest_validate, $request->geetest_seccode, $data);
-            if ($result) {
+//        if ($_SESSION['gtserver'] == 1) {
+//            $result = $GtSdk->success_validate($request->geetest_challenge, $request->geetest_validate, $request->geetest_seccode, $data);
+//            if ($result) {
                 
                 $code = rand(1000, 9999);
 
@@ -314,7 +293,7 @@ class AuthController extends IndexController
 
 
                 $templates = [
-                    'YunTongXun' => '152075',
+                    'YunTongXun' => '214848',
                 ];
 
                 $tempData = [
@@ -336,41 +315,41 @@ class AuthController extends IndexController
                 } else {
                     return ['code' => 1001, 'msg' => '短信发送失败'];
                 }
-            } else {
-                return ['info' => 0, 'msg' => '请先通过滑块验证'];
-            }
-        } else {
-            
-            if ($GtSdk->fail_validate($request->geetest_challenge, $request->geetest_validate, $request->geetest_seccode)) {
-                
-                $code = rand(1000, 9999);
-
-                $templates = [
-                    'YunTongXun' => '152075',
-                ];
-
-                $tempData = [
-                    'code' => $code,
-                ];
-
-                $content = '【客客信息】你注册的验证码为' . $code;
-
-                $status = \SmsClass::sendSms($arr['mobile'], $templates, $tempData, $content);
-
-                if ($status['success'] == true) {
-                    $data = [
-                        'code' => $code,
-                        'mobile' => $data['mobile']
-                    ];
-                    Session::put('auth_mobile_info', $data);
-                    return ['code' => 1000, 'msg' => '短信发送成功'];
-                } else {
-                    return ['code' => 1001, 'msg' => '短信发送失败'];
-                }
-            } else {
-                return ['info' => 0, 'msg' => '请先通过滑块验证'];
-            }
-        }
+//            } else {
+//                return ['info' => 0, 'msg' => '请先通过滑块验证'];
+//            }
+//        } else {
+//
+//            if ($GtSdk->fail_validate($request->geetest_challenge, $request->geetest_validate, $request->geetest_seccode)) {
+//
+//                $code = rand(1000, 9999);
+//
+//                $templates = [
+//                    'YunTongXun' => '152075',
+//                ];
+//
+//                $tempData = [
+//                    'code' => $code,
+//                ];
+//
+//                $content = '【客客信息】你注册的验证码为' . $code;
+//
+//                $status = \SmsClass::sendSms($arr['mobile'], $templates, $tempData, $content);
+//
+//                if ($status['success'] == true) {
+//                    $data = [
+//                        'code' => $code,
+//                        'mobile' => $data['mobile']
+//                    ];
+//                    Session::put('auth_mobile_info', $data);
+//                    return ['code' => 1000, 'msg' => '短信发送成功'];
+//                } else {
+//                    return ['code' => 1001, 'msg' => '短信发送失败'];
+//                }
+//            } else {
+//                return ['info' => 0, 'msg' => '请先通过滑块验证'];
+//            }
+//        }
 
 
 
@@ -432,8 +411,13 @@ class AuthController extends IndexController
 
         $status = UserModel::where('name', $username)->first();
         if (empty($status)){
-            $status = 'y';
-            $info = '';
+            if(self::checkAnhuanjia(0,$username)){
+                $status = 'y';
+                $info = '';
+            }else {
+                $info = '用户名已在安环家注册,请使用安环家账号直接登录';
+                $status = 'n';
+            }
         } else {
             $info = '用户名不可用';
             $status = 'n';
@@ -444,7 +428,22 @@ class AuthController extends IndexController
         );
         return json_encode($data);
     }
-
+    public static function checkAnhuanjia($mobile='',$name=''){
+        try {
+            $url = 'http://www.anhuanjia.com/api/registerApi.php';
+            if(trim($mobile))
+                $post_data['mobile']=trim($mobile);
+            if(trim($name))
+                $post_data['name']=trim($name);
+            $post_data['token'] = md5('xinanli'.md5(date('Ymd',time()).'xinanli'));
+            $output=json_decode(self::curl($url,$post_data,1),true);
+            if ($output['status'] == 1) {
+                return 1;
+            }
+        } catch (\Exception $e) {
+            return 0;
+        }
+    }
     
     public function checkEmail(Request $request)
     {

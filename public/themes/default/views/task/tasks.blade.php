@@ -207,7 +207,7 @@
                             <i class="fa fa-unlock-alt cor-grayd2"></i>
                             {{ ($v['bounty_status']==1)?'已托管资金':'待托管资金' }}
                         </p>
-                        <p class="cor-gray51 hidden-xs">{!! strip_tags(htmlspecialchars_decode($v['desc'])) !!} </p>
+                        {{--<p class="cor-gray51 hidden-xs">{!! strip_tags(htmlspecialchars_decode($v['desc'])) !!} </p>--}}
                     </div>
                     <div class="cor-gray87 text-size14 pull-up hidden-xs col-lg-3 col-sm-4">
                         <div class="text-right">
