@@ -116,7 +116,7 @@
                         </div>
                     </div>
                     <div class="form-group interface-bottom col-xs-12">
-                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 资讯中心SEO标题： </label>
+                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 仲裁专家SEO标题： </label>
 
                         <div class="col-sm-4">
                             <input type="text" id="form-field-1" placeholder="Username" class="col-xs-10 col-sm-12"  name="article_seo_title" @if(isset($seo['seo_article']['title']))value="{{$seo['seo_article']['title']}}"@endif/>
@@ -124,14 +124,14 @@
                         {{--<div class="col-sm-5 h5 cor-gray87"><i class="fa fa-exclamation-circle cor-orange text-size18"></i> (可用变量){资讯分类}</div>--}}
                     </div>
                     <div class="form-group interface-bottom col-xs-12">
-                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 资讯中心SEO关键词： </label>
+                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 仲裁专家SEO关键词： </label>
 
                         <div class="col-sm-4">
                             <textarea class="col-xs-10 col-sm-12" name="article_seo_keywords">@if(isset($seo['seo_article']['keywords'])){{$seo['seo_article']['keywords']}}@endif</textarea>
                         </div>
                     </div>
                     <div class="interface-bottom col-xs-12">
-                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 资讯中心SEO描述： </label>
+                        <label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 仲裁专家SEO描述： </label>
 
                         <div class="col-sm-4">
                             <textarea class="col-xs-10 col-sm-12" name="article_seo_desc">@if(isset($seo['seo_article']['description'])){{$seo['seo_article']['description']}}@endif</textarea>

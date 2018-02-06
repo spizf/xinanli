@@ -29,9 +29,11 @@ class Permission extends EntrustPermission
         
         foreach($permission_all as $k=>$v)
         {
+            if($v['id'] != 99 && $v['id'] != 380 && $v['id'] != 381 && $v['id'] != 383 && $v['id'] != 384 && $v['id'] != 385 && $v['id'] != 386 && $v['id'] != 387 && $v['id'] != 389 && $v['id'] != 390 && $v['id'] != 391 && $v['id'] != 392){
             $permission_all[$k]['pid'] = $menu_permission[$v['id']]['menu_id'];
             $permission_all[$k]['fid'] = 0;
             $permission_all[$k]['name'] = $v['display_name'];
+        }
         }
         
         $permission_menu = array_merge($menu_all,$permission_all);

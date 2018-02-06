@@ -162,7 +162,7 @@
                     <a id="more-task" class="pull-right hov-corblue2f" href="/user/acceptTasksList" target="_blank">更多</a>
                 </div>
 
-                <div class="tab-content">
+                <div class="tab-content" style="min-height: 233px;">
                     @if(Auth::user()['user_type']==2)
                     @if(count($my_task)>0)
                         <ul id="useraccept" class="{{ (count($my_task)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs fade  in dialogs">
