@@ -285,7 +285,10 @@ input[type=checkbox].ace+.lbl::before, input[type=radio].ace+.lbl::before{
 }
 
 .z-navHome{
-    color:#2f55a0!important; ;
+    color: #2f549f!important;
+    background: url('../../images/sanjiao.png') bottom center no-repeat;
+    z-index: 999;
+
 }
 
 .nav-dex .u-navitem a:hover,.nav-dex .g-subshow a:hover {

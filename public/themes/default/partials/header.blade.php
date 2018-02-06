@@ -52,7 +52,7 @@
                         @else
                             客客专业威客建站系统
                         @endif
-                       
+
                     </div>
                     <div class="pull-right">
                         <div class="pull-left">HI~</a>请[<a href="{!! url('login') !!}">登录</a>] [<a href="{!! url('register') !!}">免费注册</a>]</div>
@@ -296,7 +296,7 @@
                     <div class="collapse navbar-collapse pull-right g-nav pd-left0 pos-rela" id="example-navbar-collapse">
                         <div class="div-hover hidden-xs"></div>
                         <ul class="nav navbar-nav overhide">
-                            
+
                             @if(!empty(Theme::get('nav_list')))
                                 @if(count(Theme::get('nav_list')) > 4)
                                     @for($i=1;$i<5;$i++)
