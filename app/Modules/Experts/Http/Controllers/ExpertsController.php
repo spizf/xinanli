@@ -128,6 +128,7 @@ class ExpertsController extends BasicIndexController
                 }
             }
         }
+        $this->theme->set('now_menu','/experts/list');
         return $this->theme->scope('experts.experts_list',$data)->render();
     }
     public function expertsDetail($id){
