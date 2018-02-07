@@ -981,9 +981,11 @@ class CommonClass
      */
     static function findEnvInfo($key)
     {
-        if(array_key_exists($key,$_ENV))
+    	$arr=$_ENV;
+    	$arr=$_ENV;
+        if(array_key_exists($key,$arr))
         {
-            $envInfo = env($key)?env($key):($_ENV[$key]?$_ENV[$key]:'');
+            $envInfo = env($key)?env($key):($arr[$key]?$_ENV[$key]:'');
         }else{
             $envInfo = env($key);
         }

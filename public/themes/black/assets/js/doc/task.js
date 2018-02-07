@@ -27,7 +27,6 @@ $(function(){
         $(this).css('background','');
         $(this).find('.g-subshow').hide();
     });
-
     var demo=$("#form").Validform({
         tiptype:3,
         label:".label",

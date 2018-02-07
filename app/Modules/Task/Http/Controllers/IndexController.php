@@ -237,41 +237,27 @@ class IndexController extends BasicIndexController
     }
 
     
-    public function create(Request $request)
-    {
+    public function create(Request $request){
         $this->theme->setTitle('发布任务');
-        
         $agree = AgreementModel::where('code_name','task_publish')->first();
-
-        
         $hotCate = TaskCateModel::hotCate(6);
-        
         $category_all = TaskCateModel::findByPid([0],['id']);
         $category_all = array_flatten($category_all);
         $category_all = TaskCateModel::findByPid($category_all);
-
         $province = DistrictModel::findTree(0);
-        
         $city = DistrictModel::findTree($province[0]['id']);
-        
         $area = DistrictModel::findTree($city[0]['id']);
-        
         $service = ServiceModel::where('status',1)->where('type',1)->get()->toArray();
-        
         $templet_cate = ['设计', '文案', '开发', '装修', '营销', '商务', '生活'];
         $templet = TaskTemplateModel::all();
-        
         $taskType = [
             'xuanshang','zhaobiao'
         ];
         $rewardModel = TaskTypeModel::whereIn('alias',$taskType)->get()->toArray();
-        
         $phone = \CommonClass::getConfig('phone');
         $qq = \CommonClass::getConfig('qq');
-        
         $ad = AdTargetModel::getAdInfo('TASKINFO_RIGHT');
         $field = \DB::table('field')->where('pid',0)->orderby('sort','asc')->get();
-
         $view = [
             'hotcate' => $hotCate,
             'category_all' => $category_all,
@@ -290,8 +276,6 @@ class IndexController extends BasicIndexController
         $view['field'] = $field;
         return $this->theme->scope('task.create', $view)->render();
     }
-
-    
     public function createTask(TaskRequest $request)
     {
         $data = $request->except('_token');

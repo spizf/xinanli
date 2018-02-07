@@ -200,7 +200,6 @@ class UserCenterController extends BasicUserCenterController
     {
         $this->initTheme('userinfo');
         $this->theme->setTitle('用户中心');
-        
         $uinfo = UserDetailModel::findByUid($this->user['id']);
         
         $province = DistrictModel::findTree(0);

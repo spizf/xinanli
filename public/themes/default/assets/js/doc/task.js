@@ -36,7 +36,6 @@ $(function(){
         $(this).css('background','');
         $(this).find('.g-subshow').hide();
     });
-
     var demo=$("#form").Validform({
         ignoreHidden: true,
         tiptype:3,
