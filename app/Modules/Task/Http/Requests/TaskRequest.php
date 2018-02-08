@@ -74,7 +74,7 @@ class TaskRequest extends FormRequest
 				'worker_num'.$taskTypeAlias.'.required' => '请填写由几人完成',
 				'delivery_deadline'.$taskTypeAlias.'.required' => '请填写截稿时间',
 				'title.required' => '请填写标题',
-				'description.required'=>'需求详情不能为空',
+				'description.required'=>'生产产品不能为空',
 				'type_id.required'=>'请选择交易模式',
 				'begin_at'.$taskTypeAlias.'.required'=>'请填入任务开始时间',
 				'bounty'.$taskTypeAlias.'.bounty_max'=>'赏金最大值不能超过'.$this->task_bounty_max_limit,
