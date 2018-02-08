@@ -83,9 +83,9 @@
                 <div class="addimgbo">
                     <span>企业发布任务</span>
                     <img src="img/youjt.jpg">
-                    <span>评价机构接任务</span>
+                    <span>机构接任务</span>
                     <img src="img/youjt.jpg">
-                    <span>企业选择评价机构</span>
+                    <span>企业选择机构</span>
                     <img src="img/youjt.jpg">
                     <span>双方签署协议</span>
                     <img src="img/youjt.jpg">
@@ -95,9 +95,9 @@
                     <img src="img/youjt.jpg">
                     <span>选择专家仲裁</span>
                     <img src="img/youjt.jpg">
-                    <span>付款</span>
+                    <span style="line-height: 50px;">付款</span>
                     <img src="img/youjt.jpg">
-                    <span>双方互评</span>
+                    <span>双方<br>互评</span>
                 </div>
             </div>
             {{--<div class="addpjbt" style="display: none;">--}}
