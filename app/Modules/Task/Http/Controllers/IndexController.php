@@ -377,6 +377,11 @@ class IndexController extends BasicIndexController
         } elseif ($data['slutype'] == 3) {
             $data['status'] = 0;
         }
+        //add by xl 重新组合title
+        $catname = TaskCateModel::findById($data['cate_id']);
+        $cityname= DistrictModel::getDistrictName($data['city']);
+        $industryname = DB::table('field')->where('id',$data['industry'][0])->first();
+        $data['title'] = $cityname.'某'.$industryname->name.'企业需做'.$catname['name'];
         //add by xl 存储行业
         $data['industry'] = implode('-',$data['industry']);
         $taskModel = new TaskModel();
@@ -1630,7 +1635,7 @@ class IndexController extends BasicIndexController
     //add by xl 下载合同模板
     public function downFile(){
         $this->theme->setTitle('下载合同模板');
-            $filename= public_path().'\123.txt';
+            $filename= public_path().'\hetong.doc';
             $file  =  fopen($filename, "rb");
             $name = '合同模板.doc';
             Header( "Content-type:  application/octet-stream ");
