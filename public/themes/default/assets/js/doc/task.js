@@ -48,16 +48,15 @@ $(function(){
             'positive':/^[1-9]\d*$/,
         },
         beforeSubmit:function(){
-          /*  var cate_id = $('#task_category').val();
+            var cate_id = $('#task_category').val();
             if(cate_id){
                 $('#task_category').siblings('span').removeClass('Validform_wrong').addClass('Validform_right').html('').show();
             }else{
                 $('#task_category').siblings('span').addClass('Validform_wrong').html('请选择需要做什么').show();
                 return false;
-            }*/
+            }
 
-            // var content = ue.getContent();
-            var content = $('#discription-edit').val();
+            var content = ue.getContent();
             $('#discription-edit').val(content);
             if(content){
                 $('#discription-edit').siblings('span').removeClass('Validform_wrong').addClass('Validform_right').html('').show();
@@ -437,10 +436,8 @@ $('#morecate').on('click',function(){
 function checkprovince(obj){
     var id = obj.value;
     $.get('/task/ajaxcity',{'id':id},function(data){
-       /* var html = '<option value=\"\">请选择城市</option>';
-        var area = '<option value=\"\">请选择地区</option>';*/
-        var html = '<option>请选择城市</option>';
-        var area = '<option>请选择地区</option>';
+        var html = '<option value=\"\">请选择城市</option>';
+        var area = '<option value=\"\">请选择地区</option>';
         for(var i in data.province){
             html+= "<option value=\""+data.province[i].id+"\">"+data.province[i].name+"<\/option>";
         }
@@ -459,8 +456,7 @@ function checkprovince(obj){
 function checkcity(obj){
     var id = obj.value;
     $.get('/task/ajaxarea',{'id':id},function(data){
-       /* var html = '<option value="">请选择地区</option>';*/
-        var html = '<option>请选择地区</option>';
+        var html = '<option value="">请选择地区</option>';
         for(var i in data){
             html += "<option value=\""+data[i].id+"\">"+data[i].name+"<\/option>";
         }
