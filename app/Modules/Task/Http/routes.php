@@ -105,6 +105,7 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
     Route::post('/signContractUpdate','IndexController@signContractUpdate')->name('signContractUpdate');//报告交付
     Route::get('/offlinePayment/{id}','IndexController@offlinePayment')->name('offlinePayment');//线下支付
     Route::get('/getField/','IndexController@getField')->name('getField');//获取行业列表
+    Route::get('/downFile','IndexController@downFile')->name('downFile');//下载合同模板
 });
 
 

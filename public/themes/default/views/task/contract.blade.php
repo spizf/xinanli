@@ -17,7 +17,7 @@
                                 <input type="number" placeholder=""  name="money"  class="inputxt" datatype="*6-15" errormsg="请输入合同金额">　　
                                 <span style="color:#F00000">{!! $errors->first('money') !!}</span>
                                 <div class="space"></div>
-                                <label class="">请上传合同附件：</label>
+                                <label class="">请上传合同附件：</label><label class=""><a target="_blank" href="/task/downFile">下载模板</a> </label>
                                 <div class="annex">
                                     <!--文件上传-->
                                     <div  class="dropzone clea>fix" id="dropzone"
