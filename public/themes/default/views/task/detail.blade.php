@@ -1752,17 +1752,19 @@
             </div>
                 <div class="modal-body">
                     <p>提示：您的专家仲裁申请已成功提交，系统为您匹配了以下仲裁专家，请您耐心等侯！</p>
+                    @if(isset($ex_type))
                     @if($ex_type==0)
                     <a href="javascript:;" id="zhuanjiaRandomBtn" class="btn btn-primary bor-radius2 " style="margin-top:12px;" >
                         匹配专家
                     </a>
                     @endif
+                    @endif
                     <div class="zongjian">
                         @if(!empty($expertss))
                         @foreach($expertss as $k=>$item)
                                 <div class="zongjianle" style="width: 226px;margin-right: 10px;" data="20">
-                                <div class="zongjianle_item @if($ex_type==1) hide @endif"></div>
-                                <div class="@if($ex_type==0) hide @endif zongjianle_info">
+                                <div class="zongjianle_item @if(isset($ex_type)) @if($ex_type==1) hide @endif @endif"></div>
+                                <div class=" @if(isset($ex_type)) @if($ex_type==0) hide @endif @endif zongjianle_info">
                                 <div class="touxiang zongjianle2">
                                     <img src="{!! url($item->head_img) !!}">
                                 </div>
