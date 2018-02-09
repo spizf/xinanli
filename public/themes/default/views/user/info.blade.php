@@ -12,9 +12,7 @@
                     <div class="space-10"></div>
                 </div>
             </div>
-
             <div class="space-12"></div>
-
             <div class="form-group s-formwrp1">
                 <label for="inputText" class="col-sm-2 control-label no-padding-right s-safetywrp1 s-labelwrp1">电子邮箱&nbsp;&nbsp;</label>
                 <div class="space-6 visible-xs-block"></div>

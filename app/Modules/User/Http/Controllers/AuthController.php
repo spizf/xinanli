@@ -32,8 +32,7 @@ class AuthController extends UserCenterController
     }
 
     
-    public function getEmailAuth()
-    {
+    public function getEmailAuth(){
         $this->theme->setTitle('邮箱认证');
         $user = Auth::User();
         switch ($user->email_status){
@@ -59,8 +58,6 @@ class AuthController extends UserCenterController
         }
         return $this->theme->scope('user.emailauth', $data)->render();
     }
-
-    
     public function getPhoneAuth()
     {
         $user = UserModel::where('id', Auth::id())->first();

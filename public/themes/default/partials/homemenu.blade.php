@@ -98,7 +98,7 @@
                                 </div>
                                 <div class="p-mgl">
                                     <p class="p-space">Hi,<span class="text-blod cor-gray51">{!! Auth::User()->name !!}</span></p>
-                                    <p>您有新的消息</p>
+                                    @if(Theme::get('msg_index_count'))<p>您有新的消息</p>@endif
                                     <div class="space-4"></div>
                                     <a href="/user/index" class="b-border btn-big1 home-usercenter">个人中心</a>
                                 </div>
