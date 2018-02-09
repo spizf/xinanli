@@ -32,8 +32,7 @@ class AuthController extends UserCenterController
     }
 
     
-    public function getEmailAuth()
-    {
+    public function getEmailAuth(){
         $this->theme->setTitle('邮箱认证');
         $user = Auth::User();
         switch ($user->email_status){

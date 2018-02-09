@@ -529,7 +529,7 @@
                 {{--tab--}}
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="{{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':'' }}" index="1" onclick="rememberTable($(this))">
-                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue">{{ $works_count }}</span></a>
+                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span style="padding: 1px 4px" class="badge bg-blue">{{ $works_count }}</span></a>
                     </li>
                     @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
                     <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
