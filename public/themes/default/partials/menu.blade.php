@@ -69,7 +69,7 @@
                                     @if(Theme::get('nav_list')[$i]['is_show'] == 1)
                                         <a href="{!! Theme::get('nav_list')[$i]['link_url'] !!}"
                                            @if(Theme::get('nav_list')[$i]['is_new_window'] == 1)target="_blank" @endif @if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')) class="z-navHome" @endif>
-                                            {!! Theme::get('nav_list')[$i]['title'] !!}
+                                           {!! Theme::get('nav_list')[$i]['title'] !!}
                                         </a>
                                     @endif
                                 @endfor
@@ -102,6 +102,7 @@
                     </div>
                     <div class="collapse navbar-collapse bs-js-navbar-scrollspy">
                         <ul class="nav navbar-nav">
+
                             @if(!empty(Theme::get('nav_list')))
                                 @foreach(Theme::get('nav_list') as $m => $n)
                                     @if($n['is_show'] == 1)

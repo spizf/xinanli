@@ -83,9 +83,9 @@
                 <div class="addimgbo">
                     <span>企业发布任务</span>
                     <img src="img/youjt.jpg">
-                    <span>评价机构接任务</span>
+                    <span>机构接任务</span>
                     <img src="img/youjt.jpg">
-                    <span>企业选择评价机构</span>
+                    <span>企业选择机构</span>
                     <img src="img/youjt.jpg">
                     <span>双方签署协议</span>
                     <img src="img/youjt.jpg">
@@ -95,9 +95,9 @@
                     <img src="img/youjt.jpg">
                     <span>选择专家仲裁</span>
                     <img src="img/youjt.jpg">
-                    <span>付款</span>
+                    <span style="line-height: 50px;">付款</span>
                     <img src="img/youjt.jpg">
-                    <span>双方互评</span>
+                    <span>双方<br>互评</span>
                 </div>
             </div>
             {{--<div class="addpjbt" style="display: none;">--}}
@@ -341,7 +341,7 @@
                                         <span style="line-height: 30px;margin-left: 5px;color:red;font-size: 14px" class="Validform_checktip validform-login-form" id="mobileMsg"></span>
                                     </dd>
                                 </dl>
-                                <script>
+                                {{--<script>
                                     $('#mobile').blur(function(){
                                         var val=this.value;
                                        if(val){
@@ -355,17 +355,17 @@
                                            $('#mobileMsg').html($(this).attr('nullmsg'));
                                        }
                                     });
-                                </script>
-                                <dl>
+                                </script>--}}
+                                {{--<dl>
                                     <dt><i>*</i>输入验证码</dt>
                                     <dd id="yan" style="position: relative;">
-                                        {{--<input id="phone" style="width:315px;" type="text" placeholder="请输入验证码" />--}}
-                                        {{--<a class="yan" onclick="getqrcoder('phone','yan')">获取验证码</a>--}}
+                                        --}}{{--<input id="phone" style="width:315px;" type="text" placeholder="请输入验证码" />--}}{{--
+                                        --}}{{--<a class="yan" onclick="getqrcoder('phone','yan')">获取验证码</a>--}}{{--
                                         <input id="code" name="code" type="text" placeholder="短信验证码" class="inputxt logininp150" nullmsg="请输入验证码" datatype="*" id="form-field-3" value=""/>&nbsp;
                                         <input type="button" token="{{csrf_token()}}" onclick="sendRegisterCode()" class="btn btn-white btn-primary c-btntime" style="line-height: 17px;padding:5px 8px 5px 0px" value="获取验证码" id="sendMobileCode">&nbsp;&nbsp;
                                         <span class="Validform_checktip block validform-login-form {{ ($errors->first('code'))?'Validform_wrong':'' }}" style="color:red">{!! $errors->first('code') !!}</span>
                                     </dd>
-                                </dl>
+                                </dl>--}}
                                 {{--<script>--}}
                                     {{--$('.logininp150').blur(function(){--}}
                                         {{--var mobile=$('#mobile').val();--}}

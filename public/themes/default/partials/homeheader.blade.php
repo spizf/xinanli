@@ -7,9 +7,9 @@
                     @if(Theme::get('site_config')['site_name'])
                     {!! Theme::get('site_config')['site_name'] !!}
                     @else
-                        客客专业威客建站系统
+                        法定评价管理云平台
                     @endif
-                       HI~ <a href="/user/index">{!! Auth::User()->name !!}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/messageList/1"><i class="fa fa-envelope-o"></i> 消息@if(Theme::get('message_count') > 0)({!! Theme::get('message_count') !!})@endif</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{!! url('logout') !!}">退出</a>
+                    HI~ <a href="/user/index">{!! Auth::User()->name !!}</a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/user/messageList/1"><i class="fa fa-envelope-o"></i> @if(Theme::get('message_count') > 0)<span style="color: #F00000" >消息({!! Theme::get('message_count') !!}) @else 消息 @endif</span></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href="{!! url('logout') !!}">退出</a>
                 </div>
                 <div class="pull-right">	
                     <ul class="pull-left g-taskbarlist hidden-sm hidden-xs">

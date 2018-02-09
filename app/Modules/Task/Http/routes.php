@@ -96,6 +96,8 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	Route::post('/submitAccessory','DetailController@submitAccessory')->name('submitAccessory');
 	//仲裁附件提交
 	Route::post('/reasonAccessory','DetailController@reasonAccessory')->name('reasonAccessory');
+	//记录筛选专家状态
+	Route::post('/expertFirst','DetailController@expertFirst')->name('expertFirst');
     //申请仲裁
     Route::post('/submitExperts','IndexController@submitExperts')->name('submitExperts');
     //add by xl
@@ -105,6 +107,7 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
     Route::post('/signContractUpdate','IndexController@signContractUpdate')->name('signContractUpdate');//报告交付
     Route::get('/offlinePayment/{id}','IndexController@offlinePayment')->name('offlinePayment');//线下支付
     Route::get('/getField/','IndexController@getField')->name('getField');//获取行业列表
+    Route::get('/downFile','IndexController@downFile')->name('downFile');//下载合同模板
 });
 
 

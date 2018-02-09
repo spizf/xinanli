@@ -107,14 +107,20 @@
                                         <input type="hidden" name="area" id="region-limit" value="0" />
                                     </div>
                                     <div class="task-bar">
-                                        <label for="name" class="phone text-size14">需求类别：</label>
+                                        <label for="name" class="phone text-size14">服务类别：</label>
                                         <span id="area_select">
-                                            <select name="cate_id" class="selectwd" id="task_category">
-                                                <option>请选择服务类型</option>
+                                            <select datatype="*" nullmsg="请选择服务类型" name="cate_id" class="selectwd" id="task_category">
+                                                <option value="">请选择服务类型</option>
                                                 @foreach($category_all as $v)
                                                     <option value={{ $v['id'] }}>{{ $v['name'] }}</option>
                                                 @endforeach
                                             </select>
+                                            <span class="Validform_checktip"></span>
+                                        </span>
+                                    </div>
+                                    <div class="task-bar">
+                                        <label for="name" class="phone text-size14">所属行业：</label>
+                                        <span id="area_select">
                                             <select name="industry[]" id="field" class="selectwd">
                                                 <option>请选择行业</option>
                                                 @foreach($field as $v)

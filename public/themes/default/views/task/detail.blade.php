@@ -1,10 +1,127 @@
 <style>
+
+
+
+    .zongjian {
+        overflow: hidden;
+        width: 1245px;
+        margin-top: 30px;
+    }
+
+    .zongjianle {
+        position: relative;
+        float: left;
+        width: 230px;
+        height: 323px;
+        background: #ffffff;
+        margin-right: 10px;
+        border: 1px solid #e8e8e8;
+        margin-bottom: 10px;
+        overflow: hidden;
+    }
+
+    .touxiang {
+        width: 88px;
+        height: 88px;
+        border: 1px solid #e4e4e4;
+        border-radius: 100%;
+        margin: 18px auto;
+    }
+
+    .touxiang img {
+        width: 88px;
+        height: 88px;
+        border-radius: 100%;
+    }
+
+    .zongjianle h3 {
+        text-align: center;
+        color: #333333;
+        font-size: 16px;
+        margin-top: -8px;
+    }
+
+    .zongjianle h4 {
+        display: block;
+        text-align: center;
+        color: #999999;
+        font-size: 16px;
+        font-weight: 400;
+        margin-top: 8px;
+    }
+
+
     .zongjianle_item {
-        background: url(../../assets/images/num2.jpg) top center repeat-y;
+        background: url({!! Theme::asset()->url('images/num2.jpg') !!}) top center repeat-y;
         width: 228px;
         height: 323px;
         float: left;
         margin-right: 6px;
+    }
+
+    .xinxi dl {
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .xinxi dl dd {
+        color: #666666;
+        font-size: 12px;
+        margin: 12px 4px;
+        display: inline-block;
+    }
+
+    .shanchang {
+        overflow: hidden;
+        margin: auto 5px;
+        text-align: center;
+    }
+
+    .shanchang a {
+        display: inline-block;
+        background: #e5edfe;
+        border-radius: 20px;
+        padding: 6px 10px;
+        margin: 3px 2px;
+        font-size: 12px;
+        color: #333333;
+    }
+
+    .dubox {
+        overflow: hidden;
+        text-align: center;
+        margin: 24px 16px;
+    }
+
+    .liji {
+        margin-top: -8px;
+    }
+
+    .dubox dl {
+        float: left;
+        width: 68px;
+    }
+
+    .dubox dl dt {
+        text-align: center;
+        color: #333333;
+        font-size: 14px;
+    }
+
+    .dubox dl dd {
+        text-align: center;
+        color: #999999;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    .dubox span {
+        float: left;
+        display: block;
+        width: 1px;
+        height: 24px;
+        background: #e3e3e3;
+        margin: 5px 9px;
     }
     .hide {
         display: none;
@@ -260,7 +377,7 @@
                                 <a href="/task/changeWibBid/{{$detail['id']}}/4" class="btn btn-primary bor-radius2">
                                     暂不接
                                 </a>
-                            @elseif($detail['status']==12 && ($user_type==1 || $detail['user_name']==Auth::user()['name']) && $has_bid && $task_type_alias == 'zhaobiao')
+                            @elseif($detail['status']==12 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao')
                                 <a href="/task/signContract/{{$detail['id']}}/13" class="btn btn-primary bor-radius2">
                                     签订合同
                                 </a>
@@ -275,30 +392,30 @@
                                 <a href="/task/changeStatus/{{$detail['id']}}/15" class="btn btn-primary bor-radius2">
                                     作业实施完成
                                 </a>
-                                    @if($detail['zc_status']==0)
-                                        @if(!$is_arbitration)
-                                            <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
-                                                申请专家仲裁
-                                            </a>
-                                        @endif
-                                    @elseif($detail['zc_status']==1)
-                                        <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
-                                            申请二次仲裁
-                                        </a>
-                                        <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
-                                            查看仲裁结果
-                                        </a>
-                                    @elseif($detail['zc_status']==2)
-                                        <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
-                                            查看仲裁结果
-                                        </a>
-                                    @endif
-                                    @if($is_arbitration)
-                                        <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
-                                        <br>
-                                        <br>
-                                        <p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>
-                                    @endif
+                                    {{--@if($detail['zc_status']==0)--}}
+                                        {{--@if(!$is_arbitration)--}}
+                                            {{--<a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >--}}
+                                                {{--申请专家仲裁--}}
+                                            {{--</a>--}}
+                                        {{--@endif--}}
+                                    {{--@elseif($detail['zc_status']==1)--}}
+                                        {{--<a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >--}}
+                                            {{--申请二次仲裁--}}
+                                        {{--</a>--}}
+                                        {{--<a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >--}}
+                                            {{--查看仲裁结果--}}
+                                        {{--</a>--}}
+                                    {{--@elseif($detail['zc_status']==2)--}}
+                                        {{--<a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >--}}
+                                            {{--查看仲裁结果--}}
+                                        {{--</a>--}}
+                                    {{--@endif--}}
+                                    {{--@if($is_arbitration)--}}
+                                        {{--<a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>--}}
+                                        {{--<br>--}}
+                                        {{--<br>--}}
+                                        {{--<p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>--}}
+                                    {{--@endif--}}
                             @elseif($detail['status']==15 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/16" class="btn btn-primary bor-radius2">
                                     报告编写完成
@@ -349,15 +466,15 @@
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
-                                @if(isset($group_two))
-                                @elseif($detail['status']==19 && $user_type == 3 && (Auth::user()['name']==$group_two[0]->name || Auth::user()['name']==$group_two[1]->name) && $task_type_alias == 'zhaobiao')
+                                {{--@if(isset($group_two))--}}
+                                @elseif($detail['status']==19 && $user_type == 3 && (Auth::user()['name']==$group_two[0]->name) && $task_type_alias == 'zhaobiao')
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#message-data">
                                         通知双方补充冲裁资料
                                     </a>
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#submit-data">
                                         提交仲裁报告
                                     </a>
-                                    @endif
+                                    {{--@endif--}}
                             @elseif($detail['status']==999 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 @if(CommonClass::evaluted($detail['id'],Auth::user()['id'])==0)
                                     <a target="_blank" href="{{ URL('/task/evaluate').'?'.http_build_query(['id'=>$detail['id'],'work_id'=>isset($delivery['data'][0]['id']) ? $delivery['data'][0]['id'] : 1]) }}" class="btn btn-primary bor-radius2">
@@ -831,7 +948,7 @@
 
                                         <div class="pull-right" id="check-{{ $v['id'] }}">
                                             @if($v['status']==2 && $user_type==1)
-                                                <button class="btn btn-primary btn-sm btn-blue btn-big1 bor-radius2 " data-toggle="modal" data-target="#modal{{ $v['id'] }}">验收付款</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                {{--<button class="btn btn-primary btn-sm btn-blue btn-big1 bor-radius2 " data-toggle="modal" data-target="#modal{{ $v['id'] }}">验收付款</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
                                                 <!--验收付款 模态框（Modal） -->
                                                 <div class="modal fade" id="modal{{ $v['id'] }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -872,7 +989,7 @@
                                                     </div><!-- /.modal -->
                                                 </div>
                                                 @if($task_type_alias == 'zhaobiao')
-                                                <button class="btn btn-primary btn-sm btn-blue btn-big1 bor-radius2 " data-toggle="modal" data-target="#modal_failure{{ $v['id'] }}">验收失败</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                {{--<button class="btn btn-primary btn-sm btn-blue btn-big1 bor-radius2 " data-toggle="modal" data-target="#modal_failure{{ $v['id'] }}">验收失败</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;--}}
                                                 <!--验收付款 模态框（Modal） -->
                                                 <div class="modal fade" id="modal_failure{{ $v['id'] }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -911,7 +1028,7 @@
                                                 @endif
                                             @endif
                                             @if(($v['status']==2 && ($user_type==1 || ($user_type==2 && Auth::check() && $v['uid']==Auth::user()['id']))) || ($v['status']==5 &&  $user_type==2 && Auth::check() && $v['uid']==Auth::user()['id'] && $task_type_alias == 'zhaobiao'))
-                                            <button class="btn btn-default btn-sm btn-big1 btn-gray999 bor-radius2 " data-toggle="modal" data-target="#modallost{{ $v['id'] }}">交易维权</button>
+                                            {{--<button class="btn btn-default btn-sm btn-big1 btn-gray999 bor-radius2 " data-toggle="modal" data-target="#modallost{{ $v['id'] }}">交易维权</button>--}}
                                             <!--交易维权 模态框（Modal） -->
                                             <div class="modal fade" id="modallost{{ $v['id'] }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
@@ -1635,12 +1752,17 @@
             </div>
                 <div class="modal-body">
                     <p>提示：您的专家仲裁申请已成功提交，系统为您匹配了以下仲裁专家，请您耐心等侯！</p>
+                    @if($ex_type==0)
+                    <a href="javascript:;" id="zhuanjiaRandomBtn" class="btn btn-primary bor-radius2 " style="margin-top:12px;" >
+                        匹配专家
+                    </a>
+                    @endif
                     <div class="zongjian">
                         @if(!empty($expertss))
                         @foreach($expertss as $k=>$item)
                                 <div class="zongjianle" style="width: 226px;margin-right: 10px;" data="20">
-                                <div class="zongjianle_item"></div>
-                                <div class="hide zongjianle_info">
+                                <div class="zongjianle_item @if($ex_type==1) hide @endif"></div>
+                                <div class="@if($ex_type==0) hide @endif zongjianle_info">
                                 <div class="touxiang zongjianle2">
                                     <img src="{!! url($item->head_img) !!}">
                                 </div>
@@ -1705,8 +1827,20 @@
     var isBegin = false;
     $(function () {
         var u = 323;
-        $('.btn').click(function () {
-            if (isBegin) return false;
+        var token=$('input[name="_token"]').val();
+        $('#zhuanjiaRandomBtn').click(function () {
+            $(this).hide();
+            $.ajax({
+                type: 'POST',
+                url:"/task/expertFirst",
+                data:{taskid:{!! $detail['id'] !!}, _token:token},
+                success:function (data) {
+
+                }
+            });
+            if (isBegin) {
+                return false;
+            }
             isBegin = true;
             $(".zongjianle_item").css('backgroundPositionY', 0);
 

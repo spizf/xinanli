@@ -607,7 +607,7 @@ class HomeController extends IndexController
         $begin_at = strtotime(preg_replace('/([\x80-\xff]*)/i', '', $data['begin_at']));
         $delivery_deadline = preg_replace('/([\x80-\xff]*)/i', '', $begin_at+$task_delivery_limit_time);
         $data['delivery_deadline'] = date('Y-m-d H:i:s', $delivery_deadline);
-        if ($data['code'] == $authMobileInfo['code'] && $data['mobile'] == $authMobileInfo['mobile']){
+        /*if ($data['code'] == $authMobileInfo['code'] && $data['mobile'] == $authMobileInfo['mobile']){*/
             Session::forget('auth_mobile_info');
             unset($data['code']);
             $data['create_time']=date('Y-m-d H:i:s',time());
@@ -649,9 +649,9 @@ class HomeController extends IndexController
             }else{
                 return redirect()->back()->with('error', '创建任务失败！');
             }
-        }else{
+        /*}else{
          return back()->withInput()->withErrors(['code' => '请输入正确的验证码']);
-        }
+        }*/
     }
 //    public function checkMobileCode(Request $request){
 //        $authMobileInfo = session('auth_mobile_info');dd($authMobileInfo);
