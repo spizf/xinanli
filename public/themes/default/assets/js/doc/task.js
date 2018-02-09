@@ -61,7 +61,7 @@ $(function(){
             if(content){
                 $('#discription-edit').siblings('span').removeClass('Validform_wrong').addClass('Validform_right').html('').show();
             }else {
-                $('#discription-edit').siblings('span').addClass('Validform_wrong').html('需求详情不能为空').show();
+                $('#discription-edit').siblings('span').addClass('Validform_wrong').html('生产产品不能为空').show();
                 return false;
             }
 

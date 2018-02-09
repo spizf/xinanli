@@ -44,7 +44,7 @@
                                 <div id="demo" class="collapse in">
                                     <div class="clearfix  Validform-wysiwyg-editor">
                                         <label for="name" class="phone text-size14">项目名称：</label>
-                                        <input type="text" name="title" value="{!! old('title') !!}"
+                                        <input style="width:60%" type="text" name="title" value="{!! old('title') !!}"
                                                id="form-input-readonly"
                                                placeholder="请输入您的项目名称"
                                                datatype="*" nullmsg="请填写项目名称！" >
@@ -58,7 +58,7 @@
                                     </div>
                                     <div class="clearfix  Validform-wysiwyg-editor">
                                         <label for="name" class="phone text-size14">公司名称：</label>
-                                        <input type="text" name="company_name" value="{!! old('company_name') !!}"
+                                        <input type="text" style="width:60%"  name="company_name" value="{!! old('company_name') !!}"
                                                id="form-input-readonly"
                                                placeholder="请输入您的公司名称"
                                                datatype="*" nullmsg="请填写公司名称！" >
@@ -72,26 +72,25 @@
                                     </div>
                                     <div class="task-bar">
                                         <label for="name" class="phone text-size14">地区：</label>
-                                        <span id="area_select">
                                             <select name="province" class="selectwd" onchange="checkprovince(this)">
                                                 <option>请选择省份</option>
                                                 @foreach($province as $v)
                                                     <option value={{ $v['id'] }}>{{ $v['name'] }}</option>
                                                 @endforeach
                                             </select>
-                                            <select name="city" id="province_check" onchange="checkcity(this)" class="selectwd">
+	                                        <select name="city" id="province_check" onchange="checkcity(this)" class="selectwd">
                                                 <option>请选择城市</option>
                                                 @foreach($city as $v)
                                                     <option value={{ $v['id'] }}>{{ $v['name'] }}</option>
                                                 @endforeach
                                             </select>
-                                            <select name="area" id="area_check" onchange="arealimit(this)" class="selectwd">
-                                                <option>请选择地区</option>
+                                            <select name="area" datatype="*" nullmsg="请填写所在地区!"  id="area_check" onchange="arealimit(this)" class="selectwd">
+                                                <option  value="">请选择地区</option>
                                                 @foreach($area as $v)
                                                     <option value={{ $v['id'] }}>{{ $v['name'] }}</option>
                                                 @endforeach
                                             </select>
-                                        </span>
+                                            <span class="Validform_checktip"></span>
                                         <span>
                                             @foreach($area as $v)
                                                 <div style="display:none;" id="province-{{ $v['id'] }}">
@@ -108,23 +107,30 @@
                                         <input type="hidden" name="area" id="region-limit" value="0" />
                                     </div>
                                     <div class="task-bar">
-                                        <label for="name" class="phone text-size14">需求类别：</label>
+                                        <label for="name" class="phone text-size14">服务类别：</label>
                                         <span id="area_select">
-                                            <select name="cate_id" class="selectwd" id="task_category">
-                                                <option>请选择服务类型</option>
+                                            <select datatype="*" nullmsg="请选择服务类型" name="cate_id" class="selectwd" id="task_category">
+                                                <option value="">请选择服务类型</option>
                                                 @foreach($category_all as $v)
                                                     <option value={{ $v['id'] }}>{{ $v['name'] }}</option>
                                                 @endforeach
                                             </select>
+                                            <span class="Validform_checktip"></span>
+                                        </span>
+                                    </div>
+                                    <div class="task-bar">
+                                        <label for="name" class="phone text-size14">所属行业：</label>
+                                        <span id="area_select">
                                             <select name="industry[]" id="field" class="selectwd">
                                                 <option>请选择行业</option>
                                                 @foreach($field as $v)
                                                     <option value="{{$v->id}}">{{$v->name}}</option>
                                                 @endforeach
                                             </select>
-                                            <select name="industry[]" id="field1" class="selectwd">
-                                                <option>请选择子行业</option>
+                                            <select datatype="*" nullmsg="请填写行业!"  name="industry[]" id="field1" class="selectwd">
+                                                <option value="">请选择子行业</option>
                                             </select>
+                                            <span class="Validform_checktip"></span>
                                             <script>
                                              $('#field').change(function(){
                                                  console.info('aa');
@@ -264,29 +270,31 @@
                                             <div class="mission-ck z-check-validform-ck">
                                                 <div class="checkbox">
                                                     <label class="checkbox-inline">
-                                                        设置报名时间
+                                                        投标时间范围
                                                     </label>
                                                 </div>
-                                                <div class=" input-group" style="width:60%;margin-left:20px;">
+                                                <div class=" input-group" style="width:100%;margin-left:20px;">
                                                     <span class="input-group-addon date-icon" >
                                                         <i class="fa fa-calendar bigger-110"></i>
                                                     </span>
                                                     <div>
-                                                        <input type="text" class="input-sm form-control "
-                                                               id="datepiker-begin1"
+                                                        <input style="width:70%;" datatype="*" nullmsg="请填写时间!" type="text" class="input-sm form-control "
+                                                               id="datepiker-begin1" value=""
                                                                onchange="beginAt($(this))"
                                    value="{!! (old('begin_at'))?old('begin_at'):date('Y年m月d日',time()) !!}"
                                                                placeholder="开始时间" >
+	                                                    <span class="Validform_checktip"></span>
                                                     </div>
                                                     <span class="input-group-addon  date-icon ">
                                                         <i class="fa fa-exchange"></i>
                                                     </span>
                                                     <div>
-                                                        <input type="text" class="input-sm form-control "
+                                                        <input type="text" style="width:70%;" value=""  nullmsg="请填写时间!" class="input-sm form-control "
                                                                id="datepiker-deadline1"
                                                                onchange="deadline($(this))"
                                                                value="{!! old('delivery_deadline') !!}"
                                                                placeholder="截止时间">
+                                                              <span class="Validform_checktip"></span>
                                                     </div>
                                                 </div>
                                             @if($errors->first('start')|| $errors->first('delivery_deadline') )

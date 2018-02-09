@@ -3,6 +3,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Modules\User\Model\MessageReceiveModel;
+
 use App\Modules\Advertisement\Model\RecommendModel;
 use App\Modules\Advertisement\Model\RePositionModel;
 use App\Modules\Finance\Model\CashoutModel;
@@ -570,6 +572,8 @@ class HomeController extends IndexController
         }
         $data['district']=DB::table('district')->where('upid',0)->get();
         $data['field']=DB::table('field')->where('pid',0)->orderby('sort','asc')->get();
+        if($user)$data['msg_count']=MessageReceiveModel::where('js_id', $user->uid)->where('status', 0)->count();else $data['msg_count']=0;
+        $this->theme->set('msg_index_count',$data['msg_count']);
         return $this->theme->scope('bre.homepage',$data)->render();
     }
     public function getDistrict($id){

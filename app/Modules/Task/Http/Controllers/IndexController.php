@@ -377,6 +377,11 @@ class IndexController extends BasicIndexController
         } elseif ($data['slutype'] == 3) {
             $data['status'] = 0;
         }
+        //add by xl 重新组合title
+        $catname = TaskCateModel::findById($data['cate_id']);
+        $cityname= DistrictModel::getDistrictName($data['city']);
+        $industryname = DB::table('field')->where('id',$data['industry'][0])->first();
+        $data['title'] = $cityname.'某'.$industryname->name.'企业需做'.$catname['name'];
         //add by xl 存储行业
         $data['industry'] = implode('-',$data['industry']);
         $taskModel = new TaskModel();
@@ -1543,8 +1548,12 @@ class IndexController extends BasicIndexController
         $this->theme->setTitle('签订合同');
 
         $task = TaskModel::find($taskId);
-
-        if ($task['uid'] != $this->user['id'] || $task['bounty_status'] != 0) {
+        //把企业签订合同改为由第三方评价机构签订合同
+        /*if ($task['uid'] != $this->user['id'] || $task['bounty_status'] != 0) {
+            return redirect()->to('/task/'.$taskId)->with(['error' => '非法操作！']);
+        }*/
+        $is_win_bid = WorkModel::isWinBid($taskId,$this->user['id']);//是第三方评价机构也是中标者
+        if (!$is_win_bid || $task['bounty_status'] != 0) {
             return redirect()->to('/task/'.$taskId)->with(['error' => '非法操作！']);
         }
 
@@ -1562,9 +1571,14 @@ class IndexController extends BasicIndexController
         $data['created_at'] = date('Y-m-d H:i:s', time());
 
         $task = TaskModel::findById($task_id);
-        if ($task['uid'] != $this->user['id'] ) {
+        $is_win_bid = WorkModel::isWinBid($task_id,$this->user['id']);//是第三方评价机构也是中标者
+        /*if ($task['uid'] != $this->user['id'] ) {
+            return redirect()->to('/task/' . $task_id)->with('error', '非法操作！');
+        }*/
+        if (!$is_win_bid) {
             return redirect()->to('/task/' . $task_id)->with('error', '非法操作！');
         }
+
         $money = $data['money'];
         if ($money <= 0 || !is_numeric($money))  return redirect()->to('/task/signContract/' . $task_id.'/'.$data['status'])->with('error', '合同金额必须大于零！');
         //查找该任务中标者即为被签订合同者
@@ -1593,8 +1607,8 @@ class IndexController extends BasicIndexController
                 'task_id'       => $task_id,
                 'attachment_id' => $attachment_data,
                 'money'         => $money,
-                'uid'           => $this->user['id'],
-                'withwho'       => $worker['uid'],
+                'uid'           => $this->user['id'],//企业用户id
+                'withwho'       => $worker['uid'],//第三方机构id
                 'created_at'    => date('Y-m-d H:i:s', time()),
             ];
             $insert =  \DB::table('task_contract')->insert($contract_data);
@@ -1617,6 +1631,23 @@ class IndexController extends BasicIndexController
 
         $url = 'task/'.$data['task_id'];
         return redirect()->to($url);
+    }
+    //add by xl 下载合同模板
+    public function downFile(){
+        $this->theme->setTitle('下载合同模板');
+            $filename= public_path().'\hetong.doc';
+            $file  =  fopen($filename, "rb");
+            $name = '合同模板.doc';
+            Header( "Content-type:  application/octet-stream ");
+            Header( "Accept-Ranges:  bytes ");
+            Header( "Content-Disposition:  attachment;  filename= $name");
+            $contents = "";
+            while (!feof($file)) {
+                $contents .= fread($file, 8192);
+            }
+            echo $contents;
+            fclose($file);
+
     }
     //add by xl 增加线下付款
     public function offlinePayment($id)
