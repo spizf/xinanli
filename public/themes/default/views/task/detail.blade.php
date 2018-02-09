@@ -392,30 +392,30 @@
                                 <a href="/task/changeStatus/{{$detail['id']}}/15" class="btn btn-primary bor-radius2">
                                     作业实施完成
                                 </a>
-                                    @if($detail['zc_status']==0)
-                                        @if(!$is_arbitration)
-                                            <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
-                                                申请专家仲裁
-                                            </a>
-                                        @endif
-                                    @elseif($detail['zc_status']==1)
-                                        <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
-                                            申请二次仲裁
-                                        </a>
-                                        <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
-                                            查看仲裁结果
-                                        </a>
-                                    @elseif($detail['zc_status']==2)
-                                        <a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >
-                                            查看仲裁结果
-                                        </a>
-                                    @endif
-                                    @if($is_arbitration)
-                                        <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
-                                        <br>
-                                        <br>
-                                        <p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>
-                                    @endif
+                                    {{--@if($detail['zc_status']==0)--}}
+                                        {{--@if(!$is_arbitration)--}}
+                                            {{--<a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >--}}
+                                                {{--申请专家仲裁--}}
+                                            {{--</a>--}}
+                                        {{--@endif--}}
+                                    {{--@elseif($detail['zc_status']==1)--}}
+                                        {{--<a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >--}}
+                                            {{--申请二次仲裁--}}
+                                        {{--</a>--}}
+                                        {{--<a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >--}}
+                                            {{--查看仲裁结果--}}
+                                        {{--</a>--}}
+                                    {{--@elseif($detail['zc_status']==2)--}}
+                                        {{--<a href="#" class="btn btn-primary bor-radius2" data-toggle="modal" data-target="#download-data" >--}}
+                                            {{--查看仲裁结果--}}
+                                        {{--</a>--}}
+                                    {{--@endif--}}
+                                    {{--@if($is_arbitration)--}}
+                                        {{--<a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>--}}
+                                        {{--<br>--}}
+                                        {{--<br>--}}
+                                        {{--<p><span style="color: #e32a26;">*</span>仲裁费用未支付！</p>--}}
+                                    {{--@endif--}}
                             @elseif($detail['status']==15 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao' && $detail['bounty_status'] != 0)
                                 <a href="/task/changeStatus/{{$detail['id']}}/16" class="btn btn-primary bor-radius2">
                                     报告编写完成
