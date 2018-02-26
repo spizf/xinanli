@@ -174,8 +174,9 @@ class UserMoreController extends UserCenterController
         $data = $request->all();
 
         $data['uid'] = $this->user['id'];
-         
-		$taskType=TaskTypeModel::getTaskTypeAll();
+         //add by xl 任务类型不确定暂时默认为招标
+		//$taskType=TaskTypeModel::getTaskTypeAll();
+        $taskType =  TaskTypeModel::select('id','name','alias')->where('alias','zhaobiao')->get();
 		foreach($taskType as $Vtt){
 			$Vtt->counts=TaskModel::where('uid',$data['uid'])->where('type_id',$Vtt['id'])->where('status','>',0)->count();
 		}

@@ -14,7 +14,7 @@
     <div class="space-12"></div>
     <div class="clearfix g-reletaskhd hidden-xs">
         <form action="/user/myTasksList" method="get">
-            <div class="col-lg-12 clearfix">
+            {{--<div class="col-lg-12 clearfix">
 				<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
 					<div class="row">任务类型</div>
 				</div>
@@ -49,7 +49,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>--}}
 			<div class="col-lg-12 clearfix">
 				<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
 					<div class="row">任务状态</div>
