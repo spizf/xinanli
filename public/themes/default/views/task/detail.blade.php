@@ -727,11 +727,14 @@
                                                     @endif
                                                 </p>
                                                 @if($task_type_alias == 'zhaobiao')
+                                                    <!-- add by xl 只许投标者和发布需求者看到报价-->
+                                                    @if(($v['uid']==Auth::user()['id']) || $user_type == 1)
                                                     <p class="pull-left price">
                                                         <img src="{{ Theme::asset()->url('images/price_icon.png') }}">
                                                         <span>报价金额:</span>
                                                         <span>￥{{$v['price']}}</span>
                                                     </p>
+                                                    @endif
                                                 @endif
                                             </div>
                                             <p class="evaluatetime">提交于{{ $v['created_at'] }}</p>
@@ -853,6 +856,8 @@
                                             <div class="weedout" id="weedout-{{ $v['id'] }}" style="display:none;"></div>
                                         @endif
                                     </div>
+                                    <!-- add by xl 只许投标者和发布需求者看到报价-->
+                                    @if(($v['uid']==Auth::user()['id']) || $user_type == 1)
                                     <div>
                                         <div>
                                             <p class="h4 description-title"><b><i class="fa fa-paperclip fa-rotate-90"></i> 附件 <span class="text-muted">({{ count($v['children_attachment']) }})</span></b></p>
@@ -875,6 +880,7 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="text-right">
                                         @if(Auth::check())
                                         <a class="evaluateshow text-under blue get-comment" url="/task/getComment" work_id = '{{ $v['id'] }}' num="0" onclick="evaluateshow($(this))"  >回复({{ count($v['children_comment']) }})</a>
