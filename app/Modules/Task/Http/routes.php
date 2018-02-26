@@ -96,6 +96,8 @@ Route::group(['prefix' => 'task','middleware' => 'auth'], function() {
 	Route::post('/submitAccessory','DetailController@submitAccessory')->name('submitAccessory');
 	//仲裁附件提交
 	Route::post('/reasonAccessory','DetailController@reasonAccessory')->name('reasonAccessory');
+	//记录筛选专家状态
+	Route::post('/expertFirst','DetailController@expertFirst')->name('expertFirst');
     //申请仲裁
     Route::post('/submitExperts','IndexController@submitExperts')->name('submitExperts');
     //add by xl

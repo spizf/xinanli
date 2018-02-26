@@ -18,7 +18,6 @@ class MessagesClass
             $view, ['data' => $data], function ($message) use ($data) {
             $message->to($data['email'])->subject($data['title']);
         });
-
         return $res ? true : false;
     }
 

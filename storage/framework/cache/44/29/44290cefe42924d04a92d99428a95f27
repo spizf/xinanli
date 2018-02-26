@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 1519631568a:1:{i:0;a:6:{s:2:"id";i:48;s:5:"alias";s:10:"attachment";s:4:"rule";s:64:"{"size":"50","extension":"pdf|jpg|jpeg|png|bmp|gif|rar|txt|zip"}";s:4:"type";s:10:"attachment";s:5:"title";s:12:"附件配置";s:4:"desc";s:12:"附件配置";}}
+=======
+1516177890a:1:{i:0;a:6:{s:2:"id";i:48;s:5:"alias";s:10:"attachment";s:4:"rule";s:64:"{"size":"50","extension":"pdf|jpg|jpeg|png|bmp|gif|rar|txt|zip"}";s:4:"type";s:10:"attachment";s:5:"title";s:12:"附件配置";s:4:"desc";s:12:"附件配置";}}
+>>>>>>> 128a3ac36bf49c33858e46e521919a98b58f6881

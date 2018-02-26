@@ -316,13 +316,24 @@ class DetailController extends IndexController
                 $view['expertss'] = $expertss;
             }
             //专家组长
-            if (isset($array_experts)){
-                $group_two = DB::table('experts')
-                    ->whereIn('id',$array_experts)
-                    ->where('position_level',1)
+//            if (isset($array_experts)){
+//                $group_two = DB::table('experts')
+//                    ->whereIn('id',$array_experts)
+//                    ->where('position_level',1)
+//                    ->select('id','name')
+//                    ->get();
+//                $view['group_two'] =$group_two;
+//            }
+            $group_two = DB::table('experts')
+                    ->where('id',$experts_str->headman)
                     ->select('id','name')
                     ->get();
-                $view['group_two'] =$group_two;
+            $view['group_two'] =$group_two;
+            /*判断是否筛选过仲裁专家*/
+            if ($experts_str->type = 1){
+                $view['ex_type'] = 1;
+            }else{
+                $view['ex_type'] = 0;
             }
         }
         //获取仲裁报告
@@ -626,6 +637,14 @@ class DetailController extends IndexController
         if(!$result) return redirect()->back()->with('error','提交失败！');
 
         return redirect()->to('task/'.$data['task_id'])->with('error','提交成功！');
+    }
+
+    /*筛选专家状态*/
+    public function expertFirst(Request $request)
+    {
+        DB::table('arbitration_expert')
+            ->where('task_id', $request->taskid)
+            ->update(['type' => 1]);
     }
     
     public function work($id)
