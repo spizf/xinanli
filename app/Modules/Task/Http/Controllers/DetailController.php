@@ -83,7 +83,7 @@ class DetailController extends IndexController
             
             if(WorkModel::isWorker($this->user['id'],$detail['id']))
             {
-                $user_type = 2;
+                $user_type = 2;//投标者
                 
                 $is_win_bid = WorkModel::isWinBid($id,$this->user['id']);
                 $is_delivery = WorkModel::where('task_id',$id)->where('status','>',1)->where('uid',$this->user['id'])->first();
@@ -93,7 +93,7 @@ class DetailController extends IndexController
             
             if($detail['uid']==$this->user['id'])
             {
-                $user_type = 1;
+                $user_type = 1;//发布需求者
                 $hasBid = WorkModel::where('task_id',$id)->where('status',1)->first();
                 if($hasBid){
                     $hasBid = 1;
@@ -143,6 +143,7 @@ class DetailController extends IndexController
                         ->leftjoin('users as us','us.id','=','work.uid')
                         ->paginate(5)->setPageName('delivery_page')->toArray();
                 }
+
                 $delivery_count = count($delivery['data']);
             }elseif($user_type==1){
                 $delivery = WorkModel::findDelivery($id,$data);
@@ -178,7 +179,12 @@ class DetailController extends IndexController
         $attatchment_ids = TaskAttachmentModel::where('task_id','=',$id)->lists('attachment_id')->toArray();
         $attatchment_ids = array_flatten($attatchment_ids);
         $attatchment = AttachmentModel::whereIn('id',$attatchment_ids)->get();
-        
+        //add by xl 获取合同报告
+        if (DB::table('task_contract')->where('task_id',$id)->get()){
+            $contract = DB::table('task_contract')->where('task_id',$id)->first();
+            $arraycontract = explode(",",$contract->attachment_id);
+            $contract = AttachmentModel::whereIn('id',$arraycontract)->get();
+        }
         $alike_task = TaskModel::findByCate($detail['cate_id'],$id);
 
         
@@ -242,11 +248,11 @@ class DetailController extends IndexController
 
         //是否仲裁中
         $is_arbitration = TaskReasonModel::where('task_id',$id)->where('nums',$detail['zc_status']+1)->first();
-
         $view = [
             'detail'=>$detail,
 //            'expertss'=>$expertss,
             'attatchment'=>$attatchment,
+            'contract'=>$contract,
             'alike_task'=>$alike_task,
             'user_type'=>$user_type,
             'works'=> $works,
@@ -279,6 +285,7 @@ class DetailController extends IndexController
             'has_bid' => $hasBid,
             'usertype' =>$this->user['user_type']
         ];
+
         //保存仲裁专家
         if ($detail['zc_status']==1 || $detail['zc_status']==2) {
             if (!DB::table('arbitration_expert')->where('task_id', $id)->where('num',$detail['zc_status'])->get()) {

@@ -439,7 +439,8 @@
                                     </div>
                                     <p style="margin-left:20px;"><span class="js_more" style="cursor:pointer;color:#2f55a0"><span class="text">查看更多</span> <i class="fa fa-angle-double-down"></i></span></p>
                                 </div>
-                                {{--<div class="description-main task-taskdisplay">
+                                @if(count($attatchment) > 0)
+                                <div class="description-main task-taskdisplay">
                                     <div>
                                         <p class="h4 description-title">
                                             <b>任务附件
@@ -468,9 +469,41 @@
                                             @endforelse
                                         </ul>
                                     </div>
-                                </div>--}}
+                                </div>
+                                @endif
                                 <div class="space"></div>
-
+                                @if(count($contract) > 0 && (($user_type == 2 && $is_delivery) || $user_type == 1))
+                                <div class="description-main task-taskdisplay">
+                                    <div>
+                                        <p class="h4 description-title">
+                                            <b>合同附件
+                                                <span class="text-muted">
+                                                    ({{ count($contract) }})
+                                                </span>
+                                            </b>
+                                        </p>
+                                        <!-- <span class="hr"></span> -->
+                                    </div>
+                                    <div class="user-profile clearfix">
+                                        <ul class="ace-thumbnails">
+                                            @forelse($contract as $v)
+                                                <li>
+                                                    <a href="#" >
+                                                        <img alt="150x150" src="{!! Theme::asset()->url('images/task-xiazai/'.matchImg($v['type']).'.png') !!}">
+                                                        <div class="text">
+                                                            <div class="inner"></div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="{{ URL('task/download',['id'=>$v['id']]) }}" target="_blank">下载</a>
+                                                    </div>
+                                                </li>
+                                            @empty
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="space"></div>
                             </div>
                             {{--@if(($detail['status']==5||$detail['status']==6)&&$experts->is_user)--}}

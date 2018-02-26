@@ -11,17 +11,17 @@
                         <span class="title h6 p-space">需求描述</span>
                         <span class="step">1</span>
                     </li>
-                    <li data-target="#step2">
+                    {{--<li data-target="#step2">
                         <span class="title h6 p-space">交易模式</span>
                         <span class="step">2</span>
-                    </li>
+                    </li>--}}
                     <li data-target="#step3">
-                        <span class="title h6 p-space">确认需求，发布</span>
-                        <span class="step">3</span>
+                        <span class="title h6 p-space">确认需求，提交</span>
+                        <span class="step">2</span>
                     </li>
                     <li data-target="#step4 text-right">
                         <span class="title h6 p-space">等待审核</span>
-                        <span class="step">4</span>
+                        <span class="step">3</span>
                     </li>
                 </ul>
             </div>
