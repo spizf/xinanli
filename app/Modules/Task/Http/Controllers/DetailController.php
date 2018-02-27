@@ -180,6 +180,7 @@ class DetailController extends IndexController
         $attatchment_ids = array_flatten($attatchment_ids);
         $attatchment = AttachmentModel::whereIn('id',$attatchment_ids)->get();
         //add by xl 获取合同报告
+        $contract = array();
         if (DB::table('task_contract')->where('task_id',$id)->get()){
             $contract = DB::table('task_contract')->where('task_id',$id)->first();
             $arraycontract = explode(",",$contract->attachment_id);
