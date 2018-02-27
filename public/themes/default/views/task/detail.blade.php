@@ -556,7 +556,8 @@
                                     </div>
                                     <p style="margin-left:20px;"><span class="js_more" style="cursor:pointer;color:#2f55a0"><span class="text">查看更多</span> <i class="fa fa-angle-double-down"></i></span></p>
                                 </div>
-                                {{--<div class="description-main task-taskdisplay">
+                                @if(count($attatchment) > 0)
+                                <div class="description-main task-taskdisplay">
                                     <div>
                                         <p class="h4 description-title">
                                             <b>任务附件
@@ -585,9 +586,41 @@
                                             @endforelse
                                         </ul>
                                     </div>
-                                </div>--}}
+                                </div>
+                                @endif
                                 <div class="space"></div>
-
+                                @if(count($contract) > 0 && (($user_type == 2 && $is_win_bid) || $user_type == 1))
+                                <div class="description-main task-taskdisplay">
+                                    <div>
+                                        <p class="h4 description-title">
+                                            <b>合同附件
+                                                <span class="text-muted">
+                                                    ({{ count($contract) }})
+                                                </span>
+                                            </b>
+                                        </p>
+                                        <!-- <span class="hr"></span> -->
+                                    </div>
+                                    <div class="user-profile clearfix">
+                                        <ul class="ace-thumbnails">
+                                            @forelse($contract as $v)
+                                                <li>
+                                                    <a href="#" >
+                                                        <img alt="150x150" src="{!! Theme::asset()->url('images/task-xiazai/'.matchImg($v['type']).'.png') !!}">
+                                                        <div class="text">
+                                                            <div class="inner"></div>
+                                                        </div>
+                                                    </a>
+                                                    <div class="tools tools-bottom">
+                                                        <a href="{{ URL('task/download',['id'=>$v['id']]) }}" target="_blank">下载</a>
+                                                    </div>
+                                                </li>
+                                            @empty
+                                            @endforelse
+                                        </ul>
+                                    </div>
+                                </div>
+                                @endif
                                 <div class="space"></div>
                             </div>
                             {{--@if(($detail['status']==5||$detail['status']==6)&&$experts->is_user)--}}
@@ -646,7 +679,7 @@
                 {{--tab--}}
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="{{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':'' }}" index="1" onclick="rememberTable($(this))">
-                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span style="padding: 1px 4px" class="badge bg-blue">{{ $works_count }}</span></a>
+                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue">{{ $works_count }}</span></a>
                     </li>
                     @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
                     <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
@@ -694,11 +727,14 @@
                                                     @endif
                                                 </p>
                                                 @if($task_type_alias == 'zhaobiao')
+                                                    <!-- add by xl 只许投标者和发布需求者看到报价-->
+                                                    @if(($v['uid']==Auth::user()['id']) || $user_type == 1)
                                                     <p class="pull-left price">
                                                         <img src="{{ Theme::asset()->url('images/price_icon.png') }}">
                                                         <span>报价金额:</span>
                                                         <span>￥{{$v['price']}}</span>
                                                     </p>
+                                                    @endif
                                                 @endif
                                             </div>
                                             <p class="evaluatetime">提交于{{ $v['created_at'] }}</p>
@@ -820,6 +856,8 @@
                                             <div class="weedout" id="weedout-{{ $v['id'] }}" style="display:none;"></div>
                                         @endif
                                     </div>
+                                    <!-- add by xl 只许投标者和发布需求者看到报价-->
+                                    @if(($v['uid']==Auth::user()['id']) || $user_type == 1)
                                     <div>
                                         <div>
                                             <p class="h4 description-title"><b><i class="fa fa-paperclip fa-rotate-90"></i> 附件 <span class="text-muted">({{ count($v['children_attachment']) }})</span></b></p>
@@ -842,6 +880,7 @@
                                             </ul>
                                         </div>
                                     </div>
+                                    @endif
                                     <div class="text-right">
                                         @if(Auth::check())
                                         <a class="evaluateshow text-under blue get-comment" url="/task/getComment" work_id = '{{ $v['id'] }}' num="0" onclick="evaluateshow($(this))"  >回复({{ count($v['children_comment']) }})</a>
