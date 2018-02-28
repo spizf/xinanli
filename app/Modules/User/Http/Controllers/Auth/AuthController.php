@@ -294,6 +294,7 @@ class AuthController extends IndexController
 
                 $tempData = [
                     'code' => $code,
+                    'minutes' => '80秒'
                 ];
 
                 $content = '【客客信息】你注册的验证码为' . $code;
