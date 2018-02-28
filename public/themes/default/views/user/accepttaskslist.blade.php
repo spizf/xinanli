@@ -13,8 +13,8 @@
     <div class="space-12"></div>
     <div class="clearfix g-reletaskhd hidden-xs">
         <form action="/user/acceptTasksList" method="get">
-            <div class="col-lg-12 clearfix">
-				{{--<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
+           {{-- <div class="col-lg-12 clearfix">
+				<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
 					<div class="row">任务类型</div>
 				</div>
 				<div class="col-lg-6 col-sm-10  col-xs-12 g-task-select">
@@ -23,7 +23,7 @@
 					<a class="{!! (!isset($merge['type']) || $merge['type']==$Vtt->id)?'bg-blue':'' !!}" href="{!! URL('user/acceptTasksList').'?'.http_build_query(array_merge(array_except($merge,'page'), ['type'=>$Vtt->id])) !!}">{{$Vtt->name}}（@if(isset($Vtt->counts)){{$Vtt->counts}}@else 0 @endif）</a>
 						@endif
 				  @endforeach	
-				</div>--}}
+				</div>
 				<div class="pull-right">
 					<a class="text-size14 cor-blue2f visible-lg-block" href="/user/acceptTasksList"><i class="fa fa-list-ul"></i></a>
 					<a class="text-size14 cor-graybd visible-lg-block" href="/user/myTask"><i class="fa fa-list-ul fa-rotate-90"></i></a>
@@ -52,7 +52,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>--}}
 			<div class="col-lg-12 clearfix">
 				<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
 					<div class="row">任务状态</div>

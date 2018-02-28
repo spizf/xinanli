@@ -301,7 +301,6 @@ class AuthController extends IndexController
 
                 $status = \SmsClass::sendSms($arr['mobile'], $templates, $tempData, $content);
 
-
                 if ($status['success'] == true) {
                     $data = [
                         'code' => $code,
