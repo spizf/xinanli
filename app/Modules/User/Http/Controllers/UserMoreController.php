@@ -228,7 +228,7 @@ class UserMoreController extends UserCenterController
 					12=>'交易成功',
 					13=>'交易关闭'
 		        ];
-				$status = [
+				/*$status = [
 					1=>'待审核',
 					3=>'投标中',
 					4=>'投标中',
@@ -239,14 +239,30 @@ class UserMoreController extends UserCenterController
 					9=>'交易成功',
 					10=>'交易关闭',
 					11=>'维权中'
-				]; 
-				if(isset($data['status']) && !in_array($data['status'],[6,7,8,9,10,11,12,13])){
-					$data['status']=0;
+				];*/
+                $status = [
+                    1=>'待审核',
+                    3=>'投标中',
+                    4=>'投标中',
+                    5=>'选标中',
+                    12=>'工作中',
+                    13=>'工作中',
+                    14=>'工作中',
+                    15=>'工作中',
+                    16=>'工作中',
+                    17=>'工作中',
+                    18=>'验收中',
+                    999=>'交易成功',
+                    20=>'交易关闭',
+                    19=>'维权中'
+                ];
+                if(isset($data['status']) && !in_array($data['status'],[6,7,8,9,10,11,12,13])){
+                $data['status']=0;
 				}
 				break;
 			}
 		}
-        $my_tasks = TaskModel::myTasks($data);	
+        $my_tasks = TaskModel::myTasks($data);
 		foreach($my_tasks as $key => $val){
                 if((time()-strtotime($val['created_at']))> 0 && (time()-strtotime($val['created_at'])) < 3600){
                     $val['show_publish'] = intval((time()-strtotime($val['created_at']))/60).'分钟前';
@@ -336,7 +352,6 @@ class UserMoreController extends UserCenterController
         $this->theme->set('TYPE',2);
         return $this->theme->scope('user.mytaskaxis', $view)->render();
     }
-
     
     public function myTaskAxisAjax(Request $request)
     {
@@ -457,7 +472,6 @@ class UserMoreController extends UserCenterController
         return $this->theme->scope('user.mycommentowner', $view)->render();
     }
 
-    
     public function myWorkHistory(Request $request)
     {
         $this->initTheme('usercenter');
@@ -590,7 +604,6 @@ class UserMoreController extends UserCenterController
         return $this->theme->scope('user.myworkhistoryaxis', $view)->render();
     }
 
-    
     public function unreleasedTasks(Request $request)
     {
         $this->initTheme('usertask');
@@ -625,7 +638,6 @@ class UserMoreController extends UserCenterController
         return $this->theme->scope('user.unreleasedtasks', $view)->render();
     }
 
-    
     public function unreleasedTasksDelete($id)
     {
         
@@ -745,9 +757,9 @@ class UserMoreController extends UserCenterController
         $domain = \CommonClass::getDomain();
         $data=$request->all();
         $taskIDs = WorkModel::where('uid',$this->user['id'])->select('task_id')->get()->toArray();
-        
-        
-		$taskType=TaskTypeModel::getTaskTypeAll();
+        //add by xl 任务类型不确定暂时默认为招标
+        //$taskType=TaskTypeModel::getTaskTypeAll();
+        $taskType =  TaskTypeModel::select('id','name','alias')->where('alias','zhaobiao')->get();
 		$data['type']=$request->get('type')?$request->get('type'):$taskType[0]['id'];
 		$data['status']=$request->get('status')?$request->get('status'):0;
 		if($taskType[0]['alias'] == 'xuanshang' && !isset($data['type'])){
@@ -815,7 +827,8 @@ class UserMoreController extends UserCenterController
 		}
 		if(count($taskIDs)){
             $taskIDs = array_unique(array_flatten($taskIDs));
-            $id = [2,3,4,5,6,7,8,9,10,11];
+            /*$id = [2,3,4,5,6,7,8,9,10,11];*/
+            $id = [2,3,4,5,12,13,14,15,16,17,18,19,20,999];
             $taskInfo = TaskModel::whereIn('id',$taskIDs)->whereIn('status',$id);
 			
 			foreach($taskType as $Vtt){
@@ -850,27 +863,32 @@ class UserMoreController extends UserCenterController
 					case 6:
 						$status = [1];
 						break;
-					case 7:
-						$status = [3,4];
-						break;
-					case 8:
-						$status = [5];
-						break;
-					case 9:
-						$status = [6];
-						break;
-					case 10:
-						$status = [7];
-						break;
-					case 11:
-						$status = [11];
-						break;
-					case 12:
-						$status = [8,9];
-						break;
-					case 13:
-						$status = [10];
-						break; 
+                    case 7://投标中
+                        $status = [3,4];
+                        break;
+                    case 8://选标中
+                        $status = [5];
+                        break;
+                    case 9://工作中
+                        /*$status = [6];*/
+                        $status = [12,13,14,15,16,17];
+                        break;
+                    case 10://验收中
+                        /*$status = [7];*/
+                        $status = [18];
+                        break;
+                    case 11://维权中--仲裁中
+                        /*$status = [11];*/
+                        $status = [19];
+                        break;
+                    case 12://交易成功
+                        /*$status = [8,9];*/
+                        $status = [999];
+                        break;
+                    case 13://交易失败
+                        /*$status = [10];*/
+                        $status = [20];//因为有之前的失败状态为10的  为符合数据库数据暂先保留
+                        break;
 					case 14:
 						$status = [8,9,10];
 						break;
@@ -934,7 +952,7 @@ class UserMoreController extends UserCenterController
 
                 $taskInfo['data'][$k] = $v;
             }
-            $status = [
+            /*$status = [
                 'status'=>[
                     2=>'审核中',
                     3=>'工作中',
@@ -946,6 +964,24 @@ class UserMoreController extends UserCenterController
                     9=>'已结束',
                     10=>'已结束',
                     11=>'维权中'
+                ]
+            ];*/
+            $status = [
+                'status'=>[
+                    1=>'待审核',
+                    3=>'投标中',
+                    4=>'投标中',
+                    5=>'选标中',
+                    12=>'工作中',
+                    13=>'工作中',
+                    14=>'工作中',
+                    15=>'工作中',
+                    16=>'工作中',
+                    17=>'工作中',
+                    18=>'验收中',
+                    999=>'交易成功',
+                    20=>'交易关闭',
+                    19=>'维权中'
                 ]
             ];
             $taskInfo['data'] = \CommonClass::intToString($taskInfo['data'],$status);
@@ -988,11 +1024,135 @@ class UserMoreController extends UserCenterController
             ];
 
         }
-        $this->theme->set('TYPE',3);
+        $this->theme->set('TYPE',1);
         return $this->theme->scope('user.accepttaskslist', $view)->render();
     }
 
-    
+    public function fabuTasksList(Request $request)
+    {
+        $this->initTheme('accepttask');
+        $this->theme->setTitle('我发布的任务');
+
+        $data = $request->all();
+
+        $data['uid'] = $this->user['id'];
+        //add by xl 任务类型不确定暂时默认为招标
+        //$taskType=TaskTypeModel::getTaskTypeAll();
+        $taskType =  TaskTypeModel::select('id','name','alias')->where('alias','zhaobiao')->get();
+        foreach($taskType as $Vtt){
+            $Vtt->counts=TaskModel::where('uid',$data['uid'])->where('type_id',$Vtt['id'])->where('status','>',0)->count();
+        }
+        $data['type']=isset($data['type'])?$data['type']:$taskType[0]['id'];
+        $data['status']=isset($data['status'])?$data['status']:0;
+        if($taskType[0]['alias'] == 'xuanshang' && !isset($data['type'])){
+            $taskStatus=[
+                1=>'工作中',
+                2=>'选标中',
+                3=>'交付中',
+                4=>'已结束',
+                5=>'其他'
+            ];
+        }else{
+            $taskTM=TaskTypeModel::select('alias')->where('id',$data['type'])->first();
+            switch($taskTM['alias']){
+                case 'xuanshang':
+                    $taskStatus=[
+                        1=>'工作中',
+                        2=>'选标中',
+                        3=>'交付中',
+                        4=>'已结束',
+                        5=>'其他'
+                    ];
+                    $status = [
+                        2=>'已发布',
+                        3=>'工作中',
+                        4=>'工作中',
+                        5=>'选标中',
+                        6=>'工作中',
+                        7=>'交付中',
+                        8=>'已结束',
+                        9=>'已结束',
+                        10=>'已结束',
+                        11=>'维权中'
+                    ];
+                    if(isset($data['status']) && !in_array($data['status'],[1,2,3,4,5])){
+                        $data['status']=0;
+                    }
+                    break;
+                case 'zhaobiao':
+                    $taskStatus=[
+                        6=>'待审核',
+                        7=>'投标中',
+                        8=>'选标中',
+                        9=>'工作中',
+                        10=>'验收中',
+                        11=>'维权中',
+                        12=>'交易成功',
+                        13=>'交易关闭'
+                    ];
+                    /*$status = [
+                        1=>'待审核',
+                        3=>'投标中',
+                        4=>'投标中',
+                        5=>'选标中',
+                        6=>'工作中',
+                        7=>'验收中',
+                        8=>'交易成功',
+                        9=>'交易成功',
+                        10=>'交易关闭',
+                        11=>'维权中'
+                    ];*/
+                    $status = [
+                        1=>'待审核',
+                        3=>'投标中',
+                        4=>'投标中',
+                        5=>'选标中',
+                        12=>'工作中',
+                        13=>'工作中',
+                        14=>'工作中',
+                        15=>'工作中',
+                        16=>'工作中',
+                        17=>'工作中',
+                        18=>'验收中',
+                        999=>'交易成功',
+                        20=>'交易关闭',
+                        19=>'维权中'
+                    ];
+                    if(isset($data['status']) && !in_array($data['status'],[6,7,8,9,10,11,12,13])){
+                        $data['status']=0;
+                    }
+                    break;
+            }
+        }
+        $my_tasks = TaskModel::myTasks($data);
+        foreach($my_tasks as $key => $val){
+            if((time()-strtotime($val['created_at']))> 0 && (time()-strtotime($val['created_at'])) < 3600){
+                $val['show_publish'] = intval((time()-strtotime($val['created_at']))/60).'分钟前';
+            }
+            if((time()-strtotime($val['created_at']))> 3600 && (time()-strtotime($val['created_at'])) < 24*3600){
+                $val['show_publish'] = intval((time()-strtotime($val['created_at']))/3600).'小时前';
+            }
+            if((time()-strtotime($val['created_at']))> 24*3600){
+                $val['show_publish'] = intval((time()-strtotime($val['created_at']))/(24*3600)).'天前';
+            }
+        }
+        $domain = \CommonClass::getDomain();
+
+
+
+        $pie_data = \CommonClass::pie($this->user['id']);
+        $view = [
+            'my_tasks'=>$my_tasks,
+            'domain'=>$domain,
+            'pie_data'=>$pie_data,
+            'status'=>$status,
+            'task_type'=>$taskType,
+            'merge'    =>$data,
+            'task_status'=>$taskStatus
+        ];
+        $this->theme->set('TYPE',3);
+        return $this->theme->scope('user.fabutasklist', $view)->render();
+    }
     public function workComment(Request $request)
     {
         $this->initTheme('accepttask');

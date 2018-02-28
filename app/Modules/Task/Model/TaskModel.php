@@ -39,16 +39,17 @@ class TaskModel extends Model
     }
     static public function myTasks($data)
     {
+
         $query = self::select('task.*', 'tt.name as type_name','tt.alias','us.name as nickname', 'ud.avatar', 'tc.name as cate_name', 'province.name as province_name', 'city.name as city_name')
             ->where('task.status', '>', 0)
-            ->where('task.status', '<=', 11)->where('task.uid', $data['uid'])->where(function($query){
+           /* ->where('task.status', '<=', 11)->where('task.uid', $data['uid'])->where(function($query){*/
+           ->where('task.status', '<=', 999)->where('task.uid', $data['uid'])->where(function($query){
 				$query->where(function($querys){
 					 $querys->where('task.bounty_status',1)->where('tt.alias','xuanshang');
 				 })->orwhere(function($querys){
 					 $querys->whereIn('task.bounty_status',[0,1])->where('tt.alias','zhaobiao');
 				 });
 			});
-        
         if (isset($data['status']) && $data['status'] != 0) {
             
 
@@ -68,29 +69,34 @@ class TaskModel extends Model
                 case 5:
                     $status = [2, 11];
                     break;
-				case 6:
+				case 6://待审核
 					$status = [1];
 					break;
-				case 7:
+				case 7://投标中
 					$status = [3,4];
 					break;
-				case 8:
+				case 8://选标中
 					$status = [5];
 					break;
-                case 9:
-					$status = [6];
+                case 9://工作中
+					/*$status = [6];*/
+                    $status = [12,13,14,15,16,17];
 					break;
- 				case 10:
-					$status = [7];
+ 				case 10://验收中
+					/*$status = [7];*/
+                    $status = [18];
 					break;
-                case 11:
-					$status = [11];
+                case 11://维权中--仲裁中
+					/*$status = [11];*/
+                    $status = [19];
 					break;
-                case 12:
-					$status = [8,9];
+                case 12://交易成功
+					/*$status = [8,9];*/
+                    $status = [999];
 					break;
-                case 13:
-					$status = [10];
+                case 13://交易失败
+					/*$status = [10];*/
+                    $status = [20];//因为有之前的失败状态为10的  为符合数据库数据暂先保留
 					break; 
                 case 14:
 					$status = [8,9,10];

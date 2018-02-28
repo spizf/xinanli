@@ -110,7 +110,7 @@
             <div class="g-userhint">
                 <div class="g-usertitname cor-gray51 text-size14"><a href="">{{ $user_data['nickname'] }}</a>，这里是你的【主页】！</div>
                 <div class="space-6"></div>
-                <p class="cor-gray51 text-size14">结交各路豪杰的地盘儿。现在开启威客之旅！</p>
+                {{--<p class="cor-gray51 text-size14">结交各路豪杰的地盘儿。现在开启威客之旅！</p>--}}
                 <div class="space-14"></div>
                 <div class="g-userhintwrap row">
                     <div class="col-lg-4 col-sm-6 text-center">
@@ -155,51 +155,25 @@
             <div class="g-userhint g-userlist tabbable">
                 <div class="clearfix g-userlisthead">
                     <ul class="pull-left text-size16 nav nav-tabs">
-                        @if(Auth::user()['user_type']==2)
-                        <li ><a href="#useraccept" onclick="changeurl($(this))" url="/user/acceptTasksList" data-toggle="tab">我接受的任务</a></li>
-                        <div class="pull-left">|</div>@endif @if(Auth::user()['user_type']!=3)<li class="active"><a onclick="changeurl($(this))"  url="/user/myTasksList" href="#userrelease" data-toggle="tab">我发布的任务</a></li>@endif @if(Auth::user()['user_type']==3) <li class="active"><a onclick="changeurl($(this))"  url="/user/myTasksList" href="#expertwork" data-toggle="tab">我仲裁的任务</a></li> @endif
+                         @if(Auth::user()['user_type']!=3)
+                            <li class="active"><a onclick="changeurl($(this))" @if(Auth::user()['user_type']==2) url="/user/fabuTasksList" @else url="/user/myTasksList" @endif href="#userrelease" data-toggle="tab">我发布的任务</a></li>
+                            <div class="pull-left">|</div>@endif
+                         @if(Auth::user()['user_type']==2)
+                             <li ><a href="#useraccept" onclick="changeurl($(this))" url="/user/acceptTasksList" data-toggle="tab">我接受的任务</a></li>
+                             @endif
+                         @if(Auth::user()['user_type']==3)
+                             <li><a onclick="changeurl($(this))"  url="/user/myTasksList" href="#expertwork" data-toggle="tab">我仲裁的任务</a></li> @endif
                     </ul>
-                    <a id="more-task" class="pull-right hov-corblue2f" href="/user/acceptTasksList" target="_blank">更多</a>
+                    @if(Auth::user()['user_type']!=2)
+                        <a id="more-task" class="pull-right hov-corblue2f" href="/user/myTasksList" target="_blank">更多</a>
+                    @elseif(Auth::user()['user_type']==2)
+                        <a id="more-task" class="pull-right hov-corblue2f" href="/user/fabuTasksList" target="_blank">更多</a>
+                        {{--<a id="more-task" class="pull-right hov-corblue2f" href="/user/acceptTasksList" target="_blank">更多</a>--}}
+                    @endif
                 </div>
 
                 <div class="tab-content" style="min-height: 233px;">
-                    @if(Auth::user()['user_type']==2)
-                    @if(count($my_task)>0)
-                        <ul id="useraccept" class="{{ (count($my_task)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs fade  in dialogs">
-                            @foreach($my_task as $v)
-                                <li class="row width590">
-                                    <div class="col-sm-1 col-xs-2 u-headimg"><img class="user-image2" src="{{ $domain.'/'.$v['avatar'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/defauthead.png')}}',$(this))"></div>
-                                    <div class="col-sm-11 col-xs-10 usernopd">
-                                        <div class="col-sm-9 col-xs-8">
-                                            <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;@if(isset($v['status_text']))&nbsp;{{ $v['status_text'] }}@endif</div>
-                                            <div class="space-6"></div>
-                                            <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ str_limit($v['nickname'],10) }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{ date('d',time()-strtotime($v['created_at'])) }}天前&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> {{ $v['bounty_status']==1?'已托管赏金':'待托管赏金' }}</p>
-                                            <div class="space-6"></div>
-                                            <p class="cor-gray51 userrelp p-space">{!! strip_tags(htmlspecialchars_decode($v['desc'])) !!}</p>
-                                            <div class="space-2"></div>
-                                            <div class="g-userlabel"><a href="">{{ $v['category_name'] }}</a>
-                                                @if($v['region_limit']==1)
-                                                    <a href="">{{ CommonClass::getRegion($v['city']) }}</a>
-                                                @endif
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-3 col-xs-4 text-right hiden590"><a class="btn-big bg-blue bor-radius2 hov-blue1b" href="/task/{{ $v['id'] }}" target="_blank">查看</a></div>
-                                        <div class="col-xs-12"><div class="g-userborbtm"></div></div>
-                                    </div>
-                                </li>
-                            @endforeach
-                            {{--@else
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task" target="_blank">接收任务</a>吧</li>
-                       --}}
-                        </ul>
-                    @endif
-                    @if(count($my_task)==0)
-                        <ul id="useraccept" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade active in">
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task" target="_blank">接收任务</a>吧</li>
-                        </ul>
-                    @endif
-                    @endif
-                        @if(Auth::user()['user_type']!=3)
+                    @if(Auth::user()['user_type']!=3)
                         @if(count($task)>0)
                             <ul id="userrelease" class="{{ (count($task)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs active fade in dialogs">
 
@@ -231,14 +205,51 @@
                                  @endif--}}
                             </ul>
                         @endif
-                    @if(count($task)==0)
-                        <ul id="userrelease" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">
+                        @if(count($task)==0)
+                            <ul id="userrelease" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs active fade">
 
-                            <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task/create" target="_blank">发布任务</a>吧</li>
+                                <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task/create" target="_blank">发布任务</a>吧</li>
 
-                        </ul>
+                            </ul>
+                        @endif
                     @endif
+                    @if(Auth::user()['user_type']==2)
+                        @if(count($my_task)>0)
+                            <ul id="useraccept" class="{{ (count($my_task)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs fade  in dialogs">
+                                @foreach($my_task as $v)
+                                    <li class="row width590">
+                                        <div class="col-sm-1 col-xs-2 u-headimg"><img class="user-image2" src="{{ $domain.'/'.$v['avatar'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/defauthead.png')}}',$(this))"></div>
+                                        <div class="col-sm-11 col-xs-10 usernopd">
+                                            <div class="col-sm-9 col-xs-8">
+                                                <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;@if(isset($v['status_text']))&nbsp;{{ $v['status_text'] }}@endif</div>
+                                                <div class="space-6"></div>
+                                                <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ str_limit($v['nickname'],10) }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{ date('d',time()-strtotime($v['created_at'])) }}天前&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> {{ $v['bounty_status']==1?'已托管赏金':'待托管赏金' }}</p>
+                                                <div class="space-6"></div>
+                                                <p class="cor-gray51 userrelp p-space">{!! strip_tags(htmlspecialchars_decode($v['desc'])) !!}</p>
+                                                <div class="space-2"></div>
+                                                <div class="g-userlabel"><a href="">{{ $v['category_name'] }}</a>
+                                                    @if($v['region_limit']==1)
+                                                        <a href="">{{ CommonClass::getRegion($v['city']) }}</a>
+                                                    @endif
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-3 col-xs-4 text-right hiden590"><a class="btn-big bg-blue bor-radius2 hov-blue1b" href="/task/{{ $v['id'] }}" target="_blank">查看</a></div>
+                                            <div class="col-xs-12"><div class="g-userborbtm"></div></div>
+                                        </div>
+                                    </li>
+                                @endforeach
+                                {{--@else
+                                <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task" target="_blank">接收任务</a>吧</li>
+                           --}}
+                            </ul>
+                        @endif
+                        @if(count($my_task)==0)
+                            <ul id="useraccept" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade  in">
+                                <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task" target="_blank">接收任务</a>吧</li>
+                            </ul>
+                        @endif
                     @endif
+
                         @if(Auth::user()['user_type']==3)
                             @if(isset($group_experts))
                             @if(count($group_experts)>0)
