@@ -179,5 +179,5 @@
 {!! Theme::asset()->container('specific-js')->usePath()->add('validform-js', 'plugins/jquery/validform/js/Validform_v5.3.2_min.js') !!}
 {!! Theme::asset()->container('custom-js')->usePath()->add('custom-validform-js', 'js/auth.js') !!}
 {!! Theme::asset()->container('custom-js')->usepath()->add('payphoneword','js/doc/payphoneword.js') !!}
-{!! Theme::asset()->container('custom-js')->usePath()->add('auth-js', 'js/password.js') !!}
+{{--{!! Theme::asset()->container('custom-js')->usePath()->add('auth-js', 'js/password.js') !!}--}}
 {!! Theme::asset()->container('custom-js')->usePath()->add('main-js', 'js/main.js') !!}

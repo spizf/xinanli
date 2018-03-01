@@ -174,8 +174,18 @@ class ExpertsController extends ManageController
         $res = DB::table('users')->insertGetId($userArr);
         $detail = DB::table('user_detail')->insert(['uid'=>$res]);
         //注册专家结束
-
         $file=$request->file('head_img');
+        if(empty($file)){
+            return redirect('manage/expertsAdd')->with(['message' => '请上传图片']);
+        }
+        //限制图片上传的尺寸为200*200
+        $size = getimagesize($file);//获取上传图片大小
+        $width = $size[0];
+        $height = $size[1];
+       // $height= ($height/$width)*$width;//等比例高度
+        if($width !=200 && $height !=200){
+            return redirect('manage/expertsAdd')->with(['message' => '请上传图片大小为200*200']);
+        }
         if(!empty($file))
         {
             $result = \FileClass::uploadFile($file,'sys');
@@ -235,6 +245,17 @@ class ExpertsController extends ManageController
             'detail' => $request->get('detail')
         ];
         $file=$request->file('head_img');
+        if(empty($file)){
+            return redirect('manage/expertsAdd')->with(['message' => '请上传图片']);
+        }
+        //限制图片上传的尺寸为200*200
+        $size = getimagesize($file);//获取上传图片大小
+        $width = $size[0];
+        $height = $size[1];
+        // $height= ($height/$width)*$width;//等比例高度
+        if($width !=200 && $height !=200){
+            return redirect('manage/expertsAdd')->with(['message' => '请上传图片大小为200*200']);
+        }
         if(!empty($file))
         {
             $result = \FileClass::uploadFile($file,'sys');

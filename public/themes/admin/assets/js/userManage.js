@@ -1,5 +1,5 @@
 jQuery(function($) {
-		/**var oTable1 = 
+		/**var oTable1 =
 	$('#sample-table-2')
 	//.wrap("<div class='dataTables_borderWrap' />")   //if you are applying horizontal scrolling (sScrollX)
 	.dataTable( {
@@ -41,11 +41,11 @@ jQuery(function($) {
 		selectOtherMonths: false,
 		//isRTL:true,
 
-		
+
 		/*
 		changeMonth: true,
 		changeYear: true,
-		
+
 		showButtonPanel: true,
 		beforeShow: function() {
 			//change button colors
@@ -73,7 +73,7 @@ jQuery(function($) {
 	$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
 	function tooltip_placement(context, source) {
 		var $source = $(source);
-		var $parent = $source.closest('table')
+		var $parent = $source.closest('table');
 		var off1 = $parent.offset();
 		var w1 = $parent.width();
 

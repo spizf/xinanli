@@ -268,7 +268,7 @@
                                 @elseif($detail['status']==19)
                                 此任务当前处于：<span class="text-primary">仲裁中</span>状态
                                 @elseif($detail['status']==20)
-                                    此任务当前处于：<span class="text-primary">失败</span>状态
+                                此任务当前处于：<span class="text-primary">失败</span>状态
                                 @elseif($detail['status']==7)
                                 此任务当前处于：<span class="text-primary">验收</span>状态
                                 @elseif($detail['status']==8)

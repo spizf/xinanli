@@ -25,6 +25,7 @@
 				<div class="memberdiv pull-left">
 					<div class="position-relative">
 						<input type="file" id="id-input-file-3" name="head_img" />
+						<span style="padding-left:5px;color:red;line-height: 34px"> 建议图片尺寸为200*200</span>
 					</div>
 				</div>
 			</div>
