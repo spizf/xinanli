@@ -1617,20 +1617,48 @@ class IndexController extends BasicIndexController
         return redirect()->to($url);
     }
     //add by xl 下载合同模板
-    public function downFile(){
+    public function downFile($id){
+
         $this->theme->setTitle('下载合同模板');
-            $filename= public_path().'\hetong.doc';
-            $file  =  fopen($filename, "rb");
-            $name = '合同模板.doc';
-            Header( "Content-type:  application/octet-stream ");
-            Header( "Accept-Ranges:  bytes ");
-            Header( "Content-Disposition:  attachment;  filename= $name");
-            $contents = "";
-            while (!feof($file)) {
-                $contents .= fread($file, 8192);
-            }
-            echo $contents;
-            fclose($file);
+        switch($id){
+            case 1:
+                $suffix = '\aqbzh.zip';
+                $prex='安全标准化';
+                break;
+            case 2:
+                $suffix = '\aqpj.zip';
+                $prex='安全评价';
+                break;
+            case 3:
+                $suffix = '\jszx.zip';
+                $prex='技术咨询';
+                break;
+            case 4:
+                $suffix = '\wtjc.zip';
+                $prex='委托检测';
+                break;
+            case 5:
+                $suffix = '\xfjsfw.zip';
+                $prex='消防技术服务';
+                break;
+            case 6:
+                $suffix = '\zybwhpj.zip';
+                $prex='职业病危害评价';
+                break;
+
+        }
+        $filename= public_path().$suffix;
+        $file  =  fopen($filename, "rb");
+        $name = $prex.'合同模板.zip';
+        Header( "Content-type:  application/octet-stream ");
+        Header( "Accept-Ranges:  bytes ");
+        Header( "Content-Disposition:  attachment;  filename= $name");
+        $contents = "";
+        while (!feof($file)) {
+            $contents .= fread($file, 8192);
+        }
+        echo $contents;
+        fclose($file);
 
     }
     //add by xl 增加线下付款
