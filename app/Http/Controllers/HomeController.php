@@ -600,13 +600,23 @@ class HomeController extends IndexController
         }else{
             $data['status'] = 3;
         }
-        $data['begin_at'] = date('Y-m-d H:i:s', time());
+
+
         //招标任务交稿截止最大天数
         $task_delivery_limit_time = \CommonClass::getConfig('bid_delivery_max');
         $task_delivery_limit_time = $task_delivery_limit_time * 24 * 3600;
+        //开始和截止时间
         $begin_at = strtotime(preg_replace('/([\x80-\xff]*)/i', '', $data['begin_at']));
-        $delivery_deadline = preg_replace('/([\x80-\xff]*)/i', '', $begin_at+$task_delivery_limit_time);
+        $delivery_deadline = strtotime(preg_replace('/([\x80-\xff]*)/i', '', $data['delivery_deadline']));
+
+
         $data['delivery_deadline'] = date('Y-m-d H:i:s', $delivery_deadline);
+        $deadlineMax = $begin_at + $task_delivery_limit_time;
+        //和内部发需求保持一致，如果设置的截止时间大于最大时间限制则取最大截止时间
+        if ($deadlineMax < $delivery_deadline) {
+            $data['delivery_deadline'] =  date('Y-m-d', $deadlineMax);
+        }
+        $data['begin_at'] = date('Y-m-d H:i:s', $begin_at);
         /*if ($data['code'] == $authMobileInfo['code'] && $data['mobile'] == $authMobileInfo['mobile']){*/
             Session::forget('auth_mobile_info');
             unset($data['code']);
@@ -638,7 +648,9 @@ class HomeController extends IndexController
                 "worker_num" => "1",
                 "created_at" => $data['begin_at'],
                 "begin_at" => $data['begin_at'],
-                "delivery_deadline" => $data['delivery_deadline']
+                "delivery_deadline" => $data['delivery_deadline'],
+                "task_detail" => $data['task_detail'],
+                'company_name' => $data['company_name']
             ];
             $taskModel = new TaskModel();
             $result = $taskModel->createTask($newdata);

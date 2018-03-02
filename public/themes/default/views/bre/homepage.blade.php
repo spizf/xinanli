@@ -225,6 +225,12 @@
                                     </dd>
                                 </dl>
                                 <dl>
+                                    <dt><i>*</i>公司名称</dt>
+                                    <dd>
+                                        <input id="company_name" name="company_name" type="text" placeholder="请输入您的公司名称" style="width:622px;text-indent: 10px;"
+                                    </dd>
+                                </dl>
+                                <dl>
                                     <dt><i>*</i>地区</dt>
                                     <dd>
                                         <select name="addr[]" style="width:204px;" id="addr1">
@@ -278,7 +284,7 @@
                                     });
                                 </script>
                                 <dl>
-                                    <dt><i>*</i>需求类别</dt>
+                                    <dt><i>*</i>服务类别</dt>
                                     <dd>
                                         <select name='cate' style="width:204px;">
                                             <option>请选择您需要的服务类型</option>
@@ -286,6 +292,11 @@
                                                 <option value="{{$v->id}}">{{$v->name}}</option>
                                             @endforeach
                                         </select>
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><i>*</i>所属行业</dt>
+                                    <dd>
                                         <select name='industry[]' style="margin-left: 6px;width:204px;" id="field">
                                             <option>请选择你的行业类型</option>
                                             @foreach($field as $k=>$v)
@@ -385,6 +396,28 @@
                                         {{--});--}}
                                     {{--});--}}
                                 {{--</script>--}}
+                                <dl>
+                                    <dt><i>*</i>任务详情</dt>
+                                    <dd>
+                                        <textarea id="task_detail" name="task_detail"  placeholder="请输入您的项目任务详情" rows="5" style="width:622px;text-indent: 10px;"></textarea>
+                                    </dd>
+                                </dl>
+                                <dl>
+                                    <dt><i>*</i>报名时间</dt>
+                                    <dd>
+                                        <input name="begin_at" type="text" style="width:300px;text-indent: 10px;"
+                                               id="datepiker-begin1"
+                                               onchange="beginAt($(this))"
+                                               value="{!! (old('begin_at'))?old('begin_at'):date('Y年m月d日',time()) !!}"
+                                               placeholder="开始时间" >
+                                        <input name="delivery_deadline" type="text" style="width:322px;text-indent: 10px;"
+                                               id="datepiker-deadline1"
+                                               onchange="deadline($(this))"
+                                               value="{!! old('delivery_deadline') !!}"
+                                               placeholder="截止时间">
+
+                                    </dd>
+                                </dl>
                                 <dl>
                                     <dt style="height:30px;"></dt>
                                     <dd>
@@ -597,13 +630,20 @@
         //点击发布
         function fabu() {
             var projectName = $("#projectName").val();
+            var companyName = $("#company_name").val();
             var productName = $("#productName").val();
             var productNum = $("#productNum").val();
             var iphone = $("#mobile").val();
             var lianxi = $("#lianxi").val();
-            var code = $("#code").val();
+            var task_detail = $("#task_detail").val();
+            var datepikerdeadline1 = $("#datepiker-deadline1").val();
+
             if(projectName == "") {
                 layer.msg("项目名称不能为空");
+                return false;
+            }
+            if(companyName == "") {
+                layer.msg("公司名称不能为空");
                 return false;
             }
             if(productName == "") {
@@ -622,8 +662,12 @@
                 layer.msg("联系人不能为空");
                 return false;
             }
-            if(code == "") {
-                layer.msg("验证码不能为空");
+            if(task_detail == "") {
+                layer.msg("请输入任务详情");
+                return false;
+            }
+            if(datepikerdeadline1 == "") {
+                layer.msg("请输入截止时间");
                 return false;
             }
             $('#fastTask').submit();
@@ -1143,6 +1187,6 @@
 {!! Theme::asset()->container('custom-js')->usepath()->add('homepage','js/doc/homepage.js') !!}
 {!! Theme::asset()->container('specific-js')->usepath()->add('adaptive','plugins/jquery/adaptive-backgrounds/jquery.adaptive-backgrounds.js') !!}
 {!! Theme::asset()->container('specific-js')->usePath()->add('validform-js', 'plugins/jquery/validform/js/Validform_v5.3.2_min.js') !!}
-
+{!! Theme::widget('datepicker')->render() !!}
 {!! Theme::asset()->container('custom-js')->usePath()->add('custom-validform-js', 'js/auth.js') !!}
 {!! Theme::asset()->container('custom-js')->usepath()->add('payphoneword','js/doc/payphoneword.js') !!}
