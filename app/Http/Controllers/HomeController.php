@@ -609,7 +609,6 @@ class HomeController extends IndexController
         $begin_at = strtotime(preg_replace('/([\x80-\xff]*)/i', '', $data['begin_at']));
         $delivery_deadline = strtotime(preg_replace('/([\x80-\xff]*)/i', '', $data['delivery_deadline']));
 
-
         $data['delivery_deadline'] = date('Y-m-d H:i:s', $delivery_deadline);
         $deadlineMax = $begin_at + $task_delivery_limit_time;
         //和内部发需求保持一致，如果设置的截止时间大于最大时间限制则取最大截止时间

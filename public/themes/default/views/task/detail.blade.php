@@ -455,7 +455,8 @@
                                     查看仲裁结果
                                 </a>
                                 @endif
-                                @if($is_arbitration)
+
+                                @if($is_arbitration && $is_user)
                                     <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
                                         <br>
                                         <br>
