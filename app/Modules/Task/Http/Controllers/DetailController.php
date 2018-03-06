@@ -307,13 +307,13 @@ class DetailController extends IndexController
                             $str .= $v->id;
                         }
                     }
-                    $arbitration_expert = [
-                        'task_id' => $id,
-                        'experts' => $str,
-                        'num' => $detail['zc_status']
-                    ];
-                    DB::table('arbitration_expert')->insert($arbitration_expert);
                 }
+                $arbitration_expert = [
+                    'task_id' => $id,
+                    'experts' => $str,
+                    'num' => $detail['zc_status']
+                ];
+                DB::table('arbitration_expert')->insert($arbitration_expert);
             }
             //获取仲裁专家
             $experts_str = DB::table('arbitration_expert')->where('task_id',$id)->where('num',$detail['zc_status'])->first();
@@ -331,22 +331,23 @@ class DetailController extends IndexController
 //                    ->get();
 //                $view['group_two'] =$group_two;
 //            }
-            if(!empty($experts_str->headman)){
+            if(!empty($experts_str)){
                 $group_two = DB::table('experts')
                     ->where('id',$experts_str->headman)
                     ->select('id','name')
                     ->get();
+                /*判断是否筛选过仲裁专家*/
+                if ($experts_str->type == 1){
+                    $view['ex_type'] = 1;
+                }else{
+                    $view['ex_type'] = 0;
+                }
             }else{
                 $group_two = array();
-            }
 
-            $view['group_two'] =$group_two;
-            /*判断是否筛选过仲裁专家*/
-            if ($experts_str->type == 1){
-                $view['ex_type'] = 1;
-            }else{
-                $view['ex_type'] = 0;
             }
+            $view['group_two'] =$group_two;
+
         }
         //获取仲裁报告
         if (ArbitrationReportModel::where('task_id',$id)->where('num',$detail['zc_status'])->first()){
@@ -535,6 +536,7 @@ class DetailController extends IndexController
                 //第一次仲裁
                 $num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,1);//查询市里专家组长数目
                 if ($num == 2){
+
                     //足两位
                     $group_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],1,$name,2,2);//组长
                 }else{
@@ -620,6 +622,7 @@ class DetailController extends IndexController
 
 
         }
+        dd($expert_result);
         return $expert_result;
 
     }
