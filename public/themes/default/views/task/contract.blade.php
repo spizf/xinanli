@@ -9,7 +9,7 @@
                 <div class="tab-content clearfix f-tab">
                     <!--余额支付-->
                     <div class="tab-pane in active clearfix text-size14 cor-gray51 u-pay" id="home1">
-                            <div class="form-horizontal" role="form" action="/task/signContractUpdate" method="post"  name="bounty-form">
+                            <form class="form-horizontal" role="form" action="/task/signContractUpdate" method="post"  name="bounty-form">
                                 {{ csrf_field() }}
                                 <div>
                                     <label style="color: #F00000">请使用平台提供的合同模板：</label>

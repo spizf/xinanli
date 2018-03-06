@@ -12,7 +12,7 @@
         position: relative;
         float: left;
         width: 230px;
-        height: 323px;
+        height: 353px;
         background: #ffffff;
         margin-right: 10px;
         border: 1px solid #e8e8e8;
