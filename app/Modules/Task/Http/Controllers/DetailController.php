@@ -342,7 +342,7 @@ class DetailController extends IndexController
 
             $view['group_two'] =$group_two;
             /*判断是否筛选过仲裁专家*/
-            if ($experts_str->type = 1){
+            if ($experts_str->type == 1){
                 $view['ex_type'] = 1;
             }else{
                 $view['ex_type'] = 0;
