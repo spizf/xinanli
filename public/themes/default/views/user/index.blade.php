@@ -157,8 +157,9 @@
                     <ul class="pull-left text-size16 nav nav-tabs">
                          @if(Auth::user()['user_type']!=3)
                             <li class="active"><a onclick="changeurl($(this))" @if(Auth::user()['user_type']==2) url="/user/fabuTasksList" @else url="/user/myTasksList" @endif href="#userrelease" data-toggle="tab">我发布的任务</a></li>
-                            <div class="pull-left">|</div>@endif
+                            @endif
                          @if(Auth::user()['user_type']==2)
+                             <div class="pull-left">|</div>
                              <li ><a href="#useraccept" onclick="changeurl($(this))" url="/user/acceptTasksList" data-toggle="tab">我接受的任务</a></li>
                              @endif
                          @if(Auth::user()['user_type']==3)
@@ -182,7 +183,7 @@
                                         <div class="col-sm-1 col-xs-2 u-headimg"><img class="user-image2" src="{{ $domain.'/'.$value['avatar'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/defauthead.png')}}',$(this))" ></div>
                                         <div class="col-sm-11 col-xs-10 usernopd">
                                             <div class="col-sm-9 col-xs-8">
-                                                <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $value['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $value['id'] }}" target="_blank">{{ $value['title'] }}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;@if(isset($value['status_text'])){{ $value['status_text'] }}@endif</div>
+                                                <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $value['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $value['id'] }}" target="_blank">{{ $value['title'] }}</a>&nbsp;&nbsp;@if(isset($value['status_text'])) |&nbsp;&nbsp;{{ $value['status_text'] }}@endif</div>
                                                 <div class="space-6"></div>
                                                 <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ str_limit($value['nickname'],10) }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $value['view_count'] }}人浏览/{{ $value['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{ date('d',time()-strtotime($value['created_at'])) }}天前&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> {{ $value['bounty_status']==1?'已托管赏金':'待托管赏金' }}</p>
                                                 <div class="space-6"></div>
@@ -221,7 +222,7 @@
                                         <div class="col-sm-1 col-xs-2 u-headimg"><img class="user-image2" src="{{ $domain.'/'.$v['avatar'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/defauthead.png')}}',$(this))"></div>
                                         <div class="col-sm-11 col-xs-10 usernopd">
                                             <div class="col-sm-9 col-xs-8">
-                                                <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;@if(isset($v['status_text']))&nbsp;{{ $v['status_text'] }}@endif</div>
+                                                <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;@if(isset($v['status_text']))&nbsp;|&nbsp; {{ $v['status_text'] }}@endif</div>
                                                 <div class="space-6"></div>
                                                 <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ str_limit($v['nickname'],10) }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{ date('d',time()-strtotime($v['created_at'])) }}天前&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> {{ $v['bounty_status']==1?'已托管赏金':'待托管赏金' }}</p>
                                                 <div class="space-6"></div>

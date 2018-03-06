@@ -24,7 +24,7 @@
                                 <input type="hidden" name="task_id" value="{{ $id }}" />
                                 <input type="hidden" name="status" value="{{ $status }}" />
                                 <label class="">请输入合同金额：</label>
-                                <input type="number" placeholder=""  name="money"  class="inputxt" datatype="*6-15" errormsg="请输入合同金额">　　
+                                <input type="number" placeholder=""  name="money"  class="inputxt" datatype="*" errormsg="请输入合同金额">　　
                                 <span style="color:#F00000">{!! $errors->first('money') !!}</span>
                                 <div class="space"></div>
                                 <label class="">请上传合同附件：</label>

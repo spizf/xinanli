@@ -119,20 +119,41 @@ class UserCenterController extends BasicUserCenterController
             ->leftjoin('cate as tc', 'tc.id', '=', 'task.cate_id')
             ->leftjoin('users as us','us.id','=','task.uid')
             ->orderBy('task.created_at','desc')->limit(5)->get()->toArray();
+        /* $status = [
+            'status' => [
+                0 => '暂不发布',
+                1 => '已经发布',
+                2 => '赏金托管',
+                3 => '审核通过',
+                4 => '招标中',
+                5 => '评标中',
+                6 => '任务公示',
+                7 => '交付验收',
+                8 => '双方互评',
+                9 => '成功完成',
+                10 => '任务失败',
+                11=> '维权中'
+            ]
+        ];*/
         $status = [
             'status' => [
                 0 => '暂不发布',
                 1 => '已经发布',
                 2 => '赏金托管',
                 3 => '审核通过',
-                4 => '威客交稿',
-                5 => '雇主选标',
-                6 => '任务公示',
-                7 => '交付验收',
-                8 => '双方互评',
-                9 => '成功完成',
-                10 => '任务失败',
-                11=>'维权中'
+                4 => '招标中',
+                5 => '评标中',
+                12=>'工作中',
+                13=>'工作中',
+                14=>'工作中',
+                15=>'工作中',
+                16=>'工作中',
+                17=>'工作中',
+                18=>'验收中',
+                999=>'交易成功',
+                20=>'交易关闭',
+                19=>'维权中'
+
             ]
         ];
         $my_task_data = \CommonClass::intToString($my_task_data, $status);

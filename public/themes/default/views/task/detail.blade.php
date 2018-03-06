@@ -469,7 +469,7 @@
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
-                                {{--@if(isset($group_two))--}}
+                                @if(isset($group_two))
                                 @elseif($detail['status']==19 && $user_type == 3 && (Auth::user()['name']==$group_two[0]->name) && $task_type_alias == 'zhaobiao')
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#message-data">
                                         通知双方补充冲裁资料
@@ -477,7 +477,7 @@
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#submit-data">
                                         提交仲裁报告
                                     </a>
-                                    {{--@endif--}}
+                                    @endif
                             @elseif($detail['status']==999 && (($user_type==2 && $is_delivery) || $user_type == 1) && $task_type_alias == 'zhaobiao')
                                 @if(CommonClass::evaluted($detail['id'],Auth::user()['id'])==0)
                                     <a target="_blank" href="{{ URL('/task/evaluate').'?'.http_build_query(['id'=>$detail['id'],'work_id'=>isset($delivery['data'][0]['id']) ? $delivery['data'][0]['id'] : 1]) }}" class="btn btn-primary bor-radius2">
