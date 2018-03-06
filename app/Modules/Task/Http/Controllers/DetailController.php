@@ -331,10 +331,15 @@ class DetailController extends IndexController
 //                    ->get();
 //                $view['group_two'] =$group_two;
 //            }
-            $group_two = DB::table('experts')
+            if(!empty($experts_str->headman)){
+                $group_two = DB::table('experts')
                     ->where('id',$experts_str->headman)
                     ->select('id','name')
                     ->get();
+            }else{
+                $group_two = array();
+            }
+
             $view['group_two'] =$group_two;
             /*判断是否筛选过仲裁专家*/
             if ($experts_str->type = 1){
