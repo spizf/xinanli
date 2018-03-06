@@ -46,7 +46,7 @@ class AuthController extends IndexController
     {
         parent::__construct();
         $this->initTheme('auth');
-        $this->theme->setTitle('威客|系统—客客出品,专业威客建站系统开源平台');
+        $this->theme->setTitle('法定评价管理云平台');
         $this->middleware('guest', ['except' => 'getLogout']);
     }
 
@@ -288,10 +288,6 @@ class AuthController extends IndexController
 //            if ($result) {
                 
                 $code = rand(1000, 9999);
-
-                
-
-
                 $templates = [
                     'YunTongXun' => '214848',
                 ];
@@ -304,7 +300,6 @@ class AuthController extends IndexController
                 $content = '【客客信息】你注册的验证码为' . $code;
 
                 $status = \SmsClass::sendSms($arr['mobile'], $templates, $tempData, $content);
-
 
                 if ($status['success'] == true) {
                     $data = [

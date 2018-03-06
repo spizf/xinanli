@@ -9,15 +9,26 @@
                 <div class="tab-content clearfix f-tab">
                     <!--余额支付-->
                     <div class="tab-pane in active clearfix text-size14 cor-gray51 u-pay" id="home1">
-                            <form class="form-horizontal" role="form" action="/task/signContractUpdate" method="post"  name="bounty-form">
+                            <div class="form-horizontal" role="form" action="/task/signContractUpdate" method="post"  name="bounty-form">
                                 {{ csrf_field() }}
+                                <div>
+                                    <label style="color: #F00000">请使用平台提供的合同模板：</label>
+                                    <label ><a target="_blank" href="/task/downFile/1">安全标准化</a> | </label>
+                                    <label class=""><a target="_blank" href="/task/downFile/2">安全评价</a> | </label>
+                                    <label class=""><a target="_blank" href="/task/downFile/3">技术咨询</a> | </label>
+                                    <label class=""><a target="_blank" href="/task/downFile/4">委托检测</a> | </label>
+                                    <label class=""><a target="_blank" href="/task/downFile/5">消防技术服务 | </a></label>
+                                    <label class=""><a target="_blank" href="/task/downFile/6">职业病危害评价</a></label>
+                                </div>
+                                <div class="space"></div>
                                 <input type="hidden" name="task_id" value="{{ $id }}" />
                                 <input type="hidden" name="status" value="{{ $status }}" />
                                 <label class="">请输入合同金额：</label>
                                 <input type="number" placeholder=""  name="money"  class="inputxt" datatype="*6-15" errormsg="请输入合同金额">　　
                                 <span style="color:#F00000">{!! $errors->first('money') !!}</span>
                                 <div class="space"></div>
-                                <label class="">请上传合同附件：</label><label class=""><a target="_blank" href="/task/downFile">下载模板</a> </label>
+                                <label class="">请上传合同附件：</label>
+
                                 <div class="annex">
                                     <!--文件上传-->
                                     <div  class="dropzone clea>fix" id="dropzone"

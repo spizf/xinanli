@@ -226,7 +226,7 @@ function sendRegisterCode(){
     var geetest_challenge=$("input[name=geetest_challenge]").val();
     var geetest_validate=$("input[name=geetest_validate]").val();
     var geetest_seccode=$("input[name=geetest_seccode]").val();
-    console.log(geetest_challenge,geetest_seccode,geetest_validate);
+    //console.log(geetest_challenge,geetest_seccode,geetest_validate);
     curCount = count;
     if (mobile){
         //设置button效果，开始计时

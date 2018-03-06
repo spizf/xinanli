@@ -47,6 +47,9 @@
                 </div>
             </div>
         </div>
+        <div class="space-10"></div>
+        <a id='___szfw_logo___' href='https://credit.szfw.org/CX02272018016655810199.html' target='_blank'><img src='http://icon.szfw.org/cert.png' border='0' /></a>
+        <script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script>
     </div>
 </div>
 

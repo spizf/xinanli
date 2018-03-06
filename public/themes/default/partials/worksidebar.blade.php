@@ -10,13 +10,16 @@
                 </a>
             </h4>
         </div>
-        <div id="collapseThree4" class="panel-collapse collapse {{ (preg_match('/^\/user\/(acceptTasksList|serviceMyJob|workComment|mySellGoods)/',$_SERVER['REQUEST_URI']))?'in':'' }}">
+        <div id="collapseThree4" class="panel-collapse collapse {{ (preg_match('/^\/user\/(acceptTasksList|fabuTasksList|serviceMyJob|workComment|mySellGoods)/',$_SERVER['REQUEST_URI']))?'in':'' }}">
             <div class="g-sidenav {{ (preg_match('/^\/user\/(myTask|acceptTasksList)/',$_SERVER['REQUEST_URI']))?'z-active':'' }}">
                 <a href="/user/acceptTasksList" class="g-wrap2 {{ (preg_match('/^\/user\/(myTask|myTasksList)/',$_SERVER['REQUEST_URI']))?'active':'' }}">我承接的任务</a>
             </div>
             {{--<div class="g-sidenav {{ (preg_match('/^\/user\/(serviceMyJob)/',$_SERVER['REQUEST_URI']))?'z-active':'' }}">
                 <a href="/user/serviceMyJob" class="g-wrap2 {{ (preg_match('/^\/user\/(serviceMyJob)/',$_SERVER['REQUEST_URI']))?'active':'' }}">我承接的服务</a>
             </div>--}}
+            <div class="g-sidenav {{ (preg_match('/^\/user\/(myTask|fabuTasksList)/',$_SERVER['REQUEST_URI']))?'z-active':'' }}">
+                <a href="/user/fabuTasksList" class="g-wrap2 {{ (preg_match('/^\/user\/(myTask|fabuTasksList)/',$_SERVER['REQUEST_URI']))?'active':'' }}">我发布的任务</a>
+            </div>
             <div class="g-sidenav {{ (preg_match('/^\/user\/(mySellGoods)/',$_SERVER['REQUEST_URI']))?'z-active':'' }}">
                 <a href="/user/mySellGoods" class="g-wrap2 {{ (preg_match('/^\/user\/(mySellGoods)/',$_SERVER['REQUEST_URI']))?'active':'' }}">我卖出的作品</a>
             </div>

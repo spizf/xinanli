@@ -267,6 +267,8 @@
                                 此任务当前处于：<span class="text-primary">20天静默期</span>状态
                                 @elseif($detail['status']==19)
                                 此任务当前处于：<span class="text-primary">仲裁中</span>状态
+                                @elseif($detail['status']==20)
+                                此任务当前处于：<span class="text-primary">失败</span>状态
                                 @elseif($detail['status']==7)
                                 此任务当前处于：<span class="text-primary">验收</span>状态
                                 @elseif($detail['status']==8)
@@ -453,7 +455,8 @@
                                     查看仲裁结果
                                 </a>
                                 @endif
-                                @if($is_arbitration)
+
+                                @if($is_arbitration && $is_user)
                                     <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
                                         <br>
                                         <br>

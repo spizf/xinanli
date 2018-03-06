@@ -163,7 +163,7 @@ section .task-l>.step{
 }
 
 .task-bar{
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 .task-bar>a{
     display: inline-block;

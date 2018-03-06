@@ -109,7 +109,7 @@ class UserCenterController extends BasicUserCenterController
             ->leftjoin('users as us','us.id','=','user_focus.focus_uid')
             ->get()->toArray();
 
-        
+        //我接受的任务
         $my_task = WorkModel::where('uid', $this->user['id'])->lists('task_id')->toArray();
         $my_task_id = array_flatten($my_task);
         $my_task_id = array_unique($my_task_id);
@@ -136,8 +136,7 @@ class UserCenterController extends BasicUserCenterController
             ]
         ];
         $my_task_data = \CommonClass::intToString($my_task_data, $status);
-
-        
+        //我发布的任务
         $tasks = TaskModel::select('task.*', 'us.name as nickname', 'tc.name as category_name', 'ud.avatar')
             ->where('task.status','>',2)
             ->where('task.uid', $this->user['id'])

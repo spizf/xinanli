@@ -270,42 +270,40 @@
                                             <div class="mission-ck z-check-validform-ck">
                                                 <div class="checkbox">
                                                     <label class="checkbox-inline">
-                                                        投标时间范围
+                                                        设置报名时间
                                                     </label>
                                                 </div>
-                                                <div class=" input-group" style="width:100%;margin-left:20px;">
+                                                <div class=" input-group" style="width:60%;margin-left:20px;">
                                                     <span class="input-group-addon date-icon" >
                                                         <i class="fa fa-calendar bigger-110"></i>
                                                     </span>
                                                     <div>
-                                                        <input style="width:70%;" datatype="*" nullmsg="请填写时间!" type="text" class="input-sm form-control "
-                                                               id="datepiker-begin1" value=""
+                                                        <input type="text" class="input-sm form-control "
+                                                               id="datepiker-begin1"
                                                                onchange="beginAt($(this))"
-                                   value="{!! (old('begin_at'))?old('begin_at'):date('Y年m月d日',time()) !!}"
+                                                               value="{!! (old('begin_at'))?old('begin_at'):date('Y年m月d日',time()) !!}"
                                                                placeholder="开始时间" >
-	                                                    <span class="Validform_checktip"></span>
                                                     </div>
                                                     <span class="input-group-addon  date-icon ">
                                                         <i class="fa fa-exchange"></i>
                                                     </span>
                                                     <div>
-                                                        <input type="text" style="width:70%;" value=""  nullmsg="请填写时间!" class="input-sm form-control "
+                                                        <input type="text" class="input-sm form-control "
                                                                id="datepiker-deadline1"
                                                                onchange="deadline($(this))"
                                                                value="{!! old('delivery_deadline') !!}"
                                                                placeholder="截止时间">
-                                                              <span class="Validform_checktip"></span>
                                                     </div>
                                                 </div>
-                                            @if($errors->first('start')|| $errors->first('delivery_deadline') )
+                                                @if($errors->first('start')|| $errors->first('delivery_deadline') )
                                                     <p class="Validform_checktip Validform_wrong">
                                                         {!! $errors->first('begin_at') !!}
                                                         {!! $errors->first('delivery_deadline') !!}
                                                     </p>
-                                            @endif
+                                                @endif
                                                 <input name="begin_at{{$type_v['alias']}}" type="hidden" id="begin_at1" datatype="*"
                                                        nullmsg="请填写开始时间！" class="begin_at"
-                                   value="{!! (old('begin_at'))?old('begin_at'):date('Y年m月d日',time()) !!}"/>
+                                                       value="{!! (old('begin_at'))?old('begin_at'):date('Y年m月d日',time()) !!}"/>
                                                 <input name="delivery_deadline{{$type_v['alias']}}" type="hidden"
                                                        id="delivery_deadline1" class="delivery_deadline"
                                                        ajaxurl="/task/checkDeadlineByBid"

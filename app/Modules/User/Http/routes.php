@@ -115,6 +115,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth'], function () {
     Route::get('/myTaskAxisAjax','UserMoreController@myTaskAxisAjax')->name('myTaskAxisAjax');
     Route::get('/myTask','UserMoreController@myTask')->name('myTask');
     Route::get('/acceptTasksList','UserMoreController@acceptTasksList')->name('acceptTasksList');
+    Route::get('/fabuTasksList','UserMoreController@fabuTasksList')->name('fabuTasksList');
     Route::get('/myAjaxTask','UserMoreController@myAjaxTask')->name('myAjaxTask');
 
     

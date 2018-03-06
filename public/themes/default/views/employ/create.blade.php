@@ -8,7 +8,8 @@
                         <input type="hidden" name="employee_uid" value="{{ $employ_data['uid'] }}">
                         <input type="hidden" name="service_id" value="{{ (isset($service['id']))?$service['id']:'0' }}">
                         <div class="needs-section">
-                            <h4>您将雇佣  {{ $employ_data['user_name'] }}</h4>
+                            {{--<h4>您将雇佣  {{ $employ_data['user_name'] }}</h4>--}}
+                            <h4>您将雇佣  {{ $user_shop['shop_name'] }}</h4>
                             <div class="needs-section-module">
                                 <div class="needs-section-wwrap1">
                                     <p>一句话说明TA需要干什么：</p>
@@ -96,10 +97,10 @@
                     <h4 class="text-center">被雇佣评价机构信息</h4>
                     <div class="needs-sidebar-wrap">
                         <div class="wrap1">
-                            <img src="{{ $domain.'/'.$employ_data['avatar'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/employ/bg2.jpg')}}',$(this))" alt=""/>
+                            <img src="{{ $domain.'/'.$user_shop['shop_pic'] }}" onerror="onerrorImage('{{ Theme::asset()->url('images/employ/bg2.jpg')}}',$(this))" alt=""/>
                         </div>
                         <div class="wrap2">
-                            <p class="tit">{{ $employ_data['user_name'] }}</p>
+                            <p class="tit">{{ $user_shop['shop_name'] }}</p>
                             <p class="beyond clearfix beyond-a">
                                 <span>认证：</span>
                                 <a  class="ico2 {{ (in_array('bank',$employ_data['auth']))?'u-ico2':'' }}" title="银行卡认证"></a>

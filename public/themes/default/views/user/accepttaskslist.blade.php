@@ -13,7 +13,7 @@
     <div class="space-12"></div>
     <div class="clearfix g-reletaskhd hidden-xs">
         <form action="/user/acceptTasksList" method="get">
-            <div class="col-lg-12 clearfix">
+           {{-- <div class="col-lg-12 clearfix">
 				<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
 					<div class="row">任务类型</div>
 				</div>
@@ -52,7 +52,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</div>--}}
 			<div class="col-lg-12 clearfix">
 				<div class="col-lg-1 cor-gray51 text-size14 col-sm-2 col-xs-12">
 					<div class="row">任务状态</div>
@@ -78,7 +78,7 @@
 
                 <div class="col-sm-11 col-xs-10 usernopd">
                     <div class="col-sm-9 col-xs-8">
-                        <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{ $v['status_text'] }}</div>
+                        <div class="text-size14 cor-gray51"><span class="cor-orange">￥{{ $v['bounty'] }}</span>&nbsp;&nbsp;<a class="cor-blue42" href="/task/{{ $v['id'] }}">{{ $v['title'] }}</a>&nbsp;&nbsp;&nbsp;@if(!empty($v['status_text']))|&nbsp;&nbsp;&nbsp;{{ $v['status_text'] }} @endif</div>
                         <div class="space-6"></div>
                         <p class="cor-gray87"><i class="ace-icon fa fa-user bigger-110 cor-grayd2"></i> {{ $v['nickname'] }}&nbsp;&nbsp;&nbsp;<i class="fa fa-eye cor-grayd2"></i> {{ $v['view_count'] }}人浏览/{{ $v['delivery_count'] }}人接任务&nbsp;&nbsp;&nbsp;<i class="fa fa-clock-o cor-grayd2"></i> {{$v['show_publish']}}&nbsp;&nbsp;&nbsp;<i class="fa fa-unlock-alt cor-grayd2"></i> @if($v['bounty_status']==0)未托管赏金@else 已托管赏金@endif</p>
                         <div class="space-6"></div>
