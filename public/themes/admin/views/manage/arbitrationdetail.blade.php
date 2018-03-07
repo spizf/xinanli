@@ -26,7 +26,9 @@
                     <dl>
                         <dd>{!! $item->year !!}年工作经验</dd>
                         <dd>{{\DB::table('district')->whereId(explode('-',$item->addr)[0])->first()->name}}</dd>
+                        @if(isset(explode('-',$item->addr)[1]) && !empty(explode('-',$item->addr)[1]))
                         <dd>{{\DB::table('district')->whereId(explode('-',$item->addr)[1])->first()->name}}</dd>
+                        @endif
                     </dl>
                 </div>
                 <div class="shanchang zongjianle2">
@@ -51,7 +53,9 @@
                     <dl>
                         <dd>{!! $item->year !!}年工作经验</dd>
                         <dd>{{\DB::table('district')->whereId(explode('-',$item->addr)[0])->first()->name}}</dd>
-                        <dd>{{\DB::table('district')->whereId(explode('-',$item->addr)[1])->first()->name}}</dd>
+                        @if(isset(explode('-',$item->addr)[1]) && !empty(explode('-',$item->addr)[1]))
+                            <dd>{{\DB::table('district')->whereId(explode('-',$item->addr)[1])->first()->name}}</dd>
+                        @endif
                     </dl>
                 </div>
                 <div class="shanchang zongjianle2">

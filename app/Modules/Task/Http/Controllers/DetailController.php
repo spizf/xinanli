@@ -622,7 +622,6 @@ class DetailController extends IndexController
 
 
         }
-        dd($expert_result);
         return $expert_result;
 
     }
