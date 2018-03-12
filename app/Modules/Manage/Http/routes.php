@@ -314,6 +314,13 @@ Route::group(['prefix' => 'manage', 'middleware' => ['manageauth', 'RolePermissi
     Route::post('/allEnterprisePass', 'AuthController@allEnterprisePass')->name('allEnterprisePass');
     Route::post('/allEnterpriseDeny', 'AuthController@allEnterpriseDeny')->name('allEnterpriseDeny');
 
+    Route::get('/scope', 'ScopeController@scopelist')->name('scopelist');//业务范围
+    Route::get('/addScope','ScopeController@addScope')->name('Scope');
+    Route::post('/addScope','ScopeController@postAddScope')->name('ScopeCreate');
+    Route::get('/editScope/{id}','ScopeController@editScope')->name('ScopeUpdatePage');
+    Route::post('/editScope','ScopeController@postEditScope')->name('ScopeUpdate');
+    Route::get('/deleteScope/{id}','ScopeController@deleteScope')->name('ScopeDelete');
+
     
     Route::get('/shopList', 'ShopController@shopList')->name('shopList');
     Route::get('/shopInfo/{id}', 'ShopController@shopInfo')->name('shopInfo');

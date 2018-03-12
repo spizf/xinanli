@@ -438,11 +438,11 @@
                                     </a>
                                 @endif
                                 @if($detail['zc_status']==0)
-                                        @if(!$is_arbitration)
-                                <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
-                                    申请专家仲裁
-                                </a>
-                                        @endif
+                                    @if(!$is_arbitration)
+                                        <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
+                                            申请专家仲裁
+                                        </a>
+                                    @endif
                                 @elseif($detail['zc_status']==1)
                                 <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                     申请二次仲裁
@@ -1846,7 +1846,7 @@
                                 </div>
                             @endforeach
                         @else
-                            暂无推荐专家！
+                            对不起，平台未匹配出该任务同服务类别的仲裁专家！有疑问请联系服务热线：400-7666-950
                         @endif
                     </div>
                 </div>

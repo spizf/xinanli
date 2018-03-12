@@ -24,7 +24,7 @@ class AuthController extends ManageController
     }
 
 
-    
+
     public function realnameAuth($id)
     {
         $id = intval($id);
