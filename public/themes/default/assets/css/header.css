@@ -968,7 +968,7 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
 
 .g-taskbarnav .g-tasknavbtn {
     padding-left: 55px;
-    padding-top: 2px;
+    /*padding-top: 2px;*/
 }
 
 .g-taskbarnav .g-tasknavbtn button {
@@ -1838,9 +1838,9 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
     position:absolute;
     top:0;
     left:0;
-    z-index:9;
+    z-index:99;
     background:#fff;
-    width: 128px;
+    width: 158px;
     border: 1px solid #E6E4E3;
 }
 .gongju_menu li {
