@@ -87,12 +87,6 @@
                         @endif
                     </div></div>
                 </div>
-                {{--<ul class="gongju_menu">--}}
-                    {{--<li><a href="#">法定</a></li>--}}
-                    {{--<li><a href="#">法定2</a></li>--}}
-                {{--</ul>--}}
-
-
                 <div class="pull-right g-tasknavbtn visible-lg-block visible-md-block">
                     <a href="/task/create" class="u-ahref">发布需求</a>
                 </div>

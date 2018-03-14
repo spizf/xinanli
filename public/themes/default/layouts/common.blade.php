@@ -65,7 +65,32 @@
 <script src="/themes/default/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="/themes/default/assets/js/nav.js"></script>
 <script src="/themes/default/assets/js/common.js"></script>
+<script>
+    $(function(){
+        var obj = $(".z-navTool");
+        var top = obj.offset().top;
+        var left = obj.offset().left;
+        var str = "<ul class=\"gongju_menu\">\n" +
+            "                    <li><a href=\"/article/biaozun\">标准化</a></li>\n" +
+            "                    <li><a href=\"/article/tool\">作业过程管控工具</a></li>\n" +
+            "                </ul>";
 
+        obj.append(str);
+        $(".gongju_menu").css({
+            "top":top+54+"px",
+            "left":left-54+"px"
+        });
+
+        obj.hover(function(){
+            $(".gongju_menu").show();
+        },function(){
+            $(".gongju_menu").hide();
+        });
+
+
+
+    })
+</script>
 {!! Theme::asset()->container('specific-js')->scripts() !!}
 
 {!! Theme::asset()->container('custom-js')->scripts() !!}
