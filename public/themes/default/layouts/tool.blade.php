@@ -29,7 +29,17 @@
     <link rel="stylesheet" href="/themes/default/assets/css/footer.css">
     <link rel="stylesheet" href="/themes/default/assets/css/{!! Theme::get('color') !!}/style.css">
     {!! Theme::asset()->container('custom-css')->styles() !!}
+
+    <link rel="stylesheet" href="/themes/default/assets/tool/css/default.css"/>
+    <link rel="stylesheet" href="/themes/default/assets/tool/css/layouts.css"/>
+    {{--<link rel="stylesheet" href="/themes/default/assets/tool/css/menu.css"/>--}}
+    <link rel="stylesheet" href="/themes/default/assets/tool/css/responsive-leyouts.css"/>
+    <link rel="stylesheet" type="text/css" href="/themes/default/assets/tool/css/smart-forms.css"/>
+    <link rel="stylesheet" type="text/css" href="/themes/default/assets/tool/css/axstyle.css"/>
+    <link rel="stylesheet" type="text/css" href="/themes/default/assets/tool/css/consult.css"/>
+    <script src="/themes/default/assets/plugins/jquery/jquery.min.js"></script>
     <script src="/themes/default/assets/plugins/ace/js/ace-extra.min.js"></script>
+    <script src="/js/layer/layer.js"></script>
     <script>
         var _hmt = _hmt || [];
         (function() {
@@ -54,23 +64,20 @@
 </nav>
 
 <section>
-    <div class="container">
-        <div class="row">
-            {!! Theme::content() !!}
-        </div>
-    </div>
+    {!! Theme::content() !!}
 </section>
 <footer>
     {!! Theme::partial('footer') !!}
 </footer>
 
-<script src="/themes/default/assets/plugins/jquery/jquery.min.js"></script>
+
 <script src="/themes/default/assets/js/doc/jquery.cookie.js"></script>
 <script src="/themes/default/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
 <script src="/themes/default/assets/plugins/ace/js/ace.min.js"></script>
 <script src="/themes/default/assets/plugins/ace/js/ace-elements.min.js"></script>
 <script src="/themes/default/assets/js/common.js"></script>
 <script src="/themes/default/assets/js/nav.js"></script>
+<script src="/themes/default/assets/tool/js/index.js"></script>
 
 <script>
     $(function(){

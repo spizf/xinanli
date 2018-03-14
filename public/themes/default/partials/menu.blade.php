@@ -67,12 +67,16 @@
                                 {{--自定义菜单部分（真费劲找的！）--}}
                                 @for($i=0;$i<count(Theme::get('nav_list'));$i++)
                                     @if(Theme::get('nav_list')[$i]['is_show'] == 1)
-                                        <a href="{!! Theme::get('nav_list')[$i]['link_url'] !!}"
-                                           @if(Theme::get('nav_list')[$i]['is_new_window'] == 1)target="_blank" @endif @if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')) class="z-navHome" @endif>
+                                        <a @if(Theme::get('nav_list')[$i]['link_url'] == '/article/tool') href="javascrpit:;" class="z-navTool @if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu'))z-navHome @endif"
+                                           @else href="{!! Theme::get('nav_list')[$i]['link_url'] !!} " @endif
+                                           @if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')) class="z-navHome" @endif
+                                        @if(Theme::get('nav_list')[$i]['is_new_window'] == 1)target="_blank"  @endif>
                                            {!! Theme::get('nav_list')[$i]['title'] !!}
                                         </a>
                                     @endif
                                 @endfor
+
+
                             @endif
                         @else
                             <a href="{!! CommonClass::homePage() !!}" @if(CommonClass::homePage() == Theme::get('now_menu')) class="z-navHome" @endif>首页</a>
@@ -83,6 +87,12 @@
                         @endif
                     </div></div>
                 </div>
+                {{--<ul class="gongju_menu">--}}
+                    {{--<li><a href="#">法定</a></li>--}}
+                    {{--<li><a href="#">法定2</a></li>--}}
+                {{--</ul>--}}
+
+
                 <div class="pull-right g-tasknavbtn visible-lg-block visible-md-block">
                     <a href="/task/create" class="u-ahref">发布需求</a>
                 </div>
@@ -150,8 +160,6 @@
             </div>
         </div>
     </div>
-
-
 
 
 

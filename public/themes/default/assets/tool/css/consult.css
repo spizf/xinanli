@@ -1,0 +1,94 @@
+/*�勈捷��膤紙���贋��*/
+.toolbar{text-align: center;position: fixed;  right: 0;  bottom: 8%;  z-index: 999999;  -webkit-transition: all 0.3s;  -moz-transition: all 0.3s;  -ms-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s; }
+.toolbarbox {z-index: 999999;  width: 86px;  /*height: 169px;*/ background: #ffffff; /*padding: 18px 0; */ border:1px solid #ececec; position: fixed; right: 0; bottom: 100px; border-top-left-radius: 8px;  border-bottom-left-radius: 8px; box-shadow: 0px 0px 10px rgba(0, 0, 0, .1); /* overflow: hidden; */ color: #ffffff; font-family: "緇�蒐��藥�";  font-weight: bold; font-size: 16px;}
+.toolbarbox img { border: 0; max-width: 100%;   /*margin-top: 10px;*/}
+.msg,.help_n {width: 86px; height: 34px; margin:0 auto;/* overflow: hidden; */    box-sizing: content-box;text-align: center;position: relative; cursor: pointer; padding:18px 0 15px 0;}
+.msg .msg-line,.help_n .msg-line { position: absolute;top: 60px; left: 32px; width: 20px; height: 1px; border-bottom: 1px solid #e7e7e7;}
+.msg-img { position: absolute; left: 0; top: 10px; transform: 0.2s; -webkit-animation: aniSix-x 1s ease-in-out .2s infinite; animation: aniSix-x 1s ease-in-out .2s infinite;}
+.hidemsg {z-index: 99999999999999999;  width: 110px; height: 40px; line-height: 36px;  background: #ff4400;  text-align: center;   /* display: none; */  border-radius: 5px;  overflow: hidden;}
+
+.triangle{ width: 20px;  height: 40px; background: transparent; position: absolute;  right: -16px;  top: 0px;}
+.hidemsg div{position: absolute; left: 0; right: 20px; top: 0; bottom: 0; margin: auto;    pointer-events: none; background-color: rgba(255,255,255,.4);  -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100%; -webkit-animation-fill-mode: both; -moz-animation-fill-mode: both; -ms-animation-fill-mode: both;-o-animation-fill-mode: both; animation-fill-mode: both; display: inline-block;  width: 100px;  height: 100px; -webkit-animation: ball-scale 1s 0s ease-in-out infinite; -moz-animation: ball-scale 1s 0s ease-in-out infinite; -ms-animation: ball-scale 1s 0s ease-in-out infinite;
+    -o-animation: ball-scale 1s 0s ease-in-out infinite; animation: ball-scale 1s 0s ease-in-out infinite;}
+.hidemsg a, .hidemobel a{color: #fff;  text-decoration: none; }
+.hidemsgAfter,.hidemsgAfter_help {display: none; width: 125px; height: 40px; position: relative; left: -122px; top: -36px; border-radius: 5px; overflow: hidden; cursor: pointer;}
+.hidemsgAfter :after,.hidemsgAfter_help :after { content: ''; position: absolute; top: 11px; right: 7px;  display: block; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid #ff4400;}
+
+
+.hidemsg1 {z-index: 99999999999999999;  width: 110px; height: 40px; line-height: 36px;  background: #ff4400;  text-align: center;   /* display: none; */  border-radius: 5px;  overflow: hidden;}
+.hidemsg1 div{position: absolute; left: 0; right: 20px; top: 0; bottom: 0; margin: auto;    pointer-events: none; background-color: rgba(255,255,255,.4);  -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100%; -webkit-animation-fill-mode: both; -moz-animation-fill-mode: both; -ms-animation-fill-mode: both;-o-animation-fill-mode: both; animation-fill-mode: both; display: inline-block;  width: 100px;  height: 100px; -webkit-animation: ball-scale 1s 0s ease-in-out infinite; -moz-animation: ball-scale 1s 0s ease-in-out infinite; -ms-animation: ball-scale 1s 0s ease-in-out infinite;
+    -o-animation: ball-scale 1s 0s ease-in-out infinite; animation: ball-scale 1s 0s ease-in-out infinite;}
+.hidemsg1 a, .hidemobel a{color: #fff;  text-decoration: none; }
+.hidemsgAfter1 {display: none; width: 125px; height: 40px; position: relative; left: -122px; top: -46px; border-radius: 5px; overflow: hidden; cursor: pointer;}
+.hidemsgAfter1 :after { content: ''; position: absolute; top: 11px; right: 7px;  display: block; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid #ff4400;}
+
+
+
+.mobel { width: 86px; height: 34px; margin:0 auto; padding:15px 0; /* overflow: hidden; */ text-align: center; position: relative; cursor: pointer;}
+.tool-line { width: 20px;height: 1px; border-bottom: 1px solid #e7e7e7; margin: 0 auto; margin-top: 13px;}
+.hidemobelBox { width: 230px; height: 40px; line-height: 12px; text-align: center; background: #ff4400; border-radius: 5px; /*display: none;*/  position: absolute; right: 93px;  top: 17px;  cursor: pointer; }
+.hidemobelBox p{ line-height: 40px}
+.hidemobelBox p:after { content: ''; position: absolute; top: 11px; right: -8px; display: block; border-top: 8px solid transparent; border-bottom: 8px solid transparent; border-left: 8px solid #ff4400;}
+.Rtop { width: 36px; /*height: 66px;*/ margin:0 auto; /*overflow: hidden;*/ text-align: center; cursor: pointer; padding: 10px 0;}
+.hideRtop { width: 57px; height: 28px; line-height: 28px; background: #ff4400; text-align: center;display: none; position: absolute; top: 128px; right: 75px; border-radius: 5px;}
+.hideRtop :after {content: ''; position: absolute; top: 6px; right: -7px; display: block; border-top: 8px solid transparent;border-bottom: 8px solid transparent; border-left: 8px solid #10c46e;}
+
+.msg .img{background: url(../images/fuwu2.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.msg .img:hover{background: url(../images/fuwu.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+
+
+.mobel .img{background: url(../images/zx.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.mobel .img:hover{background: url(../images/zx2.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.tel .img,.tel .img:hover{ background-position:0 0;}
+.mail .img,.mail .img:hover{ background-position: 0 -52px;}
+.tmairuan .img,.tmairuan .img:hover{ background-position: 0 -104px;}
+.Rtop .img{background: url(../images/zx.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.Rtop .img:hover{background: url(../images/zx2.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.Rtop .img,.Rtop .img:Hover{ background-position: 0 -158px;}
+
+.kefubox{ border:1px solid #ddd; background: #fff; color: #333; text-align: left; font-weight: normal; font-size: 12px; line-height: 20px; padding:15px;width:300px; height: 120px; margin-top:-30px}
+.kefubox .kf_t{ border-bottom: 1px solid #ddd; padding-bottom: 10px;}
+.kefubox .kf_t img{ margin-left:80px}
+.kefubox .kf_tel{ padding-top:15px; color: #999;}
+.kefubox .kf_tel img{ vertical-align: middle;}
+.kefubox .kf_tel b{ font-size: 22px; color: #333; padding-right: 5px;}
+.kefubox .kf_tel span{ padding-left:35px}
+.kefu .jt{ position: absolute; right:-8px; top:26%}
+
+.wxBox{border:1px solid #ddd; background: #fff; color: #333; text-align: left; font-weight: normal; font-size: 12px;padding:15px;width:200px; height: 210px; margin-top:-130px}
+.weixin .wx{ width: 70px; height: auto; float: left; margin-right: 15px;}
+.weixin .right{float: left;}
+.weixin b{ font-size: 14px; padding-bottom: 12px; padding-top:5px; display: block;}
+.weixin span{ color: #666; display: block; line-height: 21px;}
+.weixin .bot{margin-left:5px}
+.weixin .bot i{ font-style: normal; color: #077BFE; font-size: 12px; line-height: 26px; padding-left:5px }
+.weixin .jt{ position: absolute; right:-8px; top:56%}
+
+.mobel .img2{background: url(../images/dc01.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.mobel .img2:hover{background: url(../images/dc02.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+
+.help_n .img{background: url(../images/zx.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.help_n .img:hover{background: url(../images/zx2.png) no-repeat; width:32px; height: 32px; margin:0 auto}
+.help_n .img{ background-position:-1px -192px;}
+.help_n .img:hover { background-position:-1px -205px; }
+@-webkit-keyframes ball-scale {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0)
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0
+    }
+}
+@keyframes ball-scale {
+    0% {
+        -webkit-transform: scale(0);
+        transform: scale(0)
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0
+    }}

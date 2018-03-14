@@ -15,4 +15,8 @@ Route::group(['prefix' => 'article'], function() {
 	
 	Route::get('/helpCenter/{catID}/{upID}','FooterArticleController@helpCenter')->name('helpCenterDetail');
 
+    Route::get('/tool','ToolController@tool')->name('tool');
+    Route::get('/biaozun','ToolController@biaozun')->name('biaozun');
+
+
 });

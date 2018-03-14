@@ -1833,3 +1833,34 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
     display: block!important;
     line-height: 2;
 }
+.gongju_menu {
+    display: none;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:9;
+    background:#fff;
+    width: 128px;
+    border: 1px solid #E6E4E3;
+}
+.gongju_menu li {
+    text-align: center;
+    padding: 0 8px;
+    margin-bottom: -1px;
+}
+.gongju_menu a{
+    display: block;
+    border-bottom: 1px solid #E6E4E3;
+    padding: 8px 0;
+    height: 32px;
+    line-height: 32px;
+    box-sizing: content-box;
+    color: #666;
+    font-size: 14px;
+    float: none;
+    width: 100%;
+    margin-left: 0!important;
+}
+.z-Active{
+
+}

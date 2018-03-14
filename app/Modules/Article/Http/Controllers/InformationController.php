@@ -100,9 +100,6 @@ class InformationController extends IndexController
         $this->theme->set('now_menu','/article');
         return $this->theme->scope('bre.information',$view)->render();
     }
-
-
-    
     public function newsDetail($id)
     {
         $info = ArticleModel::where('id',$id)->first();
