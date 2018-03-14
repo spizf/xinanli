@@ -187,29 +187,30 @@ class UserCenterController extends BasicUserCenterController
         }
         if ($expert_work)
         {
-            if ($expert_work->position_level == 1)
-            {
-
-                $experts = DB::table('arbitration_expert')->select('task_id')->where('experts','like','%'.$expert_work->id.'%')->get();
-                $group = '';
-                foreach ($experts as $k=>$v){
-                    if ($k){
-                        $group .= '-'.$v->task_id;
-                    }else{
-                        $group .= $v->task_id;
-                    }
+            //add by xl 查询仲裁专家仲裁的任务
+          // DB::connection()->enableQueryLog();//开启查询日志
+            $experts = DB::table('arbitration_expert')->select('task_id')->orWhere('result_experts','=',$expert_work->id)->orWhere('result_experts','like','%-'.$expert_work->id.'%')->orWhere('result_experts','like','%'.$expert_work->id.'-%')->get();
+            //dd(DB::getQueryLog());
+            $group = '';
+            foreach ($experts as $k=>$v){
+                if ($k){
+                    $group .= '-'.$v->task_id;
+                }else{
+                    $group .= $v->task_id;
                 }
-                $group_s = explode('-',$group);
-                $group_expert = TaskModel::select('task.*', 'us.name as nickname', 'tc.name as category_name', 'ud.avatar')
-                    ->where('task.status','>',2)
-                    ->whereIn('task.id', $group_s)
-                    ->join('user_detail as ud', 'ud.uid', '=', 'task.uid')
-                    ->leftjoin('users as us','us.id','=','task.uid')
-                    ->leftjoin('cate as tc', 'tc.id', '=', 'task.cate_id')
-                    ->orderBy('task.created_at','desc')->limit(5)->get()->toArray();
-                $view['group_experts'] = $group_expert;
             }
+            $group_s = explode('-',$group);
+            $group_expert = TaskModel::select('task.*', 'us.name as nickname', 'tc.name as category_name', 'ud.avatar')
+                ->where('task.status','>',2)
+                ->whereIn('task.id', $group_s)
+                ->join('user_detail as ud', 'ud.uid', '=', 'task.uid')
+                ->leftjoin('users as us','us.id','=','task.uid')
+                ->leftjoin('cate as tc', 'tc.id', '=', 'task.cate_id')
+                ->orderBy('task.created_at','desc')->limit(5)->get()->toArray();
+            $group_expert = \CommonClass::intToString($group_expert, $status);
+            $view['group_experts'] = $group_expert;
         }
+
         $this->theme->set('TYPE',1);
         return $this->theme->scope('user.index', $view)->render();
     }

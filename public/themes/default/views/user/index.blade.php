@@ -165,7 +165,8 @@
                          @if(Auth::user()['user_type']==3)
                              <li><a onclick="changeurl($(this))"  url="/user/myTasksList" href="#expertwork" data-toggle="tab">我仲裁的任务</a></li> @endif
                     </ul>
-                    @if(Auth::user()['user_type']!=2)
+                    {{--@if(Auth::user()['user_type']!=2)--}} <!-- 暂时隐藏仲裁任务的更多 -->
+                    @if(Auth::user()['user_type'] == 1)
                         <a id="more-task" class="pull-right hov-corblue2f" href="/user/myTasksList" target="_blank">更多</a>
                     @elseif(Auth::user()['user_type']==2)
                         <a id="more-task" class="pull-right hov-corblue2f" href="/user/fabuTasksList" target="_blank">更多</a>
@@ -254,7 +255,7 @@
                         @if(Auth::user()['user_type']==3)
                             @if(isset($group_experts))
                             @if(count($group_experts)>0)
-                                <ul id="userrelease" class="{{ (count($group_experts)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs active fade in dialogs">
+                                <ul id="expertwork" class="{{ (count($group_experts)>0)?'':'g-userlistno' }} tab-pane g-releasetask g-releasnopt g-releasfirs active fade in dialogs">
 
                                     @foreach($group_experts as $value)
                                         <li class="row width590">
@@ -286,8 +287,7 @@
                             @endif
                             @endif
                             @if(count($group_experts)==0)
-                                <ul id="userrelease" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs fade">
-
+                                <ul id="expertwork" class="g-userlistno tab-pane g-releasetask g-releasnopt g-releasfirs active in fade">
                                     <li class="g-usernoinfo g-usernoinfo-noinfo">暂无任务哦！快去<a href="/task/create" target="_blank">发布任务</a>吧</li>
 
                                 </ul>
