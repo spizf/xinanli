@@ -469,8 +469,8 @@
                                 <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#replenish-data">
                                     补充仲裁资料
                                 </a>
-                                @if(isset($group_two))
-                                @elseif($detail['status']==19 && $user_type == 3 && (Auth::user()['name']==$group_two[0]->name) && $task_type_alias == 'zhaobiao')
+                                @elseif($detail['status']==19 && $user_type == 3  && $task_type_alias == 'zhaobiao')
+                                    @if(isset($group_two) && (Auth::user()['name']==$group_two[0]->name))
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#message-data">
                                         通知双方补充冲裁资料
                                     </a>
@@ -704,7 +704,7 @@
                     <!--投标记录-->
                     <div id="home2" class="tab-pane fade {{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active ':'' }} in">
                         <div class="tab-content bg-white task-taskdisplay">
-                            <ul class="nav nav-pills mg-margin">
+                            <ul class="nav nav-pills mg-margin navfeng">
                                 <li class="{{ !isset($merge['work_type'])?'active':'' }}"><a href="javascript:void(0);" onclick="ajaxPageWorks($(this))"  url="{{ URL('task/ajaxPageWorks/').'/'.$detail['id']}}" class="{{ !isset($merge['work_type'])?'btn-blue':'' }}">全部</a></li>
                                 <li class="{{ (isset($merge['work_type']) && $merge['work_type']==1)?'active':'' }}"><a class="{{ (isset($merge['work_type']) && $merge['work_type']==1)?'btn-blue':'' }}" href="javascript:void(0)" onclick="ajaxPageWorks($(this))" url="{{ URL('task/ajaxPageWorks/').'/'.$detail['id'].'?'.http_build_query(['work_type'=>1]) }}">未中标<span> ({{ ($works_count-$works_bid_count) }})</span></a></li>
                                 <li class="{{ (isset($merge['work_type']) && $merge['work_type']==2)?'active':'' }}"><a class="{{ (isset($merge['work_type']) && $merge['work_type']==2)?'btn-blue':'' }}" href="javascript:void(0)" onclick="ajaxPageWorks($(this))" url="{{ URL('task/ajaxPageWorks/').'/'.$detail['id'].'?'.http_build_query(['work_type'=>2]) }}">中标<span> ({{ $works_bid_count }})</span></a></li>
@@ -2058,7 +2058,6 @@
 {!! Theme::asset()->container('custom-js')->usepath()->add('zc_alert','js/zc_alert.js') !!}
 {{--仲裁专家筛选效果--}}
 {!! Theme::asset()->container('custom-js')->usepath()->add('easing','js/easing.js') !!}
-
 
 {{--{!! Theme::asset()->container('custom-js')->usepath()->add('checkbox', 'js/doc/checkbox.js') !!}--}}
 {!! Theme::asset()->container('specific-css')->usepath()->add('validform-css','plugins/jquery/validform/css/style.css') !!}
