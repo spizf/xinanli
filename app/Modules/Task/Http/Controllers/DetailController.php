@@ -556,7 +556,7 @@ class DetailController extends IndexController
                 }
                 //组员
                 $first_group_son_num = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,1);//市里组员数目
-                if ($first_group_son_num==8){
+                if ($first_group_son_num > 8){
                     //组员足够8位
                     $group_son_result = $this->expertGroup($evade_two['cate_id'],$evade_two['city'],2,$name,8,2);
                     $expert_result = array_merge($group_result,$group_son_result);

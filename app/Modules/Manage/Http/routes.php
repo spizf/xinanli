@@ -430,7 +430,7 @@ Route::group(['prefix' => 'manage', 'middleware' => ['manageauth', 'RolePermissi
 
     //仲裁专家管理
     Route::get('/experts','ExpertsController@showExperts')->name('experts');
-    Route::get('/arbitration','ExpertsController@showArbitration')->name('arbitration');
+   /* Route::get('/arbitration','ExpertsController@showArbitration')->name('arbitration');*/
     Route::get('/expertsAdd','ExpertsController@expertsAdd')->name('expertsAdd');
     Route::post('/ajaxGetAddr','ExpertsController@ajaxGetAddr')->name('ajaxGetAddr');
     Route::post('/expertsAddHandle','ExpertsController@expertsAddHandle')->name('expertsAddHandle');

@@ -57,14 +57,21 @@
                     </td>
                     <td><a target="view_window" href="{!! url('/task',$item->task_id) !!}">{{$item->user_task->title}}</a></td>
                     <td>
+                        @if(isset($item->user_zc) && !empty($item->user_zc))
                         {{$item->user_zc->name}}
+                        @endif
                     </td>
-                    <td>{{$item->user_zc->mobile}}</td>
+                    <td>
+                        @if(isset($item->user_zc) && !empty($item->user_zc))
+                        {{$item->user_zc->mobile}}</td>
+                        @endif
                     <td>详情列表查看</td>
                     {{--<td>@foreach($item->ex_name_zh as $va) <a href="{!! url('/experts/detail',$va->id) !!}">{{$va->name}}</a> @endforeach</td>--}}
                     {{--<td>@foreach($item->ex_name_z as $val) <a href="{!! url('/experts/detail',$val->id) !!}">{{$val->name}}</a> @endforeach</td>--}}
                     <td>
+                        @if(isset($item->user_zc) && !empty($item->user_zc))
                         {{$item->user_zc->reason}}
+                        @endif
                     </td>
                     <td>
                         {{$item->user_task->updated_at}}

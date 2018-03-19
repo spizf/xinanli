@@ -49,6 +49,10 @@
         </div>
         <div class="space-10"></div>
         <a id='___szfw_logo___' href='https://credit.szfw.org/CX02272018016655810199.html' target='_blank'><img src='http://icon.szfw.org/cert.png' border='0' /></a>
+        <a href=" http://www.315online.com.cn/member/315180004.html" target="_blank" style="margin-left: 5px;"><img  src="/img/cert.png" height="41" width="96"  border="0"></a>
+        <a href="https://ss.knet.cn/verifyseal.dll?sn=e180315110105723634may000000&pa=111332" tabindex="-1" id="urlknet" style="margin-left: 5px;" target="_blank">
+            <img alt="&#x53EF;&#x4FE1;&#x7F51;&#x7AD9;" name="KNET_seal" border="true" src="/img/ss.png"  />
+        </a>
         <script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script>
     </div>
 </div>
