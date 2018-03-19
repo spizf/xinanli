@@ -129,7 +129,7 @@
 </style>
 <script>
     /*ajax获取token*/
-    var token="{{csrf_field()}}";
+    var token='{{csrf_field()}}';
 </script>
 <div class="g-taskposition col-xs-12 col-left">
         您的位置：首页 > 任务详情
@@ -1920,18 +1920,20 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                 <h4 class="modal-title">通知双方补充仲裁资料</h4>
             </div>
-            <form action="" method="post"  >
-                {{csrf_field()}}
+            <form action="/task/sendAtributMessage" method="post" id="mesg" >
             <div class="modal-body">
                 <div>
-                        <textarea name="reason" id="res" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
-                        <input type="hidden" name="task_id" value="{{$detail['id']}}">
-                        <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <textarea name="reason" id="res" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
+                    <textarea name="content" id="mes" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
+                    <input type="hidden" name="task_id" value="{{$detail['id']}}">
+                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
+                    <input type="hidden" name="title" value="{{$detail['title']}}">
+
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <input type="submit" class="btn btn-primary" value="提交">
+                <input type="button" class="btn btn-primary messubm" value="提交">
             </div>
             </form>
         </div>

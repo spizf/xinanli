@@ -117,7 +117,8 @@ Route::group(['prefix'=>'task'],function(){
 
     Route::get('/{id}','DetailController@index')->name('taskDetailPage')->where('id', '[0-9]+');
     Route::post('/reasonTask','DetailController@reasonTask');
-
+    //通知双方上传仲裁资料
+    Route::post('/sendAtributMessage','DetailController@sendatributMessage');
 	Route::get('/successCase','SuccessCaseController@index')->name('successCaseList');
 	Route::get('/successDetail/{id}','SuccessCaseController@detail')->name('successDetail');
 	Route::get('/successJump/{id}','SuccessCaseController@jump')->name('successJump');

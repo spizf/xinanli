@@ -2060,4 +2060,74 @@ class DetailController extends IndexController
         }
 
     }
+    /*提醒双方提交仲裁资料*/
+    public function sendAtributMessage(Request $request)
+    {
+        //$megss = $request->except('_token');
+        $mesgs = $request->input('mesgs');
+        $megs = [
+            'content' => $mesgs[0]['value'],
+            'task_id' => $mesgs[1]['value'],
+            'title'  => $mesgs[2]['value'],
+            'employer_id' => $mesgs[3]['value']
+        ];
+        $task_abm = MessageTemplateModel::where('code_name','task_arbitramessage')->where('is_open',1)->where('is_on_site',1)->first();
+        if($task_abm)
+        {
+            $user = UserModel::where('id',$megs['employer_id'])->first();
+            $worker = WorkModel::where('id',$megs['task_id'])->where('status','>=',1)->first();
+            $site_name = \CommonClass::getConfig('site_name');
+            $user_name = Auth::user()['name'];//当前登录的用户即发布需求的人
+            $domain = \CommonClass::getDomain();
+
+            $messageVariableArr = [
+                'username'=>$user['name'],//接收者
+                //'name'=>$user_name,//发送者
+                'content'=>$megs['content'],//内容
+                'task_title'=>$megs['title'],//任务标题
+                'href' => $domain.'/task/'.$megs['task_id'],//任务链接
+                'website'=>$site_name,
+            ];
+            $message = MessageTemplateModel::sendMessage('task_arbitramessage',$messageVariableArr);
+            $messages = [
+                'message_title'=>$task_abm['name'],
+                'code'=>'task_arbitramessage',
+                'message_content'=>$message,
+                'js_id'=>$megs['employer_id'],//接收人为发布需求者
+                'message_type'=>2,
+                'receive_time'=>date('Y-m-d H:i:s',time()),
+                'status'=>0,
+            ];
+            $messages1 = [
+                'message_title'=>$task_abm['name'],
+                'code'=>'task_arbitramessage',
+                'message_content'=>$message,
+                'js_id'=>$worker['uid'],//接收人为任务中标者
+                'message_type'=>2,
+                'receive_time'=>date('Y-m-d H:i:s',time()),
+                'status'=>0,
+            ];
+            $fb = MessageReceiveModel::create($messages);
+            $js = MessageReceiveModel::create($messages1);
+
+            if ($fb && $js){
+                $result = array(
+                    'status'=>10002,
+                    'msg'=>'消息发送成功,请耐心等候!'
+                );
+            }else{
+                $result = array(
+                    'status'=>10001,
+                    'msg'=>'消息发送失败!'
+                );
+            }
+        }else{
+            $result = array(
+                'status'=>10003,
+                'msg'=>'很抱歉！消息通知暂时还没有开通！'
+            );
+        }
+        return json_encode($result);
+
+    }
 }
