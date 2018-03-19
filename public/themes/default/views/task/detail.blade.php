@@ -1923,11 +1923,10 @@
             <form action="/task/sendAtributMessage" method="post" id="mesg" >
             <div class="modal-body">
                 <div>
-                    <textarea name="reason" id="res" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
-                    <textarea name="content" id="mes" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
-                    <input type="hidden" name="task_id" value="{{$detail['id']}}">
-                    <input type="hidden" name="user_id" value="{{Auth::id()}}">
-                    <input type="hidden" name="title" value="{{$detail['title']}}">
+                        <textarea name="content" id="mes" placeholder="填写要双方提交的附件内容..." style="width: 100%;" rows="10"></textarea>
+                        <input type="hidden" name="task_id" value="{{$detail['id']}}">
+                        <input type="hidden" name="title" value="{{$detail['title']}}">
+                        <input type="hidden" name="employer_id" value="{{$detail['uid']}}">
 
                 </div>
             </div>

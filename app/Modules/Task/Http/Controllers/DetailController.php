@@ -1706,7 +1706,12 @@ class DetailController extends IndexController
         }else{
            $work = WorkModel::where(['task_id' => $taskId,'status' => 1,'uid' => $this->user['id']])->update(['status'=>0]);
            if($work){
-               return redirect()->to('/changeStatus/'.$taskId.'/'.$status);
+               $changes= TaskModel::where('id', $taskId)->update(['status' => $status,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
+               if($changes){
+                   return redirect()->to('/task/'.$taskId);
+               }else{
+                   return redirect()->to('/task/'.$taskId)->with(['message' => '操作失败']);
+               }
            }else{
                return redirect()->to('/task/'.$taskId)->with(['message' => '操作失败']);
            }
