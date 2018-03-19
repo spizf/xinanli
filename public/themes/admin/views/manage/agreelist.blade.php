@@ -51,11 +51,11 @@
         </table>
     </div>
     <div class="row">
-        {{--<div class="col-sm-6">
+        <div class="col-sm-6">
             <div class="dataTables_info" id="sample-table-2_info">
                 <a href="/manage/addAgreement">添加</a>
             </div>
-        </div>--}}
+        </div>
         <div class="col-xs-6">
             <div class="dataTables_paginate paging_bootstrap text-right" id="dynamic-table_paginate">
                 @if(!empty($agree_list)){!! $agree_list->render() !!}@endif

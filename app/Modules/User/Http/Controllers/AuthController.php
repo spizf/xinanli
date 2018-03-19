@@ -2,6 +2,7 @@
 namespace App\Modules\User\Http\Controllers;
 
 use App\Http\Controllers\UserCenterController;
+use App\Modules\Manage\Model\AgreementModel;
 use App\Modules\User\Http\Requests\AlipayAuthRequest;
 use App\Modules\User\Http\Requests\EmailAuthRequest;
 use App\Modules\User\Http\Requests\VerifyAlipayCashRequest;
@@ -803,6 +804,7 @@ class AuthController extends UserCenterController
         $user = Auth::User();
         $companyInfo = EnterpriseAuthModel::where('uid', $user->id)->orderBy('created_at', 'desc')->first();
 
+        $agree = AgreementModel::where('code_name','task_enterpriseAuth')->first();
 
         $cateFirst = TaskCateModel::findByPid([0],['id','name']);
         if(!empty($cateFirst)){
@@ -868,7 +870,8 @@ class AuthController extends UserCenterController
                 'city'        => $city,
                 'area'        => $area,
                 'enterprise_nature'=>$enterprise_nature,
-                'qualification_level'=>$qualification_level
+                'qualification_level'=>$qualification_level,
+                'agree'     => $agree
             );
             $view = 'user.usershopqy';
         }

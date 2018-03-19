@@ -74,7 +74,6 @@
                                 </div>
                             </div>
                             <div class="space"></div>
-                            <div class="space"></div>
                             <div class="star text-size14 cor-gray51 clearfix">
                                 <div class="col-xs-1 task-mediaAssessL pd-padding0">
                                     <div class="starpd">评价质量：</div>
@@ -105,6 +104,20 @@
                                     </div>
                                     @endif
                                 </div>
+                            </div>
+                            <div class="space"></div>
+                            <div class="clearfix text-size12">
+                                <label class="inline task-validform-right">
+                                    @if(!empty($agree))
+                                        <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*"
+                                               nullmsg="请先阅读并同意">
+                                        <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意
+                                    <a target="_blank" class="text-under" href="/bre/agree/task_comment">
+                                        《{!! $agree->name !!}》
+                                    </a>
+                                </span>
+                                    @endif
+                                </label>
                             </div>
                             <div class="space"></div>
                             <div class="space"></div>

@@ -200,7 +200,20 @@
                     </div>
                 </div>
             </div>
-
+            <div class="space-10"></div>
+            <div class="clearfix text-size12">
+                <label class="inline task-validform-right">
+                    @if(!empty($agree))
+                        <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*"
+                               nullmsg="请先阅读并同意">
+                        <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意
+                                    <a target="_blank" class="text-under" href="/bre/agree/task_enterpriseAuth">
+                                        《{!! $agree->name !!}》
+                                    </a>
+                                </span>
+                    @endif
+                </label>
+            </div>
             <div class="space-20"></div>
             <button class="btn btn-primary btn-imp btn-blue g-usershopbtn">认证</button>
             <a class="text-size14 g-usershopback text-under" href="/user/shop">返回</a>

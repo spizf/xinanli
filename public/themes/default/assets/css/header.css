@@ -1844,7 +1844,11 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
 .gongju_menu li {
     text-align: center;
     padding: 0 8px;
-    margin-bottom: -1px;
+    height:48px;
+}
+.gongju_menu li:hover{
+    border-bottom:2px solid #2f549f;
+
 }
 .gongju_menu a{
     display: block;
@@ -1867,6 +1871,12 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
     display: block;
     animation: .5s a;
 }
+.gongju_menu a {
+    border-bottom: none;
+
+}
+
+
 @keyframes a {
     0% {
         transform: translate3d(0,-10px,0);

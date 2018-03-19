@@ -1090,6 +1090,8 @@ class DetailController extends IndexController
         
         $task = TaskModel::where('id',$data['id'])->first();
 
+        $agree = AgreementModel::where('code_name','task_comment')->first();
+
         if(!$is_checked && $task['uid']!=$this->user['id'])
         {
             return redirect()->back()->with('error','你不具备评价资格！');
@@ -1156,7 +1158,8 @@ class DetailController extends IndexController
             'hoteList'=>$hotList,
             'ad'=>$ad,
             'hotList' => $hotList,
-            'targetName' => $reTarget->name
+            'targetName' => $reTarget->name,
+            'agree' => $agree
         ];
 
         return $this->theme->scope('task.evaluate', $view)->render();

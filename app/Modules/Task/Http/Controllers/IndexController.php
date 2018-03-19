@@ -1416,6 +1416,8 @@ class IndexController extends BasicIndexController
 
         $bank = BankAuthModel::where('uid', '=', $id)->where('status', '=', 4)->get();
 
+        $agree = AgreementModel::where('code_name','task_deposit')->first();
+
         $payConfig = ConfigModel::getConfigByType('thirdpay');
         $view = [
             'task' => $task,
@@ -1423,7 +1425,9 @@ class IndexController extends BasicIndexController
             'id' => $id,
             'user_money' => $user_money,
             'balance_pay' => $balance_pay,
-            'payConfig' => $payConfig
+            'payConfig' => $payConfig,
+            'agree'=>$agree
+
         ];
         return $this->theme->scope('task.bid.bounty', $view)->render();
     }
@@ -1699,6 +1703,8 @@ class IndexController extends BasicIndexController
         $user_money = UserDetailModel::where(['uid' => $this->user['id']])->first();
         $user_money = $user_money['balance'];
 
+        $agree = AgreementModel::where('code_name','task_arbitration')->first();
+
         $balance_pay = false;
         if ($user_money > $task['bounty']) {
             $balance_pay = true;
@@ -1713,7 +1719,8 @@ class IndexController extends BasicIndexController
             'id' => $id,
             'user_money' => $user_money,
             'balance_pay' => $balance_pay,
-            'payConfig' => $payConfig
+            'payConfig' => $payConfig,
+            'agree' =>$agree
         ];
         return $this->theme->scope('task.bid.arbitrationbounty', $view)->render();
     }

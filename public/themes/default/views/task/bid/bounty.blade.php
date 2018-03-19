@@ -1,7 +1,7 @@
 <div class="col-xs-12 col-left">
         <div class="taskDetails alert taskbg clearfix">
             <div class="page-header">
-                <h4 class="text-size22 cor-gray51"><strong>您已选择中标威客，请尽快托管赏金！</strong></h4>
+                <h4 class="text-size22 cor-gray51"><strong>您已签订合同，请尽快托管赏金！</strong></h4>
             </div>
             <div class="cor-gray51 text-size14">
                 <div class="space"></div>
@@ -32,6 +32,20 @@
                                 <input type="password" placeholder=""  name="password"  class="inputxt" datatype="*6-15" errormsg="密码范围在6~15位之间！">　　
                                 <label><a target="_blank" href="/user/payPassword" class="cor-gray89 text-size12">忘记密码？</a></label>
                                 {!! $errors->first('password') !!}
+                                <div class="space"></div>
+                                <div class="clearfix text-size12">
+                                    <label class="inline task-validform-right">
+                                        @if(!empty($agree))
+                                            <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*"
+                                                   nullmsg="请先阅读并同意">
+                                            <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意
+                                    <a target="_blank" class="text-under" href="/bre/agree/task_deposit">
+                                        《{!! $agree->name !!}》
+                                    </a>
+                                </span>
+                                        @endif
+                                    </label>
+                                </div>
                                 <div class="space"></div>
                                 <div class="text-center clearfix">
                                     <button class="btn btn-primary btn-blue btn-big1 bor-radius2" >确认支付</button>
@@ -85,7 +99,20 @@
                             @endif
                         </div>
                         <div class="space"></div>
-
+                        <div class="clearfix text-size12">
+                            <label  class="inline task-validform-right" style="padding-left: 20px">
+                                @if(!empty($agree))
+                                    <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*"
+                                           nullmsg="请先阅读并同意">
+                                    <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意
+                                <a target="_blank" class="text-under" href="/bre/agree/task_deposit">
+                                    《{!! $agree->name !!}》
+                                </a>
+                            </span>
+                                @endif
+                            </label>
+                        </div>
+                        <div class="space"></div>
                         <div class="text-center clearfix">
                             <button class="btn btn-primary btn-blue btn-big1 bor-radius2" data-toggle="modal" data-target="#myModal">确认支付</button>
                             <a href="/task/{{ $id }}" class="cor-gray93 btn-big">返回</a>

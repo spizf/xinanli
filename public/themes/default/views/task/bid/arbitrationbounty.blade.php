@@ -33,6 +33,20 @@
                             <label><a target="_blank" href="/user/payPassword" class="cor-gray89 text-size12">忘记密码？</a></label>
                             {!! $errors->first('password') !!}
                             <div class="space"></div>
+                            <div class="clearfix text-size12">
+                                <label  class="inline task-validform-right">
+                                    @if(!empty($agree))
+                                        <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*"
+                                               nullmsg="请先阅读并同意">
+                                        <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意
+                                <a target="_blank" class="text-under" href="/bre/agree/task_arbitration">
+                                    《{!! $agree->name !!}》
+                                </a>
+                            </span>
+                                    @endif
+                                </label>
+                            </div>
+                            <div class="space"></div>
                             <div class="text-center clearfix">
                                 <button class="btn btn-primary btn-blue btn-big1 bor-radius2" >确认支付</button>
                                 <a href="/task/{{ $id }}" class="cor-gray93 btn-big">返回</a>
@@ -85,7 +99,20 @@
                             @endif
                         </div>
                         <div class="space"></div>
-
+                        <div class="clearfix text-size12">
+                            <label  class="inline task-validform-right" style="padding-left: 20px">
+                                @if(!empty($agree))
+                                    <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*"
+                                           nullmsg="请先阅读并同意">
+                                    <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意
+                                <a target="_blank" class="text-under" href="/bre/agree/task_arbitration">
+                                    《{!! $agree->name !!}》
+                                </a>
+                            </span>
+                                @endif
+                            </label>
+                        </div>
+                        <div class="space"></div>
                         <div class="text-center clearfix">
                             <button class="btn btn-primary btn-blue btn-big1 bor-radius2" data-toggle="modal" data-target="#myModal">确认支付</button>
                             <a href="/task/{{ $id }}" class="cor-gray93 btn-big">返回</a>
