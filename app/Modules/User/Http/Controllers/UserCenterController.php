@@ -571,26 +571,6 @@ class UserCenterController extends BasicUserCenterController
         return response()->json($area);
     }
 
-    public function StartCaptchaServlet()
-    {
-
-        $res = [
-            'id' => 'e20876c0cecee2f36887c48eaf85639d',
-            'key' => '28f1e7dcd36e1af44273146ea8a19605'
-        ];
-        $GtSdk = $this->GtSdk = new \GeetestLib($res['id'], $res['key']);
-        session_start();
-        $data = array(
-            "user_id" => uniqid(),
-            "client_type" => "web",
-            "ip_address" => $_SERVER["SERVER_ADDR"]
-        );
-        $status = $GtSdk->pre_process($data, 1);
-        $_SESSION['gtserver'] = $status;
-        $_SESSION['user_id'] = $data['user_id'];
-        echo $GtSdk->get_response_str();
-    }
-
 
 
 }
