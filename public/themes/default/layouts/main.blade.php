@@ -89,9 +89,9 @@
         });
 
         obj.hover(function(){
-            $(".gongju_menu").addClass("z-hover");
+            $(".gongju_menu").show();
         },function(){
-            $(".gongju_menu").removeClass("z-hover");
+            $(".gongju_menu").hide();
         });
 
 

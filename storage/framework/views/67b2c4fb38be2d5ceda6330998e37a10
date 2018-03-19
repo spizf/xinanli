@@ -18,7 +18,8 @@
                     <?php echo config('kppw.kppw_version'); ?>*/ ?>
                     <?php echo Theme::get('site_config')['copyright']; ?><?php echo Theme::get('site_config')['record_number']; ?>
 
-                    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272420864'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272420864%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+                    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1272420864'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272420864%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+                   | 安环家荣誉出品
                 </p>
             </div>
             <div class="col-lg-3 g-contact visible-lg-block hidden-sm hidden-md hidden-xs">
@@ -45,13 +46,9 @@
                     <?php endif; ?>
                     <?php if(Theme::get('site_config')['tencent']['tencent_switch'] == 1): ?><div class="foc"><a class="focususqq" href="<?php echo Theme::get('site_config')['tencent']['tencent_url']; ?>" target="_blank"></a></div><?php endif; ?>
                     <?php if(Theme::get('site_config')['sina']['sina_switch'] == 1): ?><div class="foc"><a class="focususwb" href="<?php echo Theme::get('site_config')['sina']['sina_url']; ?>" target="_blank"></a></div><?php endif; ?>
-
                 </div>
             </div>
         </div>
-        <div class="space-10"></div>
-        <a id='___szfw_logo___' href='https://credit.szfw.org/CX02272018016655810199.html' target='_blank'><img src='http://icon.szfw.org/cert.png' border='0' /></a>
-        <script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script>
     </div>
 </div>
 
