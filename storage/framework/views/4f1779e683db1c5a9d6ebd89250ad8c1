@@ -72,11 +72,13 @@
                                 <?php else: ?>
                                     <?php for($i=0;$i<count(Theme::get('nav_list'));$i++): ?>
                                         <?php if(Theme::get('nav_list')[$i]['is_show'] == 1): ?>
-                                            <a href="<?php echo Theme::get('nav_list')[$i]['link_url']; ?>"
-                                               <?php if(Theme::get('nav_list')[$i]['is_new_window'] == 1): ?>target="_blank" <?php endif; ?> <?php if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')): ?> class="z-navHome" <?php endif; ?>>
-                                                <?php echo Theme::get('nav_list')[$i]['title']; ?>
+                                                <a <?php if(Theme::get('nav_list')[$i]['link_url'] == '/article/tool'): ?> href="javascrpit:;" class="z-navTool <?php if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')): ?>z-navHome <?php endif; ?>"
+                                                   <?php else: ?> href="<?php echo Theme::get('nav_list')[$i]['link_url']; ?> " <?php endif; ?>
+                                                   <?php if(Theme::get('nav_list')[$i]['link_url'] == Theme::get('now_menu')): ?> class="z-navHome" <?php endif; ?>
+                                                   <?php if(Theme::get('nav_list')[$i]['is_new_window'] == 1): ?>target="_blank"  <?php endif; ?>>
+                                                    <?php echo Theme::get('nav_list')[$i]['title']; ?>
 
-                                            </a>
+                                                </a>
                                         <?php endif; ?>
                                     <?php endfor; ?>
                                 <?php endif; ?>
