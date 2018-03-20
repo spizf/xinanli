@@ -60,7 +60,8 @@ class WorkModel extends Model
     
     static function findAll($id,$data=array())
     {
-        $query = Self::select('work.*','us.name as nickname','a.avatar')
+        //DB::connection()->enableQueryLog();//开启查询日志
+        $query = Self::select('work.*','us.name as nickname','a.avatar','e.company_name')
             ->where('work.task_id',$id)->where('work.status','<=',1)->where('forbidden',0);
         
         if(isset($data['work_type'])){
@@ -78,7 +79,10 @@ class WorkModel extends Model
             ->with('childrenComment')
             ->join('user_detail as a','a.uid','=','work.uid')
             ->join('users as us','us.id','=','work.uid')
+            ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
             ->paginate(5)->setPageName('work_page')->toArray();
+
+        //dd(DB::getQueryLog());
         return $data;
     }
 
@@ -168,7 +172,7 @@ class WorkModel extends Model
     
     static public function findDelivery($id,$data)
     {
-        $query = Self::select('work.*','us.name as nickname','a.avatar')
+        $query = Self::select('work.*','us.name as nickname','a.avatar','e.company_name')
             ->where('work.task_id',$id)->where('work.status','>=',2);
         
         if(isset($data['evaluate'])){
@@ -187,6 +191,7 @@ class WorkModel extends Model
         $data = $query->with('childrenAttachment')
             ->join('user_detail as a','a.uid','=','work.uid')
             ->leftjoin('users as us','us.id','=','work.uid')
+            ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
             ->paginate(5)->setPageName('delivery_page')->toArray();
         return $data;
     }
@@ -194,11 +199,12 @@ class WorkModel extends Model
     
     static public function findRights($id)
     {
-        $data = Self::select('work.*','us.name as nickname','ud.avatar')
+        $data = Self::select('work.*','us.name as nickname','ud.avatar','e.company_name')
             ->where('task_id',$id)->where('work.status',4)
             ->with('childrenAttachment')
             ->join('user_detail as ud','ud.uid','=','work.uid')
             ->leftjoin('users as us','us.id','=','work.uid')
+            ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
             ->paginate(5)->setPageName('delivery_page')->toArray();
         return $data;
     }

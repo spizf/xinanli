@@ -19,7 +19,7 @@ class CommentModel extends Model
 
     static public function taskComment($id,$data=array())
     {
-        $query = Self::select('comments.*','ud.avatar','us.name as nickname')->where('task_id',$id);
+        $query = Self::select('comments.*','ud.avatar','us.name as nickname','e.company_name')->where('task_id',$id);
         
         if(!empty($data['evaluate_type']))
         {
@@ -31,16 +31,16 @@ class CommentModel extends Model
             switch($data['evaluate_from'])
             {
                 case 1:
-                    $query->where('uid','<>',$data['task_user_id']);
+                    $query->where('ud.uid','<>',$data['task_user_id']);
                     break;
                 case 2:
-                    $query->where('uid',$data['task_user_id']);
+                    $query->where('ud.uid',$data['task_user_id']);
             }
         }
         $data = $query->leftjoin('user_detail as ud','comments.to_uid','=','ud.uid')
             ->leftjoin('users as us','us.id','=','comments.to_uid')
+            ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
             ->paginate(5)->setPageName('comment_page')->toArray();
-
         return $data;
     }
     
@@ -63,7 +63,7 @@ class CommentModel extends Model
         $status = DB::transaction(function() use($data){
             
             Self::create($data);
-            //add by xl ÒòÆÀ¼ÛÇ°ÖÃËùÒÔÆÀ¼Û²»ĞŞ¸Ä×´Ì¬Öµ
+            //add by xl ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Û²ï¿½ï¿½Ş¸ï¿½×´Ì¬Öµ
             /*$worker_num = TaskModel::where('id',$data['task_id'])->first();
             
             $comment_count = self::where('task_id',$data['task_id'])->count();

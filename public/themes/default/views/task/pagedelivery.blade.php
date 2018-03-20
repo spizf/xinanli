@@ -5,7 +5,7 @@
             <div class="col-md-11 evaluatemain">
                 <div class="evaluateinfo clearfix">
                     <div class="pull-left">
-                        <p><b>{{ $v['nickname'] }}</b> | 好评率：<span class="cor-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span></p>
+                        <p><b>{{ $v['company_name'] }}</b> | 好评率：<span class="cor-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span></p>
                         <p class="evaluatetime">提交于{{ date('Y-m-d H:i:s',strtotime($v['created_at'])) }}</p>
                     </div>
 

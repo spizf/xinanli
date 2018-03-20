@@ -377,7 +377,7 @@
                                     接需求
                                 </a>
                                 <a href="/task/changeWibBid/{{$detail['id']}}/4" class="btn btn-primary bor-radius2">
-                                    暂不接
+                                    不接需求
                                 </a>
                             @elseif($detail['status']==12 && $user_type==2 && $is_win_bid && $task_type_alias == 'zhaobiao')
                                 <a href="/task/signContract/{{$detail['id']}}/13" class="btn btn-primary bor-radius2">
@@ -721,7 +721,7 @@
                                     <div class="evaluateinfo clearfix">
                                         <div class="pull-left">
                                             <div class="clearfix">
-                                                <p class="pull-left"><b>{{ $v['nickname'] }}</b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;好评率：<span class="text-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <p class="pull-left"><b>{{ $v['company_name'] }}</b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;好评率：<span class="text-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                                     @if($user_type==1)
                                                         @if(Auth::check() && Auth::User()->id != $v['uid'])
                                                             <a class="taskconico contactHe" data-toggle="modal" data-target="#myModalwk" data-values="{{$v['uid']}}" data="{{Theme::get('is_IM_open')}}">联系TA</a>
@@ -750,7 +750,11 @@
                                                     @if($task_type_alias == 'xuanshang')
                                                 <button data-target="#myModal{{ $v['id'] }}" data-toggle="modal" class="btn btn-primary btn-blue btn-big1 bor-radius2">选TA</button>
                                                     @elseif($task_type_alias == 'zhaobiao' && $has_bid != 1)
+                                                        @if($v['flag'] == 0)
                                                         <button data-target="#myModal{{ $v['id'] }}" data-toggle="modal" class="btn btn-primary btn-blue btn-big1 bor-radius2">选TA</button>
+                                                        @else
+                                                        <button  class="btn btn-primary btn-blue btn-big1 bor-radius2">已弃标</button>
+                                                        @endif
                                                     @endif
                                                 @endif
                                             </div>
@@ -768,13 +772,13 @@
                                                             @if($task_type_alias == 'xuanshang')
                                                             <p class="h5">确定将“
                                                                 <span class="text-primary">
-                                                                    {{ $v['nickname'] }}
+                                                                    {{ $v['company_name'] }}
                                                                 </span>”设置为中标吗？
                                                             </p>
                                                             @elseif($task_type_alias == 'zhaobiao')
                                                                 <p class="h5">确定将“
                                                                 <span class="text-primary">
-                                                                    {{ $v['nickname'] }}
+                                                                    {{ $v['company_name'] }}
                                                                 </span>”设置为中标吗？
                                                                 </p>
 
@@ -852,7 +856,8 @@
                                     <div class="detail-border">
                                         @if($v['status']==1 || $v['status']==2)
                                             <div class="selecte" id="selecte-{{ $v['id'] }}" ></div>
-                                        @elseif($v['status']==5)
+                                            {{--弃标显示为淘汰--}}
+                                        @elseif($v['status']==5 || $v['flag']==1)
                                             <div class="weedout" id="weedout-{{ $v['id'] }}" ></div>
                                         @else
                                             <div class="selecte" id="selecte-{{ $v['id'] }}" style="display:none;"></div>
@@ -984,7 +989,7 @@
                                                 @endif
                                             </p>
                                             @endif
-                                            <p><b>{{ $v['nickname'] }}</b> | 好评率：<span class="cor-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span></p>
+                                            <p><b>{{ $v['company_name'] }}</b> | 好评率：<span class="cor-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span></p>
                                             <p class="evaluatetime">提交于{{ date('Y-m-d H:i:s',strtotime($v['created_at'])) }}</p>
                                         </div>
 
@@ -1193,8 +1198,8 @@
                                 <li class="{{ (isset($merge['evaluate_type']) && $merge['evaluate_type']==1)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_type'=>1]) }}">好评<span> ({{ $good_comment }})</span></a></li>
                                 <li class="{{ (isset($merge['evaluate_type']) && $merge['evaluate_type']==2)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_type'=>2]) }}">中评<span> ({{ $middle_comment }})</span></a></li>
                                 <li class="{{ (isset($merge['evaluate_type']) && $merge['evaluate_type']==3)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_type'=>3]) }}">差评<span> ({{ $bad_comment }})</span></a></li>
-                                <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==1)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>1]) }}">给威客</a></li>
-                                <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==2)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>2]) }}">给雇主</a></li>
+                                <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==1)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>1]) }}">给评价机构</a></li>
+                                <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==2)?'active':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>2]) }}">给企业</a></li>
                             </ul>
                         </div>
                         @foreach($comment['data'] as $v)
@@ -1206,7 +1211,7 @@
                                         <div class="col-md-11 col-xs-10 evaluatemain">
                                             <div class="evaluateinfo">
                                                 <div>
-                                                    <p><b>{{ $v['nickname'] }}</b>
+                                                    <p><b>{{ $v['company_name'] }}</b>
                                                         @if($v['type']==1)
                                                         <span class="flower1">好评</span>
                                                         @elseif($v['type']==2)
@@ -1306,7 +1311,7 @@
                                         <div class="col-md-11 col-xs-10 evaluatemain">
                                             <div class="evaluateinfo clearfix">
                                                 <div class="pull-left">
-                                                    <p><b>{{ $v['nickname'] }}</b> | 好评率：<span class="cor-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span></p>
+                                                    <p><b>{{ $v['company_name'] }}</b> | 好评率：<span class="cor-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span></p>
                                                     <p class="evaluatetime">提交于{{ date('Y-m-d H:i:s',strtotime($v['created_at'])) }}</p>
                                                 </div>
                                             </div>

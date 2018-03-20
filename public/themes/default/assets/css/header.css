@@ -1876,7 +1876,10 @@ a.bg-blue:focus, a.bg-red:focus, a.bg-gary:focus, a.bg-orange:focus {
 
 }
 
-
+.navfeng a {
+    height: 40px;
+    line-height: 30px;
+}
 @keyframes a {
     0% {
         transform: translate3d(0,-10px,0);

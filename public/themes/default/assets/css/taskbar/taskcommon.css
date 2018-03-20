@@ -223,7 +223,7 @@
 .tasknav li {
     float: left;
     border-right: 1px solid #ebebeb;
-    width: 124px;
+    width: 125px;
     height: 43px;
     line-height: 43px;
     text-align: center;
@@ -816,7 +816,8 @@
     background: url("../../images/weedout.png") no-repeat;
     width: 115px;
     height: 114px;
-    top: 120px;
+   /* top: 120px;*/
+    top: 40px;
     right: 10%;
 
 }

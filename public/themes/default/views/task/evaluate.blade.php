@@ -26,7 +26,7 @@
                             </div>
                             <div class="col-md-11 col-xs-12 task-mediaAssessR evaluatemain clearfix">
                                 <div class="row">
-                                    <p class="text-size16 cor-gray51">{{ $evaluate_people['nickname'] }}（{{ ($evaluate_from==0)?'雇主':'威客' }}）</p>
+                                    <p class="text-size16 cor-gray51">{{ $evaluate_people['company_name'] }}（{{ ($evaluate_from==0)?'企业':'机构' }}）</p>
                                     <p class="evaluatetime cor-gray87 text-size14">
                                         <span class="evaluate-back">好评率：<span class="cor-orange">{{ CommonClass::applauseRate($comment_people['uid']) }}% </span></span>
                                         @if(!empty($evaluate_people['phone']))
@@ -35,7 +35,9 @@
                                         @if(!empty($evaluate_people['qq']))
                                         <span class="evaluate-back">QQ：{{ $evaluate_people['qq'] }}</span>
                                         @endif
-                                        <span>来自：湖北</span>
+                                        @if(!empty($evaluate_people['province']))
+                                        <span>来自：{{$evaluate_people['province']}}</span>
+                                        @endif
                                     </p>
                                 </div>
                             </div>
@@ -138,7 +140,7 @@
             <div class="record b-border bg-white">
                 <div class="task-sidetime text-center text-size18 cor-gray51">
                     <p>恭喜您已<span class="cor-blue2f">完成交易</span></p>
-                    <p class="mg-margin">请对{{ ($evaluate_from==0)?'雇主':'威客' }}进行评价</p>
+                    <p class="mg-margin">请对{{ ($evaluate_from==0)?'企业':'机构' }}进行评价</p>
                 </div>
             </div>
             @if(count($hotList))

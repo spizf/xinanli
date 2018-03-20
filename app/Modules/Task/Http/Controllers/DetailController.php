@@ -113,7 +113,7 @@ class DetailController extends IndexController
                 $paySectionStatus = 1;
             }
         }
-        
+
         $works = WorkModel::findAll($id,$data);
         $works_count = WorkModel::where('task_id',$id)->where('status','<=',1)->where('forbidden',0)->count();
         $works_bid_count = WorkModel::where('task_id',$id)->where('status','=',1)->where('forbidden',0)->count();
@@ -124,7 +124,7 @@ class DetailController extends IndexController
             if($user_type==2)
             {
                 if($taskTypeAlias == 'zhaobiao'){
-                    $delivery = WorkModel::select('work.*','us.name as nickname','a.avatar','tp.sort','tp.desc as pay_desc')
+                    $delivery = WorkModel::select('work.*','us.name as nickname','a.avatar','tp.sort','tp.desc as pay_desc','e.company_name')
                         ->where('work.uid',$this->user['id'])
                         ->where('work.task_id',$id)
                         ->where('work.status','>=',2)
@@ -132,6 +132,7 @@ class DetailController extends IndexController
                         ->join('user_detail as a','a.uid','=','work.uid')
                         ->leftjoin('users as us','us.id','=','work.uid')
                         ->leftJoin('task_pay_section as tp','tp.work_id','=','work.id')
+                        ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
                         ->paginate(5)->setPageName('delivery_page')->toArray();
                 }else{
                     $delivery = WorkModel::select('work.*','us.name as nickname','a.avatar')
@@ -194,12 +195,13 @@ class DetailController extends IndexController
         {
             if($user_type==2)
             {
-                $works_rights = WorkModel::select('work.*','us.name as nickname','ud.avatar')
+                $works_rights = WorkModel::select('work.*','us.name as nickname','ud.avatar','e.company_name')
                     ->where('work.uid',$this->user['id'])
                     ->where('task_id',$id)->where('work.status',4)
                     ->with('childrenAttachment')
                     ->join('user_detail as ud','ud.uid','=','work.uid')
                     ->leftjoin('users as us','us.id','=','work.uid')
+                    ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
                     ->paginate(5)->setPageName('delivery_page')->toArray();
                 $works_rights_count = 1;
             }elseif($user_type==1)
@@ -1111,9 +1113,11 @@ class DetailController extends IndexController
         }else if($task['uid']==$this->user['id'])
         {
             $work = WorkModel::where('id',$data['work_id'])->first();
-            $evaluate_people = UserDetailModel::select('user_detail.*','us.name as nickname')
-                ->where('uid',$work['uid'])
+            $evaluate_people = UserDetailModel::select('user_detail.*','us.name as nickname','e.company_name','d.name as province')
+                ->where('user_detail.uid',$work['uid'])
                 ->join('users as us','user_detail.uid','=','us.id')
+                ->leftjoin('enterprise_auth as e','e.uid','=','us.id')
+                ->leftjoin('district as d','d.id','=','user_detail.province')
                 ->first();
             $comment_people = UserDetailModel::where('uid',$task['uid'])->first();
             $evaluate_from = 1;
@@ -1707,7 +1711,8 @@ class DetailController extends IndexController
         if(!$isWinBid){
             return redirect()->to('/task/'.$taskId)->with(['message' => '不是中标者,没有权限']);
         }else{
-           $work = WorkModel::where(['task_id' => $taskId,'status' => 1,'uid' => $this->user['id']])->update(['status'=>0]);
+            //将不接单者的标志flag改为1
+            $work = WorkModel::where(['task_id' => $taskId,'status' => 1,'uid' => $this->user['id']])->update(['status'=>0,'flag'=>1]);
            if($work){
                $changes= TaskModel::where('id', $taskId)->update(['status' => $status,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
                if($changes){

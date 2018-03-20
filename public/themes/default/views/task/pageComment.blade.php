@@ -5,8 +5,8 @@
         <li class="{{ (isset($merge['evaluate_type']) && $merge['evaluate_type']==1)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_type'=>1]) }}">好评<span> ({{ $good_comment }})</span></a></li>
         <li class="{{ (isset($merge['evaluate_type']) && $merge['evaluate_type']==2)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_type'=>2]) }}">中评<span> ({{ $middle_comment }})</span></a></li>
         <li class="{{ (isset($merge['evaluate_type']) && $merge['evaluate_type']==3)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_type'=>3]) }}">差评<span> ({{ $bad_comment }})</span></a></li>
-        <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==1)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>1]) }}">给威客</a></li>
-        <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==2)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>2]) }}">给雇主</a></li>
+        <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==1)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>1]) }}">给评价机构</a></li>
+        <li class="{{ (isset($merge['evaluate_from']) && $merge['evaluate_from']==2)?'active ':'' }}"><a href="javascript:void(0)" onclick="ajaxPageComment($(this))" url="{{ URL('task/ajaxPageComment/').'/'.$detail['id'].'?'.http_build_query(['evaluate_from'=>2]) }}">给企业</a></li>
     </ul>
 </div>
 @if(!empty($comment['data']))
@@ -19,7 +19,7 @@
                     <div class="col-md-11 evaluatemain">
                         <div class="evaluateinfo">
                             <div>
-                                <p><b>{{ $v['nickname'] }}</b>
+                                <p><b>{{ $v['company_name'] }}</b>
                                     @if($v['type']==1)
                                         <span class="flower1">好评</span>
                                     @elseif($v['type']==2)

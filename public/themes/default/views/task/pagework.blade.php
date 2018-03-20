@@ -1,6 +1,6 @@
 
 <div class="tab-content bg-white task-taskdisplay">
-    <ul class="nav nav-pills mg-margin">
+    <ul class="nav nav-pills mg-margin navfeng">
         <li class="{{ !isset($merge['work_type'])?'active':'' }}"><a href="javascript:void(0);" onclick="ajaxPageWorks($(this))"  url="{{ URL('task/ajaxPageWorks/').'/'.$detail['id']}}" class="{{ !isset($merge['work_type'])?'btn-blue':'' }}">全部</a></li>
         <li class="{{ (isset($merge['work_type']) && $merge['work_type']==1)?'active':'' }}"><a class="{{ (isset($merge['work_type']) && $merge['work_type']==1)?'btn-blue':'' }}" href="javascript:void(0)" onclick="ajaxPageWorks($(this))" url="{{ URL('task/ajaxPageWorks/').'/'.$detail['id'].'?'.http_build_query(['work_type'=>1]) }}">未中标<span> ({{ ($works_count-$works_bid_count) }})</span></a></li>
         <li class="{{ (isset($merge['work_type']) && $merge['work_type']==2)?'active':'' }}"><a class="{{ (isset($merge['work_type']) && $merge['work_type']==2)?'btn-blue':'' }}" href="javascript:void(0)" onclick="ajaxPageWorks($(this))" url="{{ URL('task/ajaxPageWorks/').'/'.$detail['id'].'?'.http_build_query(['work_type'=>2]) }}">中标<span> ({{ $works_bid_count }})</span></a></li>
@@ -16,7 +16,7 @@
                     <div class="evaluateinfo clearfix">
                         <div class="pull-left">
                             <div class="clearfix">
-                                <p class="pull-left"><b>{{ $v['nickname'] }}</b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;好评率：<span class="text-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <p class="pull-left"><b>{{ $v['company_name'] }}</b>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;好评率：<span class="text-orange">{{ CommonClass::applauseRate($v['uid']) }}%</span>&nbsp;&nbsp;&nbsp;&nbsp;
                                     @if($user_type==1)
                                         @if(Auth::check() && Auth::User()->id != $v['uid'])
                                             <a class="taskconico contactHe" data-toggle="modal" data-target="#myModalwk" data-values="{{$v['uid']}}" data="{{Theme::get('is_IM_open')}}">联系TA</a>
@@ -41,7 +41,11 @@
                         @if(($detail['status']==4 || $detail['status']==5) && $user_type==1 && $v['status']==0)
                             <div id="select-attachment-{{$v['id']}}" class="select-attachment">
                                 <div class="pull-right">
+                                    @if($v['flag']==0)
                                     <button data-target="#myModal{{ $v['id'] }}" data-toggle="modal" class="btn btn-primary btn-blue btn-big1 bor-radius2">选TA</button>
+                                    @else
+                                    <button class="btn btn-primary btn-blue btn-big1 bor-radius2">已弃标</button>
+                                    @endif
                                 </div>
                                 <!-- 模态框（Modal） -->
                                 <div class="modal fade" id="myModal{{ $v['id'] }}" tabindex="-1" role="dialog"aria-labelledby="myModalLabel" aria-hidden="true">
@@ -56,13 +60,13 @@
                                                 @if($task_type_alias == 'xuanshang')
                                                     <p class="h5">确定将“
                                                         <span class="text-primary">
-                                                            {{ $v['nickname'] }}
+                                                            {{ $v['company_name'] }}
                                                         </span>”设置为中标吗？
                                                     </p>
                                                 @elseif($task_type_alias == 'zhaobiao')
                                                     <p class="h5">确定将“
                                                         <span class="text-primary">
-                                                            {{ $v['nickname'] }}
+                                                            {{ $v['company_name'] }}
                                                         </span>”设置为中标,并且托管赏金吗？
                                                     </p>
 
@@ -188,7 +192,7 @@
             </div>
             @if($v['status']==1 || $v['status']==2)
                 <div class="selecte" id="selecte-{{ $v['id'] }}" ></div>
-            @elseif($v['status']==5)
+            @elseif($v['status']==5 || $v['flag']==1)
                 <div class="weedout" id="weedout-{{ $v['id'] }}" ></div>
             @else
                 <div class="selecte" id="selecte-{{ $v['id'] }}" style="display:none;"></div>
