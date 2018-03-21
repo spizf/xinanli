@@ -37,7 +37,7 @@
         <div class="row">
 
           <div class="col-md-12">
-            <div class="pagenation_links"><a href="index.html">首页</a><i> / </i> 安全生产标准化系统</div>
+            <div class="pagenation_links"><a href="/">首页</a><i> / </i> 安全生产标准化系统</div>
           </div>
         </div>
       </div>

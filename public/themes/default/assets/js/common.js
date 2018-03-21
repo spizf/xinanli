@@ -34,7 +34,7 @@ $(function() {
         var hh = parseInt(ts / 1000 / 60 / 60 % 24, 10);//计算剩余的小时数
         var mm = parseInt(ts / 1000 / 60 % 60, 10);//计算剩余的分钟数
         var ss = parseInt(ts / 1000 % 60, 10);//计算剩余的秒数
-        var timer = dd + "天" + hh + "时" + mm + "分" + ss + "秒";
+        var timer = (dd > 0 ? dd : 0) + "天" + (hh > 0 ? hh : 0) + "时" + (mm > 0 ? mm : 0) + "分" + (ss > 0 ? ss : 0) + "秒";
         $('.timer-check').html(timer);
     }
     if($('.timer-check').length){

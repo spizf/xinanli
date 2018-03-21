@@ -63,7 +63,7 @@ class CommentModel extends Model
         $status = DB::transaction(function() use($data){
             
             Self::create($data);
-            //add by xl ������ǰ���������۲��޸�״ֵ̬
+            //add by xl 因评价前置所以评价不修改状态值
             /*$worker_num = TaskModel::where('id',$data['task_id'])->first();
             
             $comment_count = self::where('task_id',$data['task_id'])->count();

@@ -20,7 +20,7 @@ class TaskBidSelectWork extends Command
     protected $signature = 'taskBidSelectWork';
 
     
-    protected $description = '悬赏模式选标超出时间';
+    protected $description = '招标模式选标超出时间';
 
     
     public function __construct()
@@ -45,7 +45,8 @@ class TaskBidSelectWork extends Command
                 $status = DB::transaction(function() use($v)
                 {
                     
-                    TaskModel::where('id',$v)->update(['status'=>10,'end_at'=>date('Y-m-d H:i:s',time())]);
+                    //TaskModel::where('id',$v)->update(['status'=>10,'end_at'=>date('Y-m-d H:i:s',time())]);
+                    TaskModel::where('id',$v)->update(['status'=>20,'end_at'=>date('Y-m-d H:i:s',time())]);
                     $task = TaskModel::where('id',$v)->first();
                     
                     

@@ -19,7 +19,7 @@ class TaskBidWork extends Command
     protected $signature = 'taskBidWork';
 
     
-    protected $description = 'Command description';
+    protected $description = '招标模式投标超出时间';
 
     
     public function __construct()
@@ -46,8 +46,9 @@ class TaskBidWork extends Command
                 
                 foreach($not_worked as $v){
                     $status = DB::transaction(function() use($v){
-                        
-                        TaskModel::where('id',$v)->update(['status'=>10,'end_at'=>date('Y-m-d H:i:s',time())]);
+                        //将投标超出最大时间限制的状态改为失败（现20为失败状态）
+                        TaskModel::where('id',$v)->update(['status'=>20,'end_at'=>date('Y-m-d H:i:s',time())]);
+                        //TaskModel::where('id',$v)->update(['status'=>10,'end_at'=>date('Y-m-d H:i:s',time())]);
                         $task = TaskModel::where('id',$v)->first();
                         
                         
@@ -112,7 +113,7 @@ class TaskBidWork extends Command
                 
                 $messageVariableArr = [
                     'task_title'=>$task['title'],
-                    'reason'=>'超过选标限制时间没有选择稿件中标',
+                    'reason'=>'超过投标限制时间没有人投标',
                 ];
                 $message = MessageTemplateModel::sendMessage('task_failed',$messageVariableArr);
                 $data = [

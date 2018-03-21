@@ -270,7 +270,7 @@
                                             <div class="mission-ck z-check-validform-ck">
                                                 <div class="checkbox">
                                                     <label class="checkbox-inline">
-                                                        设置报名时间
+                                                        投标时间范围
                                                     </label>
                                                 </div>
                                                 <div class=" input-group" style="width:60%;margin-left:20px;">

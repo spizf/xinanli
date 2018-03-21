@@ -54,7 +54,7 @@ class DetailController extends IndexController
         $data = $request->all();
 
         $detail = TaskModel::detail($id);
-        
+
         if($detail['engine_status']==1){
             $this->theme->set('engine_status',1);
         }
@@ -1711,7 +1711,7 @@ class DetailController extends IndexController
         if(!$isWinBid){
             return redirect()->to('/task/'.$taskId)->with(['message' => '不是中标者,没有权限']);
         }else{
-            //将不接单者的标志flag改为1
+            //
             $work = WorkModel::where(['task_id' => $taskId,'status' => 1,'uid' => $this->user['id']])->update(['status'=>0,'flag'=>1]);
            if($work){
                $changes= TaskModel::where('id', $taskId)->update(['status' => $status,'updated_at' => date('Y-m-d H:i:s'),'publicity_at'=>date('Y-m-d H:i:s',time())]);
