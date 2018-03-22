@@ -250,7 +250,11 @@ class DetailController extends IndexController
         $agree = AgreementModel::where('code_name','task_delivery')->first();
 
         //是否仲裁中  task_reason表中nums字段1代表一次仲裁 2代表二次仲裁  task表中zc_status 0代表可以发起一次仲裁 1代表可以发起二次仲裁
-        $is_arbitration = TaskReasonModel::where('task_id',$id)->where('nums',$detail['zc_status']+1)->first();
+        //第一次仲裁zc_status为0 nums为1 支付仲裁费之后 zc_status为1  第二次仲裁 zc_status为1 nums为2  支付仲裁费之后 zc_status为2
+        //是否支付仲裁费
+        $is_pay = TaskReasonModel::where('task_id',$id)->where('nums',$detail['zc_status']+1)->first();
+        $is_arbitration = TaskReasonModel::where('task_id',$id)->where('nums','>=',$detail['zc_status'])->first();
+
         //判断当前用户是不是发起该任务仲裁的用户
         $is_user = 0;
        if($is_arbitration && ($this->user['id'] == $is_arbitration['user_id'])){
@@ -287,6 +291,7 @@ class DetailController extends IndexController
             'works_winbid_count'=>$works_winbid_count,
             'agree' => $agree,
             'is_arbitration' => $is_arbitration,
+            'is_pay'  => $is_pay,
             'is_user' => $is_user,
             'task_type_alias' => $taskTypeAlias,
             'pay_case_status' => $payCaseStatus,

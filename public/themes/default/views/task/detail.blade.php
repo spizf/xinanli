@@ -269,6 +269,8 @@
                                 此任务当前处于：<span class="text-primary">仲裁中</span>状态
                                 @elseif($detail['status']==20)
                                 此任务当前处于：<span class="text-primary">失败</span>状态
+                                @elseif($detail['status']==999)
+                                    此任务当前处于：<span class="text-primary">已完成</span>状态
                                 @elseif($detail['status']==7)
                                 此任务当前处于：<span class="text-primary">验收</span>状态
                                 @elseif($detail['status']==8)
@@ -345,7 +347,9 @@
                                 @endif
                                 @if($detail['status']==18)
                                     <div style="display:none">
+                                        {!!  $task_delivery_max_time = CommonClass::getConfig('bid_delivery_max_time') !!}
                                         {!!  $task_check_time_limit = CommonClass::getConfig('bid_check_time_limit') !!}
+                                        {!!  $task_check_time_limit = ($task_delivery_max_time+$task_check_time_limit) !!}
                                     </div>
                                     离20天静默期结束还剩：
                                     <b  delivery_deadline="{{ date('Y/m/d H:i:s',strtotime($detail['checked_at'])+$task_check_time_limit*24*3600) }}" class="cor-orange text-size22 timer-check"></b>
@@ -438,7 +442,7 @@
                                     </a>
                                 @endif
                                 @if($detail['zc_status']==0)
-                                    @if(!$is_arbitration)
+                                    @if(!$is_pay)
                                         <a href="#" class="btn btn-primary bor-radius2 zc_alert" data-toggle="modal" data-target="#mymodal-data" >
                                             申请专家仲裁
                                         </a>
@@ -456,7 +460,7 @@
                                 </a>
                                 @endif
 
-                                @if($is_arbitration && $is_user)
+                                @if($is_pay && $is_user)
                                     <a href="/task/arbitrationBounty/{{$detail['id']}}"><button type="button" class="btn btn-primary">请支付仲裁费</button></a>
                                         <br>
                                         <br>
@@ -470,7 +474,7 @@
                                     补充仲裁资料
                                 </a>
                                 @elseif($detail['status']==19 && $user_type == 3  && $task_type_alias == 'zhaobiao')
-                                    @if(isset($group_two) && (Auth::user()['name']==$group_two[0]->name))
+                                    @if(isset($group_two) && !empty($group_two) && (Auth::user()['name']==$group_two[0]->name))
                                     <a href="#" class="btn btn-primary bor-radius2 "  data-toggle="modal" data-target="#message-data">
                                         通知双方补充冲裁资料
                                     </a>
@@ -682,7 +686,7 @@
                 {{--tab--}}
                 <ul class="tasknav clearfix mg-margin nav nav-tabs">
                     <li class="{{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':'' }}" index="1" onclick="rememberTable($(this))">
-                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue">{{ $works_count }}</span></a>
+                        <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue hide">{{ $works_count }}</span></a>
                     </li>
                     @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
                     <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
@@ -1557,11 +1561,11 @@
                         @endif
                     </li>
                     @endif
-                    <li class="{{ ($detail['status']==19 && strtotime($detail['end_at'])>0)?'active':'' }}" data-target="#step1">
+                    <li class="{{ ($detail['status']==999 && strtotime($detail['updated_at'])>0)?'active':'' }}" data-target="#step1">
                         <span></span>
                         任务已结束&nbsp;&nbsp;
-                        @if($detail['status']==19 && !is_null($detail['end_at']))
-                            {{ (strtotime($detail['end_at'])>0)?date('Y.m.d',strtotime($detail['end_at'])):'' }}
+                        @if($detail['status']==999 && !is_null($detail['updated_at']))
+                            {{ (strtotime($detail['updated_at'])>0)?date('Y.m.d',strtotime($detail['updated_at'])):'' }}
                         @endif
                     </li>
                    {{-- <li class="{{ ($detail['status']>=6 && strtotime($detail['publicity_at'])>0)?'active':'' }}" data-target="#step1">
