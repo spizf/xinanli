@@ -40,6 +40,7 @@
                 <div class="sihetit">四大核心功能</div>
                 <ul class="sihenei">
                     <li class="sihebg01">
+                        <a target="_blank" href="article/tool">
                         <h3>作业过程管控</h3>
                         <div class="neirguan">
                             <p>行业定制检查表，实现评价内容标准、无遗漏</p>
@@ -47,8 +48,10 @@
                             <p>GPS定位签到，作业人员行为有效管理</p>
                             <p>资料归档信息化，管理便捷，效率提升</p>
                         </div>
+                        </a>
                     </li>
                     <li class="sihebg02">
+                        <a target="_blank" href="test/arbitration">
                         <h3>专家技术仲裁</h3>
                         <div class="neirguan">
                             <p>政府专家库评审专家提供服务，保证服务专业性</p>
@@ -56,8 +59,10 @@
                             <p>规范仲裁过程，保障技术仲裁程序公正操作便捷</p>
                             <p>平台随机匹配专家进行技术仲裁，保证仲裁的公正客观性</p>
                         </div>
+                        </a>
                     </li>
                     <li class="sihebg03">
+                        <a target="_blank" href="test/evaluation">
                         <h3>信用评价体系</h3>
                         <div class="neirguan">
                             <p>多维信用评价规则，综合信息进行测算分析、研究</p>
@@ -65,13 +70,16 @@
                             <p>优化市场参与主体，坚持诚实守信原则</p>
                             <P>规范市场主体行为，推动行业发展不断提升</P>
                         </div>
+                        </a>
                     </li>
                     <li class="sihebg04">
+                        <a target="_blank" href="test/trusteeship">
                         <h3>资金托管系统</h3>
                         <div class="neirguan2">
                             <p>坚守客观公正原则、坚守阳光原则</p>
                             <p>平台免费服务，参与主体自由选择</p>
                             <p>第三方专业资金托管机构提供服务资金安全有保障</p></div>
+                        </a>
                     </li>
                 </ul>
             </div>
