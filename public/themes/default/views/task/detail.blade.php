@@ -703,6 +703,16 @@
                         <a href="#home5" data-toggle="tab" class="text-size16">交易维权<span class="badge badge-primary allbtn">{{ $works_rights_count }}</span></a>
                     </li>
                     @endif
+                    
+                    @if(!empty($reasonattachment) && isset($group_two) && !empty($group_two) && (Auth::user()['name']==$group_two[0]->name))
+                        <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==5)?'active':'' }}" index="5" onclick="rememberTable($(this))">
+                            <a href="#home6" data-toggle="tab" class="text-size16">仲裁资料<span class="badge badge-primary allbtn">{{ count($reasonattachment) }}</span></a>
+                        </li>
+                    @elseif(!empty($reasonattachment) && (($user_type==2 && $is_delivery) || $user_type==1) && $is_arbitration)
+                    <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==5)?'active':'' }}" index="5" onclick="rememberTable($(this))">
+                        <a href="#home6" data-toggle="tab" class="text-size16">仲裁资料<span class="badge badge-primary allbtn">{{ count($reasonattachment) }}</span></a>
+                    </li>
+                    @endif
                 </ul>
                 <div class="tab-content b-border0 pd-padding0">
                     <!--投标记录-->
@@ -1369,6 +1379,40 @@
                                 </ul>
                             </div>
                         </div>
+                    @endif
+                    {{--仲裁资料--}}
+                    @if( (!empty($reasonattachment) && ($user_type==2 && $is_delivery) || $user_type == 3 || $user_type==1) && $is_arbitration)
+                    <div id="home6" class="tab-pane fade {{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==5)?'active':'' }} in">
+                            <div class="bidrecords">
+                                <div class="evaluate row evaluatetop">
+                                    <div class="col-md-11 col-xs-10 evaluatemain">
+                                        <div>
+                                            <div>
+                                                <p class="h4 description-title"><b><i class="fa fa-paperclip fa-rotate-90"></i> 附件 <span class="text-muted">({{ count($reasonattachment) }})</span></b></p>
+                                            </div>
+                                            <div class="user-profile clearfix">
+                                                <ul class="ace-thumbnails">
+                                                    @foreach($reasonattachment as $value)
+                                                        <li>
+                                                            <a href="#" >
+                                                                <img alt="150x150" src="{!! Theme::asset()->url('images/task-xiazai/'.matchImg($value['type']).'.png') !!}">
+                                                                <div class="text">
+                                                                    <div class="inner"></div>
+                                                                </div>
+                                                            </a>
+                                                            <div class="tools tools-bottom">
+                                                                <a href="{{ URL('task/download',['id'=>$value['attachment_id']]) }}" target="_blank">下载</a>
+                                                            </div>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
                     @endif
                 </div>
 

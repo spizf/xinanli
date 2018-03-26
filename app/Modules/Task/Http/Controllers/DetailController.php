@@ -362,7 +362,13 @@ class DetailController extends IndexController
             $arrayExpert = explode("-",$report->attachment);
             $view['zc_report'] = AttachmentModel::whereIn('id',$arrayExpert)->get();
         }
-
+        //add by xl 获取仲裁资料
+        $view['reasonattachment'] = [];
+        if (DB::table('task_reasonattachment')->where('task_id',$id)->get()){
+            $reasonattachment = DB::table('task_reasonattachment')->where('task_id',$id)->first();
+            $arrayreasonattachment = explode(",",$reasonattachment->attachment_id);
+            $view['reasonattachment'] = AttachmentModel::whereIn('id',$arrayreasonattachment)->get();
+        }
         if($detail['region_limit']==1 && $detail['province'] && $detail['city'] && $detail['area'])
         {
             $province = DistrictModel::whereIn('id',[$detail['province'],$detail['city'],$detail['area']])->get()->toArray();
