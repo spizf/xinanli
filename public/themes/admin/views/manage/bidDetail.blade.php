@@ -86,11 +86,16 @@
 									</div>
 								</div>
 								<div class="form-group interface-bottom col-xs-12">
-									<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 任务描述： </label>
+									<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 生产产品： </label>
+									<div class="col-sm-9">
+										<label class="col-sm-1">{{ $task['desc'] }}</label>
+									</div>
+								</div>
+								<div class="form-group interface-bottom col-xs-12">
+									<label class="col-sm-1 control-label no-padding-right" for="form-field-1"> 任务详情： </label>
 									<div class="col-sm-8">
 										<div class="clearfix ">
-											<script id="editor"  name="desc" type="text/plain" style="width:;height:300px;">{!! htmlspecialchars_decode($task['desc']) !!}</script>
-
+											<script id="editor"  name="task_detail" type="text/plain" style="width:;height:300px;">{!! htmlspecialchars_decode($task['task_detail']) !!}</script>
 											{{--<div class="wysiwyg-editor" id="editor1">{!! htmlspecialchars_decode($task['desc']) !!}</div>
 											<input type="hidden" name="desc" id="discription-edit" datatype="*" nullmsg="需求描述不能为空" value="{{ htmlspecialchars_decode($task['desc']) }}" >--}}
 										</div>

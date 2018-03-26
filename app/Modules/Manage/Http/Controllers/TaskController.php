@@ -309,7 +309,7 @@ class TaskController extends ManageController
         
         $task = [
             'title' => $data['title'],
-            'desc' => $data['desc'],
+            'task_detail' => $data['task_detail'],
             'phone' => $data['phone']
         ];
         

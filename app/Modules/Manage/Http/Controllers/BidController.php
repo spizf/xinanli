@@ -108,7 +108,7 @@ class BidController extends ManageController
         if (!$taskDetail) {
             return redirect()->back()->with(['error' => '当前任务已经被删除！']);
         }
-        $status = [
+        /*$status = [
             0 => '暂不发布',
             1 => '已经发布',
             2 => '赏金托管',
@@ -121,6 +121,24 @@ class BidController extends ManageController
             9 => '任务完成',
             10 => '失败',
             11 => '维权'
+        ];*/
+        $status = [
+            0 => '暂不发布',
+            1 => '已经发布',
+            2 => '赏金托管',
+            3 => '审核通过',
+            4=>'投标中',
+            5=>'选标中',
+            12=>'工作中',
+            13=>'工作中',
+            14=>'工作中',
+            15=>'工作中',
+            16=>'工作中',
+            17=>'工作中',
+            18=>'验收中',
+            999=>'交易成功',
+            20=>'交易关闭',
+            19=>'维权中'
         ];
         $taskDetail['status_text'] = $status[$taskDetail['status']];
 
