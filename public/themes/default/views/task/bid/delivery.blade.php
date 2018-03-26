@@ -56,14 +56,14 @@
                                 </div>
                             </div>
                             <div class="space-4"></div>
-                            <div class="clearfix text-size12">
+                            {{--<div class="clearfix text-size12">
                                 <label class="inline">
                                     @if(!empty($agree))
                                     <input type="checkbox" class="ace" name="agree" checked="checked" datatype="*" nullmsg="请先阅读并同意">
                                     <span class="lbl text-muted">&nbsp;&nbsp;&nbsp;我已阅读并同意 <a href="/bre/agree/task_delivery">《{!! $agree->name !!}》</a></span>
                                     @endif
                                 </label>
-                            </div>
+                            </div>--}}
                         </div>
                         <div style="display:none;" id="file_update"></div>
                         <div class="clearfix text-center">

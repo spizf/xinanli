@@ -703,7 +703,7 @@
                         <a href="#home5" data-toggle="tab" class="text-size16">交易维权<span class="badge badge-primary allbtn">{{ $works_rights_count }}</span></a>
                     </li>
                     @endif
-                    
+
                     @if(!empty($reasonattachment) && isset($group_two) && !empty($group_two) && (Auth::user()['name']==$group_two[0]->name))
                         <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==5)?'active':'' }}" index="5" onclick="rememberTable($(this))">
                             <a href="#home6" data-toggle="tab" class="text-size16">仲裁资料<span class="badge badge-primary allbtn">{{ count($reasonattachment) }}</span></a>
@@ -1381,7 +1381,7 @@
                         </div>
                     @endif
                     {{--仲裁资料--}}
-                    @if( (!empty($reasonattachment) && ($user_type==2 && $is_delivery) || $user_type == 3 || $user_type==1) && $is_arbitration)
+                    @if( (!empty($reasonattachment) && ($user_type==2 && $is_delivery) || $user_type==1 || (isset($group_two) && !empty($group_two) && (Auth::user()['name']==$group_two[0]->name))) && $is_arbitration)
                     <div id="home6" class="tab-pane fade {{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==5)?'active':'' }} in">
                             <div class="bidrecords">
                                 <div class="evaluate row evaluatetop">
@@ -1401,7 +1401,7 @@
                                                                 </div>
                                                             </a>
                                                             <div class="tools tools-bottom">
-                                                                <a href="{{ URL('task/download',['id'=>$value['attachment_id']]) }}" target="_blank">下载</a>
+                                                                <a href="{{ URL('task/download',['id'=>$value['id']]) }}" target="_blank">下载</a>
                                                             </div>
                                                         </li>
                                                     @endforeach
