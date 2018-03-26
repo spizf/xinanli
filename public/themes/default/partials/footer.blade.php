@@ -16,8 +16,7 @@
                     {{--{!! config('kppw.kppw_powered_by') !!}
                     {!! config('kppw.kppw_version') !!}--}}
                     {!! Theme::get('site_config')['copyright'] !!}{!! Theme::get('site_config')['record_number'] !!}
-                    <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan style='display:none;' id='cnzz_stat_icon_1272420864'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272420864%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
-                   | 安环家荣誉出品
+                    | 安环家荣誉出品
                 </p>
             </div>
             <div class="col-lg-3 g-contact visible-lg-block hidden-sm hidden-md hidden-xs">
@@ -53,7 +52,6 @@
         <a href="https://ss.knet.cn/verifyseal.dll?sn=e180315110105723634may000000&pa=111332" tabindex="-1" id="urlknet" style="margin-left: 5px;" target="_blank">
             <img alt="&#x53EF;&#x4FE1;&#x7F51;&#x7AD9;" name="KNET_seal" border="true" src="/img/ss.png"  />
         </a>
-        <script type='text/javascript'>(function(){document.getElementById('___szfw_logo___').oncontextmenu = function(){return false;}})();</script>
     </div>
 </div>
 

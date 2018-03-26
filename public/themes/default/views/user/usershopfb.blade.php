@@ -2,12 +2,12 @@
     <h4 class="text-size16 cor-blue2f u-title">发布作品</h4>
     <div class="space-16"></div>
     @if($is_open_shop == 1)
-        @if($trade_rate != 0)
+       {{-- @if($trade_rate != 0)
         <div class="alert g-alertreal clearfix" role="alert">
             <i class="fa fa-lightbulb-o pull-left no-height"></i>
             <span class="text-size12">小贴士：作品佣金是{!! $trade_rate !!}%，成功上架后也会有提示哦！</span>
         </div>
-        @endif
+        @endif--}}
     <form method="post" action="{!! url('user/pubGoods') !!}" enctype="multipart/form-data" id="shop_info">
         {!! csrf_field() !!}
     <div class="g-userimgup profile-users g-usershopform">
@@ -95,7 +95,7 @@
             <p class="g-userimgupinp g-userimgupbor-validform">
                 <label>
                     <input name="is_recommend" class="ace ace-checkbox-2" type="checkbox" value="1">
-                    <span class="lbl"> 推荐到威客商城
+                    <span class="lbl"> 推荐到机构商城
                         <span class="cor-orange">（增值服务 ￥ {!! $price !!}元/
                         @if($recommend_unit == 0)天
                         @elseif($recommend_unit == 1)月

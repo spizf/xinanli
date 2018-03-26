@@ -2,12 +2,12 @@
     <h4 class="text-size16 cor-blue2f u-title">发布服务</h4>
     <div class="space-22"></div>
     @if($is_shop_open ==1)
-        @if($trade_rate != 0)
+        {{--@if($trade_rate != 0)
             <div class="alert g-alertreal clearfix" role="alert">
                 <i class="fa fa-lightbulb-o pull-left no-height"></i>
                 <span class="text-size12">小贴士：服务佣金是{!! $trade_rate !!}%，成功上架后也会有提示哦！</span>
             </div>
-        @endif
+        @endif--}}
     <form action="{{ URL('user/serviceUpdate') }}" method="post" enctype="multipart/form-data" id="form">
         {{ csrf_field() }}
         <div class="g-userimgup profile-users g-usershopform">
