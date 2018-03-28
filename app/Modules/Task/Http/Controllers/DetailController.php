@@ -156,7 +156,7 @@ class DetailController extends IndexController
                 }
 
                 $delivery_count = count($delivery['data']);
-            }elseif($user_type==1){
+            }elseif($user_type==1 || $is_expert){
                 $delivery = WorkModel::findDelivery($id,$data);
                 if($taskTypeAlias == 'zhaobiao'){
                     if(!empty($delivery['data'])){
