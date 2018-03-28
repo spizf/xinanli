@@ -139,14 +139,12 @@
                 </div>-->
                 <div class="col-lg-5 claerfix hidden-sm hidden-xs hidden-md" style="float: right;">
                     <div class="row">
-                       
-                        <div class="g-taskhdbg1">实名认证</div>
-                        <div class="g-taskhdbg2">资金托管</div>
-                        <div class="g-taskhdbg4">信用体系</div>
-                        <div class="g-taskhdbg6">
-                    		专家仲裁
-                    	</div>
-                         <div class="g-taskhdbg5">评价管控</div>
+
+                        <a @if(Auth::check() && Auth::User()->user_type == 1) href="/user/realnameAuth" @elseif(Auth::check() && Auth::User()->user_type == 2) href="/user/realnameAuth" @else href="/login" @endif ><div class="g-taskhdbg1">实名认证</div></a>
+                        <a href="/test/trusteeship" target="_blank"><div class="g-taskhdbg2">资金托管</div></a>
+                        <a href="/test/evaluation" target="_blank"><div class="g-taskhdbg4">信用体系</div></a>
+                        <a href="/test/arbitration" target="_blank"><div class="g-taskhdbg6">专家仲裁</div></a>
+                        <a href="/article/tool" target="_blank"><div class="g-taskhdbg5">评价管控</div></a>
                       <!--<div class="g-taskhdbg3">全额退款</div>-->
                     </div>
                 </div>

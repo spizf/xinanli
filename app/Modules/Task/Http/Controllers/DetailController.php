@@ -119,6 +119,16 @@ class DetailController extends IndexController
         $works_bid_count = WorkModel::where('task_id',$id)->where('status','=',1)->where('forbidden',0)->count();
         $works_winbid_count = WorkModel::where('task_id',$id)->where('status','=',1)->where('forbidden',0)->count();
         $delivery = [];
+        //检查当前登录的用户是否是该任务的仲裁专家组长
+        $is_expert = 0;
+        $expertdata = DB::table('arbitration_expert')->select('arbitration_expert.*')
+            ->where('e.name',$this->user['name'])
+            ->where('arbitration_expert.task_id',$id)
+            ->leftjoin('experts as e','e.id','=','arbitration_expert.headman')
+            ->first();
+        if(!empty($expertdata)){
+            $is_expert = 1;
+        }
         if(Auth::check())
         {
             if($user_type==2)
@@ -297,7 +307,8 @@ class DetailController extends IndexController
             'pay_case_status' => $payCaseStatus,
             'pay_section' => $paySectionStatus,
             'has_bid' => $hasBid,
-            'usertype' =>$this->user['user_type']
+            'usertype' =>$this->user['user_type'],
+            'is_expert' =>$is_expert
         ];
 
         //保存仲裁专家
@@ -365,9 +376,11 @@ class DetailController extends IndexController
         //add by xl 获取仲裁资料
         $view['reasonattachment'] = [];
         if (DB::table('task_reasonattachment')->where('task_id',$id)->get()){
-            $reasonattachment = DB::table('task_reasonattachment')->where('task_id',$id)->first();
-            $arrayreasonattachment = explode(",",$reasonattachment->attachment_id);
-            $view['reasonattachment'] = AttachmentModel::whereIn('id',$arrayreasonattachment)->get();
+            $arr = DB::table('task_reasonattachment')->where('task_id',$id)->get();
+            foreach($arr AS $k => $v){
+                $reasonattachment[]= $v->attachment_id;
+            }
+            $view['reasonattachment'] = AttachmentModel::whereIn('id',$reasonattachment)->get();
         }
         if($detail['region_limit']==1 && $detail['province'] && $detail['city'] && $detail['area'])
         {
@@ -1099,7 +1112,7 @@ class DetailController extends IndexController
             ->where('status',3)->first();*/
         $is_checked = WorkModel::where('task_id',$data['id'])
             ->where('uid',$this->user['id'])
-            ->where('status',2)->first();
+            ->where('status','>=',2)->first();
         
         $task = TaskModel::where('id',$data['id'])->first();
 
@@ -1192,7 +1205,7 @@ class DetailController extends IndexController
             ->where('status',3)->first();*/
         $is_checked = WorkModel::where('task_id',$data['task_id'])
             ->where('uid',$this->user['id'])
-            ->where('status',2)->first();
+            ->where('status','>=',2)->first();
         
         $task = TaskModel::where('id',$data['task_id'])->first();
 
@@ -2099,7 +2112,7 @@ class DetailController extends IndexController
         if($task_abm)
         {
             $user = UserModel::where('id',$megs['employer_id'])->first();
-            $worker = WorkModel::where('id',$megs['task_id'])->where('status','>=',1)->first();
+            $worker = WorkModel::where('task_id',$megs['task_id'])->where('status','>=',1)->first();
             $site_name = \CommonClass::getConfig('site_name');
             $user_name = Auth::user()['name'];//当前登录的用户即发布需求的人
             $domain = \CommonClass::getDomain();

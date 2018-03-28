@@ -596,7 +596,7 @@
                                 </div>
                                 @endif
                                 <div class="space"></div>
-                                @if(count($contract) > 0 && (($user_type == 2 && $is_win_bid) || $user_type == 1))
+                                @if(count($contract) > 0 && (($user_type == 2 && $is_win_bid) || $user_type == 1 || (isset($group_two) && !empty($group_two) && (Auth::user()['name']==$group_two[0]->name))))
                                 <div class="description-main task-taskdisplay">
                                     <div>
                                         <p class="h4 description-title">
@@ -688,7 +688,8 @@
                     <li class="{{ ((!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==1) || !isset($_COOKIE['table_index']))?'active':'' }}" index="1" onclick="rememberTable($(this))">
                         <a href="#home2" data-toggle="tab" class="text-size16">接任务记录<span class="badge bg-blue hide">{{ $works_count }}</span></a>
                     </li>
-                    @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1))
+                    @if(!empty($delivery['data']) && $user_type!=3 && ($is_delivery || $user_type==1 ))
+                   {{-- @if(!empty($delivery['data']) && ($is_delivery || $user_type==1 || $user_type==2 || $is_expert))--}}
                     <li class="{{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }}" index="2" onclick="rememberTable($(this))">
                         <a href="#home3" data-toggle="tab" class="text-size16">交付内容<span class="badge badge-primary bg-blue">{{ $delivery_count }}</span></a>
                     </li>
@@ -985,6 +986,7 @@
 
                     <!--交付内容-->
                     @if(!empty($delivery['data']) && $user_type!=3  && ($is_delivery || $user_type==1))
+                    {{--@if(!empty($delivery['data']) && ($is_delivery || $user_type==1 || $user_type==2 || $is_expert))--}}
                     <div id="home3" class="tab-pane fade {{ (!empty($_COOKIE['table_index']) && $_COOKIE['table_index']==2)?'active':'' }} in">
                         @foreach($delivery['data'] as $v)
                         <div class="bidrecords">
