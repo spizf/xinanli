@@ -23,6 +23,13 @@ $('.memberdiv').on('mouseenter', function(){
 /**
  * 充值表单验证
  */
+//解决window.open弹窗阻止的问题
+var new_win;
+$('#btn_sub').click(function(){
+    new_win = window.open("", '_blank');
+    new_win.document.write('正在跳转到支付页面...');
+});
+
 var cashVal = $("input[name='cash']").val();
 $(".cashform").Validform({
     btnSubmit:"#btn_sub",
@@ -43,7 +50,8 @@ $(".cashform").Validform({
     },
     callback:function(data){
         if (data.code == 200){
-            window.open(data.data.url);
+            // window.open(data.data.url);
+            new_win.location.href=data.data.url;//重新定向链接
             $('#myModal').modal({
                 keyboard: true
             });

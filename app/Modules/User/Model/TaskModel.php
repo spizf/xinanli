@@ -25,7 +25,7 @@ class TaskModel extends Model
         'title', 'desc', 'type_id', 'cate_id', 'phone', 'region_limit', 'status', 'bounty', 'bounty_status', 'created_at', 'updated_at',
         'verified_at', 'begin_at', 'end_at', 'delivery_deadline', 'show_cash', 'real_cash', 'deposit_cash', 'province', 'city', 'area',
         'view_count', 'delivery_count', 'uid', 'username', 'worker_num', 'selected_work_at', 'publicity_at', 'checked_at', 'comment_at',
-        'top_status', 'task_success_draw_ratio', 'task_fail_draw_ratio', 'engine_status', 'work_status','productNum', 'contacts', 'industry'
+        'top_status', 'task_success_draw_ratio', 'task_fail_draw_ratio', 'engine_status', 'work_status','productNum', 'contacts', 'industry','task_detail','company_name'
     ];
     static public function createTask($data)
     {
@@ -50,7 +50,7 @@ class TaskModel extends Model
                     'status'=>$data['status'],
                     'task_success_draw_ratio'=>$data['task_success_draw_ratio'],
                     'task_fail_draw_ratio'=>$data['task_fail_draw_ratio'],
-                    //add by xl ·¢²¼ĞèÇóÔö¼ÓÄê²úÁ¿ÁªÏµÈË
+                    //add by xl ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½
                     'productNum'=>$data['productNum'],
                     'contacts'=>$data['contacts'],
                     'industry'=>$data['industry']

@@ -868,17 +868,7 @@
                                     </div>
                                     @endif
                                     <div class="evaluatext detail-noborder">{!! $v['desc'] !!}</div>
-                                    <div class="detail-border">
-                                        @if($v['status']==1 || $v['status']==2)
-                                            <div class="selecte" id="selecte-{{ $v['id'] }}" ></div>
-                                            {{--弃标显示为淘汰--}}
-                                        @elseif($v['status']==5 || $v['flag']==1)
-                                            <div class="weedout" id="weedout-{{ $v['id'] }}" ></div>
-                                        @else
-                                            <div class="selecte" id="selecte-{{ $v['id'] }}" style="display:none;"></div>
-                                            <div class="weedout" id="weedout-{{ $v['id'] }}" style="display:none;"></div>
-                                        @endif
-                                    </div>
+
                                     <!-- add by xl 只许投标者和发布需求者看到报价-->
                                     @if(($v['uid']==Auth::user()['id']) || $user_type == 1)
                                     <div>
@@ -942,6 +932,15 @@
                                     </div>
                                 </div>
                             </div>
+                            @if($v['status']==1 || $v['status']==2)
+                                <div class="selecte" id="selecte-{{ $v['id'] }}" ></div>
+                                {{--弃标显示为淘汰--}}
+                            @elseif($v['status']==5 || $v['flag']==1)
+                                <div class="weedout" id="weedout-{{ $v['id'] }}" ></div>
+                            @else
+                                <div class="selecte" id="selecte-{{ $v['id'] }}" style="display:none;"></div>
+                                <div class="weedout" id="weedout-{{ $v['id'] }}" style="display:none;"></div>
+                            @endif
                         </div>
                             @else
                                 <div class="norecord">

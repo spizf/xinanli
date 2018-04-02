@@ -11,7 +11,7 @@
             <div class="memberdiv">
                 <div class="cor-gray51 position-relative" id="cashtips">充值金额：
                     <span class="inlineblock">
-                        <input type="text" class="bor-radius2" name="cash" datatype="cashValid" data-recharge-min="{!! $recharge_min !!}"  nullmsg="请输入充值金额" errormsg="充值金额不小于{!! $recharge_min !!}元"/> 元&nbsp;&nbsp;&nbsp;</span>
+                        <input type="text" class="bor-radius2" name="cash" datatype="cashValid" data-recharge-min="{!! $recharge_min !!}"   nullmsg="请输入充值金额" errormsg="充值金额不小于{!! $recharge_min !!}元"/> 元&nbsp;&nbsp;&nbsp;</span>
                     <div class="popover">
                         <div class="arrow"></div>
                         <div class="popover-content cor-gray51"> 我们会在您提交后处理您的充值。</div>
